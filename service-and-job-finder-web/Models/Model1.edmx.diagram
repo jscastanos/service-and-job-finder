@@ -5,25 +5,32 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="630449b67ba54a8c886d1f6d3171308f" Name="Diagram1">
-        <EntityTypeShape EntityType="AppWorkModel.tAccountType" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tApplication" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tBusinessEntity" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tCertification" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tComment" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tEducationalBackground" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tEmploymentHistory" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tFieldOfExpertise" Width="1.5" PointX="6.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tIndustry" Width="1.5" PointX="6.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tJobSeekerExpertise" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tMainService" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tMessage" Width="1.5" PointX="8.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tPersonInfo" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tPortfolio" Width="1.5" PointX="2.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tPost" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tSkill" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tSkillSet" Width="1.5" PointX="4.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tTraining" Width="1.5" PointX="6.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AppWorkModel.tUser" Width="1.5" PointX="10.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AppWorkModel.tAccountType" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tApplication" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tBusinessEntity" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tCertification" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tComment" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tEducationalBackground" Width="1.5" PointX="4.75" PointY="5.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tEmploymentHistory" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tFieldOfExpertise" Width="1.5" PointX="6.75" PointY="4.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tIndustry" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tJob" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tJobSeekerExpertise" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tMainService" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tMessage" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tPersonInfo" Width="1.5" PointX="2.75" PointY="9.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tPortfolio" Width="1.5" PointX="8.75" PointY="9.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tPost" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tRemark" Width="1.5" PointX="10.75" PointY="4.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tService" Width="1.5" PointX="4.75" PointY="10.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tServiceSet" Width="1.5" PointX="10.75" PointY="8.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tSkill" Width="1.5" PointX="10.75" PointY="11.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tSkillSet" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tTraining" Width="1.5" PointX="12.75" PointY="3.75" />
+        <EntityTypeShape EntityType="AppWorkModel.tUser" Width="1.5" PointX="12.75" PointY="7.75" />
+        <EntityTypeShape EntityType="AppWorkModel.vUsersAcctBusinessEntityStatu" Width="1.5" PointX="12.75" PointY="11.75" />
+        <EntityTypeShape EntityType="AppWorkModel.vUsersAcctPersonStatu" Width="1.5" PointX="4.75" PointY="13.75" />
+        <EntityTypeShape EntityType="AppWorkModel.vtJobApplicant" Width="1.5" PointX="7.375" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
