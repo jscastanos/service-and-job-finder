@@ -13,10 +13,10 @@ namespace service_and_job_finder_web
                       "~/Scripts/bootstrap.min.js",
                       "~/Scripts/jquery.metisMenu.js",
                       "~/Scripts/jquery.slimscroll.min.js",
-                      "~/Scripts/template.js",
                       "~/Scripts/pace.min.js",
                       "~/Scripts/angular.min.js",
-                      "~/Scripts/ng-app.js"
+                      "~/Scripts/ng-app.js",
+                      "~/Scripts/template.js"
                       ));
 
             bundles.Add(new StyleBundle("~/css").Include(
