@@ -1,0 +1,485 @@
+﻿@{
+    ViewBag.Title = "LandingPage";
+    Layout = null;
+}
+
+
+<!-- Mirrored from webapplayers.com/inspinia_admin-v2.5/landing.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 May 2016 13:28:38 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title> AppWork - Landing Page</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <!-- Animation CSS -->
+    <link href="~/Content/animate.css" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/ng-app.js"></script>
+    <script src="~/Scripts/controllers/LandingPage.js"></script>
+
+</head>
+
+<body id="page-top" class="landing-page" ng-app="SJF" ng-controller="LandingPage">
+    <div class="navbar-wrapper">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand page-scroll" href="#page-top">AppWork</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="page-scroll" href="#page-top">Home</a></li>
+                        <li><a class="page-scroll" href="#job">Job</a></li>
+                        <li><a class="page-scroll" href="#service">Services</a></li>
+                        <li><a class="page-scroll" href="#industry">Industries</a></li>
+                        <li><a class="page-scroll" ng-click="gotToLogInPage()">Log In</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div id="inSlider" class="carousel carousel-fade" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#inSlider" data-slide-to="0" class="active"></li>
+            <li data-target="#inSlider" data-slide-to="1"></li>
+            @*<li data-target="#inSlider" data-slide-to="2"></li>*@
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>
+
+                            Set up <br />Career
+                            guidance <br />and
+                            organize  <br />job posting
+                        </h1>
+                        <p>Efficient communication between job seeker and employer.</p>
+
+                    </div>
+                    <div class="carousel-image wow zoomIn">
+                        <img src="../images/laptop.png" alt="laptop" />
+                    </div>
+                </div>
+                <!-- Set background for slide in css -->
+                <div class="header-back one"></div>
+
+            </div>
+
+            <div class="item">
+                <div class="container">
+                    <div class="carousel-caption blank">
+                        <h1>
+                            Find reliable <br /> service workers <br />
+                            using mobile with<br /> google map features.
+                        </h1>
+                        <p>Insuring customer satisfaction</p>
+
+                    </div>
+                    <div class="carousel-image wow zoomIn">
+                        <img src="../images/m2.png" alt="mobile" />
+                    </div>
+                </div>
+                <!-- Set background for slide in css -->
+                <div class="header-back three"></div>
+            </div>
+
+
+
+
+        </div>
+        <a class="left carousel-control" href="#inSlider" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#inSlider" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+
+
+
+    <section class="navy-section testimonials" style="margin-top: 0">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center wow zoomIn animated" style="visibility: visible;">
+                    <i class="fa fa-comment big-icon"></i>
+                    <h1>
+                        Social Media for Job Seekers <br /> and Service Finder
+                    </h1>
+                    <div class="testimonials-text" style="visibility:hidden">
+                        <i>"Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."</i>
+                    </div>
+                    <small style="visibility:hidden">
+                        <strong>12.02.2014 - Andy Smith</strong>
+                    </small>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+
+
+
+
+
+
+    <section class="container features" id="job">
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="navy-line"></div>
+                <h1> Set up <span class="navy">career guidance</span> <br />and organize  <span class="navy"> job posting</span>.</h1>
+                <p style="visibility:hidden">Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
+            </div>
+        </div>
+        <div class="row features-block">
+            <div class="col-lg-6 features-text wow fadeInLeft">
+
+                <div style="margin-bottom:5%">
+                    <span class="text-muted " style="font-size:x-large">
+                        AppWork expertly connects professional job seekers and employers to employment fitting skills and talents.
+                    </span>
+                </div>
+
+
+                <h1>Get started as a... </h1>
+
+                <button ng-click="getStarted(1)" type="button" class="btn btn-w-m btn-primary">Employer</button>
+                <button ng-click="getStarted(2)" type="button" class="btn btn-outline btn-primary" style="background-color:white;color:#1ab394">Job Seeker</button>
+
+
+            </div>
+            <div class="col-lg-6 text-right wow fadeInRight">
+                <img src="../images/bwoman.jpg" alt="dashboard" class="img-responsive pull-right">
+            </div>
+        </div>
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+    <div id="service" class="gray-section" style="padding-bottom:5%">
+
+        <section id="service" class="container features ">
+
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="navy-line"></div>
+                    <h1>Find reliable services that <span class="navy">satisfy</span>. </h1>
+                    <p style="visibility:hidden">Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
+                </div>
+            </div>
+
+
+            <div class="row features-block">
+
+                <div class="col-lg-6 text-left wow fadeInLeft">
+                    <img src="../images/c.jpg" alt="dashboard" class="img-responsive pull-left">
+                </div>
+
+                <div class="col-lg-6 features-text wow fadeInRight">
+
+                    <div style="margin-bottom:5%">
+                        <span class="text-muted" style="font-size:x-large">
+                            AppWork expertly connects skilled & reliable service workers and customers to services.
+                        </span>
+                    </div>
+
+
+                    <h1>Get started as a... </h1>
+
+                    <button ng-click="getStarted(3)" type="button" class="btn btn-w-m btn-primary">Service Worker</button>
+                    <button ng-click="getStarted(4)" type="button" class="btn btn-outline btn-primary" style="background-color:white;color:#1ab394">Customer</button>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+
+    <div style="padding-bottom:2%">
+        <section class="features" id="industry">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="navy-line"></div>
+                        <h1>Industries</h1>
+                        <p style="visibility:hidden">Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 col-lg-offset-1 features-text wow fadeInLeft">
+
+                        <h2>Accounting and Consulting </h2>
+                        <i class="fa fa-bar-chart big-icon pull-right"></i>
+                        <p style="text-align:justify">
+                            Assisting clients with the direct preparation of their financial statements, auditing the financial statements, preparing tax returns and engaging in a variety of consulting activities such as providing litigation support, or reconstructed damaged accounting records.
+                        </p>
+                    </div>
+                    <div class="col-lg-5 features-text wow fadeInRight">
+
+                        <h2>Web, Mobile and Software Development</h2>
+                        <i class="fa fa-code big-icon pull-right"></i>
+                        <p style="text-align:justify">
+                            Software development is the process of conceiving, specifying, designing, programming, documenting, testing, and bug fixing involved in creating and maintaining applications, frameworks, or other software components.
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 col-lg-offset-1 features-text wow fadeInLeft">
+
+                        <h2>Real Estate</h2>
+                        <i class="fa fa-home big-icon pull-right"></i>
+                        <p style="text-align:justify"> Real Estate business involved with sell, Buy and rent a properties. There are mainly three category Residential properties, Commercial properties and Industrial properties, Agricultural properties. All category have various rules for selling and buying. Real Estate business owner know all this matter about land.</p>
+                    </div>
+                    <div class="col-lg-5 features-text wow fadeInRight">
+
+                        <h2>Sales and Marketing </h2>
+                        <i class="fa fa-area-chart big-icon pull-right"></i>
+                        <p style="text-align:justify"> Sales include “operations and activities involved in promoting and selling goods or services.” Marketing includes “the process or technique of promoting, selling, and distributing a product or service.”</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-5 col-lg-offset-1 features-text  wow fadeInLeft">
+
+                        <h2>Admin Support</h2>
+                        <i class="fa fa-users big-icon pull-right"></i>
+                        <p style="text-align:justify"> Administrative support services are essential to the operation of any office. Your administrative duties could include scheduling, answering phones, typing, taking dictation, organization and similar activities.</p>
+                    </div>
+                    <div class="col-lg-5 features-text  wow fadeInRight">
+
+                        <h2> Customer Service</h2>
+                        <i class="fa fa-headphones big-icon pull-right"></i>
+                        <p style="text-align:justify"> Customer service is the direct one-on-one interaction between a consumer making a purchase and a representative of the company that is selling it. Most retailers see this direct interaction as a critical factor in ensuring buyer satisfaction and encouraging repeat business.</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-5 col-lg-offset-1 features-text wow fadeInLeft">
+
+                        <h2>Data Science & Analytics</h2>
+                        <i class="fa fa-line-chart big-icon pull-right"></i>
+                        <p style="text-align:justify"> Data science is an umbrella term that encompasses data analytics, data mining, machine learning, and several other related disciplines. While a data scientist is expected to forecast the future based on past patterns, data analysts extract meaningful insights from various data sources.</p>
+                    </div>
+                    <div class="col-lg-5 features-text wow fadeInRight">
+
+                        <h2> Design & Creative</h2>
+                        <i class="fa fa-paint-brush big-icon pull-right"></i>
+                        <p style="text-align:justify"> Graphic design is the process of visual communication and problem-solving through the use of typography, photography, and illustration. The field is considered a subset of visual communication and communication design, but sometimes the term "graphic design" is used synonymously.</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-5 col-lg-offset-1 features-text wow fadeInLeft">
+
+                        <h2>Engineering & Architecture</h2>
+                        <i class="fa fa-cogs big-icon pull-right"></i>
+                        <p style="text-align:justify"> Building engineering or building services engineering, is an engineering discipline that deals with the technological aspects and multi-disciplinary approach to planning, design, construction and operation of buildings, such as analysis and integrated design of environmental systems (energy conservation, HVAC, plumbing, lighting, fire protection, acoustics, vertical and horizontal transportation), structural systems, behavior and properties of building components and materials, and construction management.</p>
+                    </div>
+                    <div class="col-lg-5 features-text wow fadeInRight">
+
+                        <h2> IT & Networking</h2>
+                        <i class="fa fa-sitemap big-icon  pull-right"></i>
+                        <p style="text-align:justify"> In computer networking, a network service is an application running at the network application layer and above, that provides data storage, manipulation, presentation, communication or other capability which is often implemented using a client-server or peer-to-peer architecture based on application layer network protocols.</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-5 col-lg-offset-1 features-text wow fadeInLeft">
+
+                        <h2>Legal</h2>
+                        <i class="fa fa-gavel big-icon pull-right"></i>
+                        <p style="text-align:justify"> Legal services are the services involving legal or law related matters like issue of legal opinion, filing, pleading and defending of law suits etc by a lawyer or attorney practicing law related services.</p>
+                    </div>
+                    <div class="col-lg-5 features-text wow fadeInRight">
+
+                        <h2>Translation</h2>
+                        <i class="fa fa-language big-icon pull-right"></i>
+                        <p style="text-align:justify"> Translation is highly dependent on both the sector and the type of document being translated, so each requires a different translation service. We work with subject matter specialists to ensure that you always have the right translation team working on your project. This ensures that the translated content is produced to the highest level of quality and accuracy.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <section id="contact" class="gray-section contact">
+        <div class="container">
+            <div class="row m-b-lg">
+                <div class="col-lg-12 text-center">
+                    <div class="navy-line"></div>
+                    <h1>Contact Us</h1>
+                    <p style="visibility:hidden">Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.</p>
+                </div>
+            </div>
+            <div class="row m-b-lg">
+                <div class="col-lg-3 col-lg-offset-3 wow fadeInLeft">
+                    <address>
+                        <strong><span class="navy">AppWork, Inc.</span></strong><br>
+                        Apokon, Tagum City<br>
+                        Davao del Norte, CA 94107<br>
+                        <abbr title="Phone">P:</abbr> (123) 456-7890
+                    </address>
+                </div>
+                <div class="col-lg-4 text-center wow fadeInRight">
+                    <a href="http://www.gmail.com" class="btn btn-primary">Send us e-mail</a>
+                    <p class="m-t-sm">
+                        Or follow us on social platform
+                    </p>
+                    <ul class="list-inline social-icon">
+                        <li>
+                            <a href="http://www.twitter.com"><i class="fa fa-twitter"></i></a>
+                        </li>
+                        <li>
+                            <a href="http://www.facebook.com"><i class="fa fa-facebook"></i></a>
+                        </li>
+                        <li>
+                            <a href="http://www.instagram.com"><i class="fa fa-linkedin"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
+                    <p><strong>© 2020 AppWork</strong><br> All Rights Received.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Mainly scripts -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery.metisMenu.js"></script>
+    <script src="~/Scripts/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="~/Scripts/template.js"></script>
+    <script src="~/Scripts/pace.min.js"></script>
+    <script src="~/Scripts/wow.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('body').scrollspy({
+                target: '.navbar-fixed-top',
+                offset: 80
+            });
+
+            // Page scrolling feature
+            $('a.page-scroll').bind('click', function (event) {
+                var link = $(this);
+                $('html, body').stop().animate({
+                    scrollTop: $(link.attr('href')).offset().top - 50
+                }, 500);
+                event.preventDefault();
+                $("#navbar").collapse('hide');
+            });
+        });
+
+        var cbpAnimatedHeader = (function () {
+            var docElem = document.documentElement,
+                    header = document.querySelector('.navbar-default'),
+                    didScroll = false,
+                    changeHeaderOn = 200;
+            function init() {
+                window.addEventListener('scroll', function (event) {
+                    if (!didScroll) {
+                        didScroll = true;
+                        setTimeout(scrollPage, 250);
+                    }
+                }, false);
+            }
+            function scrollPage() {
+                var sy = scrollY();
+                if (sy >= changeHeaderOn) {
+                    $(header).addClass('navbar-scroll')
+                }
+                else {
+                    $(header).removeClass('navbar-scroll')
+                }
+                didScroll = false;
+            }
+            function scrollY() {
+                return window.pageYOffset || docElem.scrollTop;
+            }
+            init();
+
+        })();
+
+        // Activate WOW.js plugin for animation on scrol
+        new WOW().init();
+
+    </script>
+
+</body>
+<!-- Mirrored from webapplayers.com/inspinia_admin-v2.5/landing.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 May 2016 13:29:35 GMT -->
