@@ -7,20 +7,25 @@ namespace service_and_job_finder_web
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-          /////////////////////////////// SCRIPTS ////////////////////////////////////////////////////////
 
-            bundles.Add(new ScriptBundle("~/Scripts/template").Include(
-                      "~/Scripts/architect-ui.js"));
+            bundles.Add(new ScriptBundle("~/js").Include(
+                      "~/Scripts/jquery.min.js",
+                      "~/Scripts/bootstrap.min.js",
+                      "~/Scripts/jquery.metisMenu.js",
+                      "~/Scripts/jquery.slimscroll.min.js",
+                      "~/Scripts/pace.min.js",
+                      "~/Scripts/angular.min.js",
+                      "~/Scripts/ng-app.js",
+                      "~/Scripts/template.js"
+                      ));
 
-            bundles.Add(new ScriptBundle("~/Scripts/angular").Include(
-                 "~/Scripts/angular/angular.min.js",
-                 "~/Scripts/angular/ng-app.js"));
-
-
-            /////////////////////////////// STYLES ////////////////////////////////////////////////////////
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/architect-ui.css"));
+            bundles.Add(new StyleBundle("~/css").Include(
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/font-awesome.css",
+                      "~/Content/icomoon.css",
+                      "~/Content/animate.css",
+                      "~/Content/style.css"
+                      ));
         }
     }
 }

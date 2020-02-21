@@ -1,51 +1,26 @@
-﻿<!doctype html>
-<html lang="en">
+﻿
+<!DOCTYPE html>
+<html>
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="@Url.Content("~/img/favicon.png")" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>@ViewBag.Title | Jobs and Service Finder</title>
+    @Styles.Render("~/css")
+    @Scripts.Render("~/js")
+</head>
 
-    <title>Material Dashboard | @ViewBag.Title</title>
-
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name="viewport" content="width=device-width" />
-
-   @Styles.Render("~/Content/css")
-
-    @Scripts.Render("~/Scripts/angular")
-    <body ng-app="SJF">
-        <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
-            <div class="app-header header-shadow">
-                <div class="app-header__logo">
-                    <div class="logo-src">                        LOGO HERE</div>
+<body class="top-navigation" ng-app="SJF">
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+            @Html.Partial("_navbar")
+            <div class="wrapper wrapper-content">
+                <div class="container">
+                    @RenderBody()
                 </div>
-                <div class="app-header__mobile-menu">
-                    <div>
-                        <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-                <div class="app-header__menu">
-                    <span>
-                        <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
-                            <span class="btn-icon-wrapper">
-                                <i class="fa fa-ellipsis-v fa-w-6"></i>
-                            </span>
-                        </button>
-                    </span>
-                </div>
-               @Html.Partial("_navbar")
-            </div>
-            <div class="app-main">
-                @RenderBody()
+
             </div>
         </div>
-    </body>
-
-@Scripts.Render("~/Scripts/template")
-
+    </div>
+</body>
 </html>
