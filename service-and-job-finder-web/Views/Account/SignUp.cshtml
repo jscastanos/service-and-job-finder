@@ -1,0 +1,186 @@
+﻿@{
+    ViewBag.Title = "SignUp";
+    Layout = null;
+}
+<html>
+
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AppWork | Sign up</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/custom.css" rel="stylesheet" />
+    <!-- Animation CSS -->
+    <link href="~/Content/animate.css" rel="stylesheet" />
+
+
+    <!-- Custom styles for this template -->
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+
+
+
+
+
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/ng-app.js"></script>
+    <script src="~/Scripts/controllers/SignUp.js"></script>
+</head>
+
+<body class="gray-bg" ng-app="SJF" ng-controller="SignUp" ng-init="init()">
+
+    <div class="loginColumns animated fadeInDown">
+        <div class="row">
+
+            <div class="col-md-6 animated fadeInLeft">
+                <h2 class="font-bold"><span style="color:#1ab394">{{account != null? account : "-Error content-"}}</span> </h2>
+
+
+                <div>
+                    <span class="font-noraml">
+                        {{description != null? description : "-Error content-"}}
+                    </span>
+                </div>
+                <br />
+                <br />
+
+                <div ng-if="type == 0 && btnEmployer == 1 && btnJobSeeker == 1 && btnServiceWorker == 1 && btnCustomer == 1">
+                    <img src="../images/socialmedia.jpg" alt="dashboard" class="img-responsive pull-left">
+                </div>
+
+                <div ng-if=" type == 1 || btnEmployer == 0">
+                    <img src="../images/e.jpg" alt="dashboard" class="img-responsive pull-left">
+                </div>
+
+                <div ng-if="type == 2 || btnJobSeeker == 0">
+                    <img src="../images/bwoman.jpg" alt="dashboard" class="img-responsive pull-left">
+                </div>
+
+                <div ng-if="type == 3 || btnServiceWorker == 0">
+                    <img src="../images/customer.jpg" alt="dashboard" class="img-responsive pull-left">
+                </div>
+
+                <div ng-if="type == 4 || btnCustomer == 0">
+                    <img src="../images/c1.jpg" alt="dashboard" class="img-responsive pull-left">
+                </div>
+
+
+            </div>
+
+            <div class="col-md-6">
+                <div class="ibox">
+                    <div class=" ibox ibox-title">
+                        <h3 class="font-noraml">Create free account</h3>
+
+                    </div>
+                    <div class="ibox-content">
+                        <form class="m-t" role="form">
+                            <div class="form-group">
+                                <input ng-change="ValidateUsername()" type="text" ng-model="user.Username" class="form-control" placeholder="Username" required="">
+                                <span ng-if="user.Username.length < 5" style="color:red">*Must be 5 characters or more...</span>
+                                <span ng-if="validUsername == 1" style="color:red">*Username already taken</span>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" ng-model="user.Password" class="form-control" placeholder="Password" required="">
+                                <span ng-if="user.Password.length < 5" style="color:red">*Must be 5 characters or more...</span>
+                            </div>
+                            <div class="form-group">
+
+                                <input type="password" ng-model="TempPassword" ng-change="validation()" class="form-control" placeholder="Confirm password" required="">
+                                <span ng-if="valid == true && user.Password.length >= 5 && TempPassword != null " style="color:red">*Password not match</span>
+                                <span ng-if="valid == true && user.Password.length >= 5 && TempPassword == null " style="color:red">*Enter your password to confirm</span>
+                            </div>
+                            <div class="form-group">
+
+
+                                <div style="text-align:justify">
+                                    <input type="checkbox" ng-model="check" required="">
+                                    Yes, I understand and agree to the AppWork Terms of Service,
+                                    including the User Agreement and Privacy Policy.
+                                </div>
+
+
+
+
+                            </div>
+                            <br />
+
+
+                            <div class="row" ng-if="type == 0 ">
+                                <div class="col-md-6">
+                                    <button type="submit" ng-disabled="check != true" ng-click="selectAccountType(1,0)" class="btn btn-primary block full-width m-b" ng-if="btnEmployer == 1" style="background-color:white;color:#1ab394">Employer</button>
+                                    <button type="submit" ng-disabled="check != true" ng-click="selectAccountType(1,1)" class="btn btn-primary block full-width m-b" ng-if="btnEmployer == 0">Employer</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" ng-disabled="check != true" ng-click="selectAccountType(2,0)" class="btn btn-primary block full-width m-b" ng-if="btnJobSeeker == 1" style="background-color:white;color:#1ab394">Job Seeker</button>
+                                    <button type="submit" ng-disabled="check != true" ng-click="selectAccountType(2,1)" class="btn btn-primary block full-width m-b" ng-if="btnJobSeeker == 0">Job Seeker</button>
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="row" ng-if="type == 0 ">
+                                <div class="col-md-6">
+                                    <button type="submit" ng-disabled="check != true" ng-click="selectAccountType(3,0)" class="btn btn-primary block full-width m-b" ng-if="btnServiceWorker == 1" style="background-color:white;color:#1ab394">Service Worker</button>
+                                    <button type="submit" ng-disabled="check != true" ng-click="selectAccountType(3,1)" class="btn btn-primary block full-width m-b" ng-if="btnServiceWorker == 0">Service Worker</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" ng-disabled="check != true" ng-click="selectAccountType(4,0)" class="btn btn-primary block full-width m-b" ng-if="btnCustomer == 1" style="background-color:white;color:#1ab394">Customer</button>
+                                    <button type="submit" ng-disabled="check != true" ng-click="selectAccountType(4,1)" class="btn btn-primary block full-width m-b" ng-if="btnCustomer == 0">Customer</button>
+                                </div>
+
+                            </div>
+
+
+
+
+
+                            <div class="form-group" ng-if="type == 0 ">
+                                <hr>
+                            </div>
+
+
+
+                            <button type="submit" class="btn btn-primary block full-width m-b" ng-disabled="check != true || user.Password != TempPassword || (user.Password == null && TempPassword == null) || check == false || user.AccountTypeId == 0 || validUsername == 1 || user.Username.length < 5" ng-click="createAccount()">Create my Account</button>
+                            <p class="text-muted text-center">
+                                <small>Already have an account?</small>
+                            </p>
+                            <a class="btn btn-sm btn-white btn-block" ng-click="gotToLogInPage()">Login</a>
+                        </form>
+                        <p class="m-t text-center"> <small>Socal Media for Job Seeker and Service Finder &copy; 2020</small> </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Mainly scripts -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.metisMenu.js"></script>
+
+    <script src="~/Scripts/template.js"></script>
+    <script src="~/Scripts/pace.min.js"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+</body>
+
+
+<!-- Mirrored from webapplayers.com/inspinia_admin-v2.5/register.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 May 2016 13:23:23 GMT -->
+</html>
