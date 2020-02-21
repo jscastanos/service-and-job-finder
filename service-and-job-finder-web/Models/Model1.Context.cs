@@ -34,22 +34,15 @@ namespace service_and_job_finder_web.Models
         public DbSet<tEmploymentHistory> tEmploymentHistories { get; set; }
         public DbSet<tFieldOfExpertise> tFieldOfExpertises { get; set; }
         public DbSet<tIndustry> tIndustries { get; set; }
-        public DbSet<tJob> tJobs { get; set; }
         public DbSet<tJobSeekerExpertise> tJobSeekerExpertises { get; set; }
         public DbSet<tMainService> tMainServices { get; set; }
         public DbSet<tMessage> tMessages { get; set; }
         public DbSet<tPersonInfo> tPersonInfoes { get; set; }
         public DbSet<tPortfolio> tPortfolios { get; set; }
         public DbSet<tPost> tPosts { get; set; }
-        public DbSet<tRemark> tRemarks { get; set; }
-        public DbSet<tService> tServices { get; set; }
-        public DbSet<tServiceSet> tServiceSets { get; set; }
         public DbSet<tSkill> tSkills { get; set; }
         public DbSet<tSkillSet> tSkillSets { get; set; }
         public DbSet<tTraining> tTrainings { get; set; }
         public DbSet<tUser> tUsers { get; set; }
-        public DbSet<vUsersAcctBusinessEntityStatu> vUsersAcctBusinessEntityStatus { get; set; }
-        public DbSet<vUsersAcctPersonStatu> vUsersAcctPersonStatus { get; set; }
-        public DbSet<vtJobApplicant> vtJobApplicants { get; set; }
     }
 }

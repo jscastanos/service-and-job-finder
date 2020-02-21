@@ -175,9 +175,6 @@
     <Compile Include="Models\tIndustry.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tJob.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\tJobSeekerExpertise.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -196,15 +193,6 @@
     <Compile Include="Models\tPost.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tRemark.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tService.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tServiceSet.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\tSkill.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -215,15 +203,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tUser.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vtJobApplicant.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vUsersAcctBusinessEntityStatu.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\vUsersAcctPersonStatu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -288,6 +267,16 @@
     <Content Include="images\rails_logo.png" />
     <Content Include="images\socialmedia.jpg" />
     <Content Include="images\zender_logo.png" />
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
     <Content Include="packages.config" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -336,25 +325,15 @@
     <Content Include="Views\Home\LandingPage.cshtml" />
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\Account\LogIn.cshtml" />
+    <Content Include="Views\Admin\VerifyAccount.cshtml" />
+    <Content Include="Views\Employer\Applicants.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
-    <Content Include="Views\Admin\VerifyAccount.cshtml" />
-    <Content Include="Views\Employer\Applicants.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

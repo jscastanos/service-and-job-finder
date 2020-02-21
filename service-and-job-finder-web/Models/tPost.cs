@@ -18,7 +18,6 @@ namespace service_and_job_finder_web.Models
         public string PostId { get; set; }
         public string UserId { get; set; }
         public string Title { get; set; }
-        public string JobId { get; set; }
         public string Description { get; set; }
         public byte[] FileImg { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }

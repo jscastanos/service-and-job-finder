@@ -21,6 +21,5 @@ namespace service_and_job_finder_web.Models
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
         public Nullable<int> Status { get; set; }
-        public string JobId { get; set; }
     }
 }
