@@ -14,3 +14,14 @@
     margin-left: calc(50vw - 28px);
   }
 }
+
+.geocoder {
+  position: absolute;
+  z-index: 1;
+  width: calc(100% - 40px);
+  left: 20px;
+  top: 20px;
+}
+.mapboxgl-ctrl-geocoder {
+  min-width: 100%;
+}
