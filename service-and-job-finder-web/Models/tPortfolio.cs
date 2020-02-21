@@ -16,7 +16,7 @@ namespace service_and_job_finder_web.Models
     {
         public int recNo { get; set; }
         public string PersonId { get; set; }
-        public string Title { get; set; }
+        public byte[] Title { get; set; }
         public string Description { get; set; }
         public string URL { get; set; }
         public byte[] ProjectImg { get; set; }

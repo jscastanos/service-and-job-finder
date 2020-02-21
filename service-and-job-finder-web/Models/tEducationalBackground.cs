@@ -16,11 +16,9 @@ namespace service_and_job_finder_web.Models
     {
         public int recNo { get; set; }
         public string PersonId { get; set; }
-        public string School { get; set; }
-        public string Course { get; set; }
-        public string Address { get; set; }
-        public Nullable<System.DateTime> DateStared { get; set; }
-        public Nullable<System.DateTime> DateEnded { get; set; }
+        public string Filename { get; set; }
+        public byte[] Description { get; set; }
+        public byte[] FileImg { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
         public Nullable<int> Status { get; set; }

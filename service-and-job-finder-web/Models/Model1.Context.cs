@@ -34,16 +34,12 @@ namespace service_and_job_finder_web.Models
         public virtual DbSet<tEmploymentHistory> tEmploymentHistories { get; set; }
         public virtual DbSet<tFieldOfExpertise> tFieldOfExpertises { get; set; }
         public virtual DbSet<tIndustry> tIndustries { get; set; }
-        public virtual DbSet<tJob> tJobs { get; set; }
         public virtual DbSet<tJobSeekerExpertise> tJobSeekerExpertises { get; set; }
         public virtual DbSet<tMainService> tMainServices { get; set; }
         public virtual DbSet<tMessage> tMessages { get; set; }
         public virtual DbSet<tPersonInfo> tPersonInfoes { get; set; }
         public virtual DbSet<tPortfolio> tPortfolios { get; set; }
         public virtual DbSet<tPost> tPosts { get; set; }
-        public virtual DbSet<tRemark> tRemarks { get; set; }
-        public virtual DbSet<tService> tServices { get; set; }
-        public virtual DbSet<tServiceSet> tServiceSets { get; set; }
         public virtual DbSet<tSkill> tSkills { get; set; }
         public virtual DbSet<tSkillSet> tSkillSets { get; set; }
         public virtual DbSet<tTraining> tTrainings { get; set; }

@@ -23,7 +23,6 @@ namespace service_and_job_finder_web.Models
         public Nullable<System.DateTime> Birthdate { get; set; }
         public string Address { get; set; }
         public string ContactNo { get; set; }
-        public string Title { get; set; }
         public string Introduction { get; set; }
         public byte[] ProfileImg { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }

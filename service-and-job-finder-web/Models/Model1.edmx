@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AppWorkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="AppWorkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tAccountType">
           <Key>
             <PropertyRef Name="recNo" />
@@ -50,7 +50,7 @@
           </Key>
           <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="varchar" MaxLength="50" />
-          <Property Name="Filename" Type="varchar(max)" />
+          <Property Name="Filename" Type="varchar" MaxLength="50" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="FileImg" Type="varbinary(max)" />
           <Property Name="DateCreated" Type="datetime" />
@@ -76,12 +76,10 @@
             <PropertyRef Name="recNo" />
           </Key>
           <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PersonId" Type="varchar(max)" />
-          <Property Name="School" Type="varchar(max)" />
-          <Property Name="Course" Type="varchar(max)" />
-          <Property Name="Address" Type="varchar(max)" />
-          <Property Name="DateStared" Type="date" />
-          <Property Name="DateEnded" Type="date" />
+          <Property Name="PersonId" Type="varchar" MaxLength="50" />
+          <Property Name="Filename" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varbinary(max)" />
+          <Property Name="FileImg" Type="varbinary(max)" />
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="DateUpdated" Type="datetime" />
           <Property Name="Status" Type="int" />
@@ -91,10 +89,10 @@
             <PropertyRef Name="recNo" />
           </Key>
           <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PersonId" Type="varchar(max)" />
-          <Property Name="CompanyName" Type="varchar(max)" />
+          <Property Name="PersonId" Type="varchar" MaxLength="50" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="50" />
           <Property Name="CompanyAddress" Type="varchar(max)" />
-          <Property Name="Position" Type="varchar(max)" />
+          <Property Name="Position" Type="varchar" MaxLength="50" />
           <Property Name="StartedDate" Type="date" />
           <Property Name="EndedDate" Type="date" />
           <Property Name="DateCreated" Type="datetime" />
@@ -119,16 +117,6 @@
           <Property Name="IndustryId" Type="varchar" MaxLength="50" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="Status" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tJob">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="JobId" Type="varchar" MaxLength="50" />
-          <Property Name="JobTitle" Type="varchar" MaxLength="50" />
-          <Property Name="EntityId" Type="varchar" MaxLength="50" />
-          <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="tJobSeekerExpertise">
           <Key>
@@ -175,7 +163,6 @@
           <Property Name="Birthdate" Type="date" />
           <Property Name="Address" Type="varchar(max)" />
           <Property Name="ContactNo" Type="varchar" MaxLength="50" />
-          <Property Name="Title" Type="varchar(max)" />
           <Property Name="Introduction" Type="varchar(max)" />
           <Property Name="ProfileImg" Type="varbinary(max)" />
           <Property Name="DateCreated" Type="datetime" />
@@ -186,15 +173,15 @@
           <Key>
             <PropertyRef Name="recNo" />
           </Key>
-          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="recNo" Type="int" Nullable="false" />
           <Property Name="PersonId" Type="varchar" MaxLength="50" />
-          <Property Name="Title" Type="varchar(max)" />
+          <Property Name="Title" Type="varbinary" MaxLength="50" />
           <Property Name="Description" Type="varchar(max)" />
-          <Property Name="URL" Type="varchar(max)" />
+          <Property Name="URL" Type="varchar" MaxLength="50" />
           <Property Name="ProjectImg" Type="varbinary(max)" />
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="DateUpdated" Type="datetime" />
-          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="tPost">
           <Key>
@@ -203,43 +190,11 @@
           <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PostId" Type="varchar" MaxLength="50" />
           <Property Name="UserId" Type="varchar" MaxLength="50" />
-          <Property Name="JobId" Type="varchar" MaxLength="50" />
           <Property Name="Title" Type="varchar(max)" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="FileImg" Type="varbinary(max)" />
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="DateUpdated" Type="datetime" />
-          <Property Name="Status" Type="int" />
-        </EntityType>
-        <EntityType Name="tRemarks">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="OwnerId" Type="varchar" MaxLength="50" />
-          <Property Name="Remarks" Type="varchar(max)" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="UpdatedBy" Type="varchar" MaxLength="50" />
-          <Property Name="DateUpdated" Type="datetime" />
-          <Property Name="Status" Type="nchar" MaxLength="10" />
-        </EntityType>
-        <EntityType Name="tService">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceId" Type="varchar" MaxLength="10" />
-          <Property Name="Description" Type="varchar(max)" />
-          <Property Name="Status" Type="int" />
-        </EntityType>
-        <EntityType Name="tServiceSet">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceId" Type="varchar" MaxLength="50" />
-          <Property Name="UserId" Type="varchar" MaxLength="50" />
           <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="tSkill">
@@ -297,50 +252,22 @@
           <EntitySet Name="tEmploymentHistory" EntityType="Self.tEmploymentHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tFieldOfExpertise" EntityType="Self.tFieldOfExpertise" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tIndustry" EntityType="Self.tIndustry" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tJob" EntityType="Self.tJob" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tJobSeekerExpertise" EntityType="Self.tJobSeekerExpertise" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tMainService" EntityType="Self.tMainService" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tMessage" EntityType="Self.tMessage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tPersonInfo" EntityType="Self.tPersonInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tPortfolio" EntityType="Self.tPortfolio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tPost" EntityType="Self.tPost" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tRemarks" EntityType="Self.tRemarks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tService" EntityType="Self.tService" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tServiceSet" EntityType="Self.tServiceSet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tSkill" EntityType="Self.tSkill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tSkillSet" EntityType="Self.tSkillSet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tTraining" EntityType="Self.tTraining" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tUser" EntityType="Self.tUser" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AppWorkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="AppWorkEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tAccountTypes" EntityType="AppWorkModel.tAccountType" />
-          <EntitySet Name="tApplications" EntityType="AppWorkModel.tApplication" />
-          <EntitySet Name="tBusinessEntities" EntityType="AppWorkModel.tBusinessEntity" />
-          <EntitySet Name="tCertifications" EntityType="AppWorkModel.tCertification" />
-          <EntitySet Name="tComments" EntityType="AppWorkModel.tComment" />
-          <EntitySet Name="tEducationalBackgrounds" EntityType="AppWorkModel.tEducationalBackground" />
-          <EntitySet Name="tEmploymentHistories" EntityType="AppWorkModel.tEmploymentHistory" />
-          <EntitySet Name="tFieldOfExpertises" EntityType="AppWorkModel.tFieldOfExpertise" />
-          <EntitySet Name="tIndustries" EntityType="AppWorkModel.tIndustry" />
-          <EntitySet Name="tJobs" EntityType="AppWorkModel.tJob" />
-          <EntitySet Name="tJobSeekerExpertises" EntityType="AppWorkModel.tJobSeekerExpertise" />
-          <EntitySet Name="tMainServices" EntityType="AppWorkModel.tMainService" />
-          <EntitySet Name="tMessages" EntityType="AppWorkModel.tMessage" />
-          <EntitySet Name="tPersonInfoes" EntityType="AppWorkModel.tPersonInfo" />
-          <EntitySet Name="tPortfolios" EntityType="AppWorkModel.tPortfolio" />
-          <EntitySet Name="tPosts" EntityType="AppWorkModel.tPost" />
-          <EntitySet Name="tRemarks" EntityType="AppWorkModel.tRemark" />
-          <EntitySet Name="tServices" EntityType="AppWorkModel.tService" />
-          <EntitySet Name="tServiceSets" EntityType="AppWorkModel.tServiceSet" />
-          <EntitySet Name="tSkills" EntityType="AppWorkModel.tSkill" />
-          <EntitySet Name="tSkillSets" EntityType="AppWorkModel.tSkillSet" />
-          <EntitySet Name="tTrainings" EntityType="AppWorkModel.tTraining" />
-          <EntitySet Name="tUsers" EntityType="AppWorkModel.tUser" />
-        </EntityContainer>
         <EntityType Name="tAccountType">
           <Key>
             <PropertyRef Name="recNo" />
@@ -386,7 +313,7 @@
           </Key>
           <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Filename" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Filename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="FileImg" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
@@ -412,12 +339,10 @@
             <PropertyRef Name="recNo" />
           </Key>
           <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PersonId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="School" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Course" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DateStared" Type="DateTime" Precision="0" />
-          <Property Name="DateEnded" Type="DateTime" Precision="0" />
+          <Property Name="PersonId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Filename" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FileImg" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Int32" />
@@ -427,10 +352,10 @@
             <PropertyRef Name="recNo" />
           </Key>
           <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PersonId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CompanyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PersonId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CompanyAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Position" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="StartedDate" Type="DateTime" Precision="0" />
           <Property Name="EndedDate" Type="DateTime" Precision="0" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
@@ -455,16 +380,6 @@
           <Property Name="IndustryId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tJob">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="JobId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EntityId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Status" Type="Int32" />
         </EntityType>
         <EntityType Name="tJobSeekerExpertise">
           <Key>
@@ -511,7 +426,6 @@
           <Property Name="Birthdate" Type="DateTime" Precision="0" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Introduction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ProfileImg" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
@@ -522,15 +436,15 @@
           <Key>
             <PropertyRef Name="recNo" />
           </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="recNo" Type="Int32" Nullable="false" />
           <Property Name="PersonId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="Binary" MaxLength="50" FixedLength="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ProjectImg" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="tPost">
           <Key>
@@ -539,43 +453,11 @@
           <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PostId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="JobId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="FileImg" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <Property Name="Status" Type="Int32" />
-        </EntityType>
-        <EntityType Name="tRemark">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OwnerId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="UpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <Property Name="Status" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tService">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceId" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Status" Type="Int32" />
-        </EntityType>
-        <EntityType Name="tServiceSet">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="Int32" />
         </EntityType>
         <EntityType Name="tSkill">
@@ -623,7 +505,28 @@
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Int32" />
         </EntityType>
-        </Schema>
+        <EntityContainer Name="AppWorkEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tAccountTypes" EntityType="Self.tAccountType" />
+          <EntitySet Name="tApplications" EntityType="Self.tApplication" />
+          <EntitySet Name="tBusinessEntities" EntityType="Self.tBusinessEntity" />
+          <EntitySet Name="tCertifications" EntityType="Self.tCertification" />
+          <EntitySet Name="tComments" EntityType="Self.tComment" />
+          <EntitySet Name="tEducationalBackgrounds" EntityType="Self.tEducationalBackground" />
+          <EntitySet Name="tEmploymentHistories" EntityType="Self.tEmploymentHistory" />
+          <EntitySet Name="tFieldOfExpertises" EntityType="Self.tFieldOfExpertise" />
+          <EntitySet Name="tIndustries" EntityType="Self.tIndustry" />
+          <EntitySet Name="tJobSeekerExpertises" EntityType="Self.tJobSeekerExpertise" />
+          <EntitySet Name="tMainServices" EntityType="Self.tMainService" />
+          <EntitySet Name="tMessages" EntityType="Self.tMessage" />
+          <EntitySet Name="tPersonInfoes" EntityType="Self.tPersonInfo" />
+          <EntitySet Name="tPortfolios" EntityType="Self.tPortfolio" />
+          <EntitySet Name="tPosts" EntityType="Self.tPost" />
+          <EntitySet Name="tSkills" EntityType="Self.tSkill" />
+          <EntitySet Name="tSkillSets" EntityType="Self.tSkillSet" />
+          <EntitySet Name="tTrainings" EntityType="Self.tTraining" />
+          <EntitySet Name="tUsers" EntityType="Self.tUser" />
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -632,305 +535,256 @@
           <EntitySetMapping Name="tAccountTypes">
             <EntityTypeMapping TypeName="AppWorkModel.tAccountType">
               <MappingFragment StoreEntitySet="tAccountType">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
-                <ScalarProperty Name="AccountTypeId" ColumnName="AccountTypeId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="AccountTypeId" ColumnName="AccountTypeId" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tApplications">
             <EntityTypeMapping TypeName="AppWorkModel.tApplication">
               <MappingFragment StoreEntitySet="tApplication">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
-                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tBusinessEntities">
             <EntityTypeMapping TypeName="AppWorkModel.tBusinessEntity">
               <MappingFragment StoreEntitySet="tBusinessEntity">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="ProfileImg" ColumnName="ProfileImg" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
-                <ScalarProperty Name="About" ColumnName="About" />
-                <ScalarProperty Name="BusinessEntityAddress" ColumnName="BusinessEntityAddress" />
-                <ScalarProperty Name="BusinessEntityName" ColumnName="BusinessEntityName" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="BusinessEntityName" ColumnName="BusinessEntityName" />
+                <ScalarProperty Name="BusinessEntityAddress" ColumnName="BusinessEntityAddress" />
+                <ScalarProperty Name="About" ColumnName="About" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="ProfileImg" ColumnName="ProfileImg" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tCertifications">
             <EntityTypeMapping TypeName="AppWorkModel.tCertification">
               <MappingFragment StoreEntitySet="tCertification">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="FileImg" ColumnName="FileImg" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Filename" ColumnName="Filename" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="FileImg" ColumnName="FileImg" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tComments">
             <EntityTypeMapping TypeName="AppWorkModel.tComment">
               <MappingFragment StoreEntitySet="tComment">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="isReply" ColumnName="isReply" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
-                <ScalarProperty Name="PostId" ColumnName="PostId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="CommentId" ColumnName="CommentId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="isReply" ColumnName="isReply" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tEducationalBackgrounds">
             <EntityTypeMapping TypeName="AppWorkModel.tEducationalBackground">
               <MappingFragment StoreEntitySet="tEducationalBackground">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateEnded" ColumnName="DateEnded" />
-                <ScalarProperty Name="DateStared" ColumnName="DateStared" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Course" ColumnName="Course" />
-                <ScalarProperty Name="School" ColumnName="School" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="FileImg" ColumnName="FileImg" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tEmploymentHistories">
             <EntityTypeMapping TypeName="AppWorkModel.tEmploymentHistory">
               <MappingFragment StoreEntitySet="tEmploymentHistory">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="EndedDate" ColumnName="EndedDate" />
-                <ScalarProperty Name="StartedDate" ColumnName="StartedDate" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="StartedDate" ColumnName="StartedDate" />
+                <ScalarProperty Name="EndedDate" ColumnName="EndedDate" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tFieldOfExpertises">
             <EntityTypeMapping TypeName="AppWorkModel.tFieldOfExpertise">
               <MappingFragment StoreEntitySet="tFieldOfExpertise">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="IndustryId" ColumnName="IndustryId" />
-                <ScalarProperty Name="ExpertiseId" ColumnName="ExpertiseId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="ExpertiseId" ColumnName="ExpertiseId" />
+                <ScalarProperty Name="IndustryId" ColumnName="IndustryId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tIndustries">
             <EntityTypeMapping TypeName="AppWorkModel.tIndustry">
               <MappingFragment StoreEntitySet="tIndustry">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
                 <ScalarProperty Name="IndustryId" ColumnName="IndustryId" />
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tJobs">
-            <EntityTypeMapping TypeName="AppWorkModel.tJob">
-              <MappingFragment StoreEntitySet="tJob">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
-                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
-                <ScalarProperty Name="JobId" ColumnName="JobId" />
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tJobSeekerExpertises">
             <EntityTypeMapping TypeName="AppWorkModel.tJobSeekerExpertise">
               <MappingFragment StoreEntitySet="tJobSeekerExpertise">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ExpertiseId" ColumnName="ExpertiseId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="ExpertiseId" ColumnName="ExpertiseId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tMainServices">
             <EntityTypeMapping TypeName="AppWorkModel.tMainService">
               <MappingFragment StoreEntitySet="tMainService">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="IndustryId" ColumnName="IndustryId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="IndustryId" ColumnName="IndustryId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tMessages">
             <EntityTypeMapping TypeName="AppWorkModel.tMessage">
               <MappingFragment StoreEntitySet="tMessage">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="RecipientId" ColumnName="RecipientId" />
-                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
-                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="SenderId" ColumnName="SenderId" />
+                <ScalarProperty Name="RecipientId" ColumnName="RecipientId" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tPersonInfoes">
             <EntityTypeMapping TypeName="AppWorkModel.tPersonInfo">
               <MappingFragment StoreEntitySet="tPersonInfo">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="ProfileImg" ColumnName="ProfileImg" />
-                <ScalarProperty Name="Introduction" ColumnName="Introduction" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
-                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
-                <ScalarProperty Name="Middlename" ColumnName="Middlename" />
-                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Middlename" ColumnName="Middlename" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Introduction" ColumnName="Introduction" />
+                <ScalarProperty Name="ProfileImg" ColumnName="ProfileImg" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tPortfolios">
             <EntityTypeMapping TypeName="AppWorkModel.tPortfolio">
               <MappingFragment StoreEntitySet="tPortfolio">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="ProjectImg" ColumnName="ProjectImg" />
-                <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="ProjectImg" ColumnName="ProjectImg" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tPosts">
             <EntityTypeMapping TypeName="AppWorkModel.tPost">
               <MappingFragment StoreEntitySet="tPost">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="FileImg" ColumnName="FileImg" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="JobId" ColumnName="JobId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
                 <ScalarProperty Name="PostId" ColumnName="PostId" />
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tRemarks">
-            <EntityTypeMapping TypeName="AppWorkModel.tRemark">
-              <MappingFragment StoreEntitySet="tRemarks">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tServices">
-            <EntityTypeMapping TypeName="AppWorkModel.tService">
-              <MappingFragment StoreEntitySet="tService">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tServiceSets">
-            <EntityTypeMapping TypeName="AppWorkModel.tServiceSet">
-              <MappingFragment StoreEntitySet="tServiceSet">
-                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="FileImg" ColumnName="FileImg" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tSkills">
             <EntityTypeMapping TypeName="AppWorkModel.tSkill">
               <MappingFragment StoreEntitySet="tSkill">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tSkillSets">
             <EntityTypeMapping TypeName="AppWorkModel.tSkillSet">
               <MappingFragment StoreEntitySet="tSkillSet">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tTrainings">
             <EntityTypeMapping TypeName="AppWorkModel.tTraining">
               <MappingFragment StoreEntitySet="tTraining">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="TrainingVenue" ColumnName="TrainingVenue" />
-                <ScalarProperty Name="TrainingTitle" ColumnName="TrainingTitle" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="TrainingTitle" ColumnName="TrainingTitle" />
+                <ScalarProperty Name="TrainingVenue" ColumnName="TrainingVenue" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tUsers">
             <EntityTypeMapping TypeName="AppWorkModel.tUser">
               <MappingFragment StoreEntitySet="tUser">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="AccountTypeId" ColumnName="AccountTypeId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AccountTypeId" ColumnName="AccountTypeId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
