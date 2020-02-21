@@ -6,18 +6,16 @@ using System.Web.Mvc;
 
 namespace service_and_job_finder_web.Controllers
 {
-    public class HomeController : Controller
+    public class JobSeekerRegController : Controller
     {
+        // GET: JobSeekerReg
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-
             return View();
         }
 
-        public ActionResult LandingPage()
+        public ActionResult SkillandServices()
         {
-
             return View();
         }
     }

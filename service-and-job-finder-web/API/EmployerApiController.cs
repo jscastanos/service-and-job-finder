@@ -17,11 +17,11 @@ namespace service_and_job_finder_web.API
     public class EmployerApiController : ApiController
     {
         private AppWorkEntities db = new AppWorkEntities();
-       
+
         public class skillAndServices
         {
             public string[] tempSkills { get; set; }
-            public List<tServiceSet> serviceArrID { get; set;}
+            public List<tServiceSet> serviceArrID { get; set; }
 
         }
 
@@ -91,7 +91,7 @@ namespace service_and_job_finder_web.API
         public IHttpActionResult GetCompanyData(string id)
         {
             var data = db.tBusinessEntities.FirstOrDefault(a => a.UserId == id);
-            
+
             return Json(data);
         }
 
@@ -106,36 +106,38 @@ namespace service_and_job_finder_web.API
         [Route("api/employerapi/CompanyService")]
         public IHttpActionResult GetCompanyService(string id)
         {
-            var data = db.tServiceSets.Where(a => a.UserId == id && a.Status == 0).Select(x => new { 
-                  name = db.tServices.FirstOrDefault(p => p.ServiceId == x.ServiceId).Description
+            var data = db.tServiceSets.Where(a => a.UserId == id && a.Status == 0).Select(x => new
+            {
+                name = db.tServices.FirstOrDefault(p => p.ServiceId == x.ServiceId).Description
             });
 
             return Json(data);
         }
-        
+
         [Route("api/employerapi/CompanyJobList")]
         public IHttpActionResult GetCompanyJobList(string id)
         {
             var data = db.tJobs.Where(a => a.EntityId == id).ToList();
             return Json(data);
         }
-        
+
         [Route("api/employerapi/jobApplicant")]
         public IHttpActionResult GetjobApplicant(string id)
         {
-            var data = db.tApplications.Where(a => a.JobId == id && a.Status == 0).Select(x => new {
+            var data = db.tApplications.Where(a => a.JobId == id && a.Status == 0).Select(x => new
+            {
                 name = db.tPersonInfoes.FirstOrDefault(p => p.PersonId == x.PersonId).Firstname + " " + db.tPersonInfoes.FirstOrDefault(p => p.PersonId == x.PersonId).Lastname
             });
             return Json(data);
         }
-        
+
         [Route("api/employerapi/updateCert")]
         public IHttpActionResult GetupdateCert(int id)
         {
             var data = db.tCertifications.FirstOrDefault(x => x.recNo == id);
             return Json(data);
         }
-        
+
         [Route("api/employerapi/brgy")]
         public IHttpActionResult GetBrgy()
         {
@@ -148,7 +150,7 @@ namespace service_and_job_finder_web.API
 
             var data = db.tBusinessEntities.SingleOrDefault(a => a.UserId == id && a.Status == 0);
 
-            return Json(new { lat = data.Latitude, lng = data.Longitude});
+            return Json(new { lat = data.Latitude, lng = data.Longitude });
         }
 
         [Route("api/employerapi/userData")]
@@ -170,8 +172,8 @@ namespace service_and_job_finder_web.API
 
             if (data.tempSkills != null)
             {
-                
-                foreach(var a in data.tempSkills)
+
+                foreach (var a in data.tempSkills)
                 {
                     obj.SkillId = a;
                     obj.Status = 0;
@@ -200,7 +202,7 @@ namespace service_and_job_finder_web.API
         public IHttpActionResult PostsaveProfile(imgBase64Str obj)
         {
             var val = new tBusinessEntity();
-            
+
             if (obj.img != null)
             {
 
@@ -208,7 +210,7 @@ namespace service_and_job_finder_web.API
 
                 val.ProfileImg = imageBytes;
             }
-           
+
             val.BusinessEntityName = obj.name;
             val.BusinessEntityAddress = obj.add;
             val.About = obj.desc;
@@ -217,7 +219,7 @@ namespace service_and_job_finder_web.API
             val.DateCreated = DateTime.Now;
             val.Latitude = obj.lat;
             val.Longitude = obj.longitude;
-          
+
             db.Entry(val).State = EntityState.Added;
             db.SaveChanges();
 
@@ -228,13 +230,13 @@ namespace service_and_job_finder_web.API
         public IHttpActionResult PostsaveCertificate(certificateData value)
         {
             var obj = new tCertification();
-            if (value.FileImg != null) 
+            if (value.FileImg != null)
             {
                 byte[] imageBytes = Convert.FromBase64String(value.FileImg);
 
                 obj.FileImg = imageBytes;
             }
-            
+
 
             obj.Filename = value.data.Filename;
             obj.Description = value.data.Description;
@@ -296,7 +298,7 @@ namespace service_and_job_finder_web.API
 
             return Json(data.data.recNo);
         }
-        
+
         [Route("api/employerapi/removeJob")]
         public IHttpActionResult PutremoveJob(int id)
         {
@@ -348,28 +350,28 @@ namespace service_and_job_finder_web.API
             if (data.serviceData != null)
             {
                 foreach (var a in data.serviceData)
-            {
-                obj2.ServiceId = a;
-                obj2.UserId = "0003";
-                obj2.Status = 0;
+                {
+                    obj2.ServiceId = a;
+                    obj2.UserId = "0003";
+                    obj2.Status = 0;
 
-                db.Entry(obj2).State = EntityState.Added;
-                db.SaveChanges();
-            }
+                    db.Entry(obj2).State = EntityState.Added;
+                    db.SaveChanges();
+                }
             }
 
             obj.BusinessEntityName = data.data.BusinessEntityName;
             obj.BusinessEntityAddress = data.data.BusinessEntityAddress;
             db.SaveChanges();
 
-            
-            var data1 = db.tServiceSets.Where(a => a.UserId == data.data.UserId && a.Status == 0).Select(x => new { 
-                  name = db.tServices.FirstOrDefault(p => p.ServiceId == x.ServiceId).Description
+
+            var data1 = db.tServiceSets.Where(a => a.UserId == data.data.UserId && a.Status == 0).Select(x => new
+            {
+                name = db.tServices.FirstOrDefault(p => p.ServiceId == x.ServiceId).Description
             });
 
             return Json(data1);
         }
-        
+
     }
 }
-            

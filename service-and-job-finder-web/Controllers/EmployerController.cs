@@ -55,6 +55,13 @@ namespace service_and_job_finder_web.Controllers
                 //return null;
                 return File("~/images/user60.png", "image/png");
             }
+
+        }
+
+        public ActionResult Applicants()
+        {
+
+            return View();
         }
     }
 }
