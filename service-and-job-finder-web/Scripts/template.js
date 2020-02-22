@@ -81,14 +81,15 @@ $(document).ready(function () {
         $('.small-chat-box').toggleClass('active');
     });
 
-    //// Initialize slimscroll for small chat
-    //$('.small-chat-box .content').slimScroll({
-    //    height: '234px',
-    //    size: '5px',
-    //    color: '#00000090',
-    //    railOpacity: 0.4,
-    //    wheelStep: 5
-    //});
+    // Initialize slimscroll for small chat
+    $('.small-chat-box .content').slimScroll({
+        height: '234px',
+        size: '5px',
+        color: '#00000090',
+        railOpacity: 0.4,
+        wheelStep: 5
+    });
+
     // Initialize slimscroll for messages dropdown
     $('.messages-container').slimScroll({
         height: '250px',

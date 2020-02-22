@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewBag.Title = "Service Worker Profile";
+}
+
+
+<script src="~/Scripts/ng-serviceWorkerProfile.js"></script>
+<script src="~/Scripts/select2.full.min.js"></script>
+
+<div class="row animated fadeInRight" ng-controller="serviceWorkerJS">
+    <div class="col-lg-6">
+
+        <div class="profile-image">
+            <a href="#"><img alt="image" class="img-circle circle-border m-b-md" src="../Employer/RetrieveCompanyLogo?id={{profileTempArr.recNo}}" /></a>
+        </div>
+        <div class="profile-info">
+            <div class="">
+                <div>
+                    <h3><b> {{profileTempArr.BusinessEntityName}}</b></h3>
+                    <h4>{{profileService}}</h4>
+                    <small>{{profileTempArr.BusinessEntityAddress}}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12"></div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>About Us</h5>
+                            <div class="ibox-tools">
+                                <a class="">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <p>
+                                {{profileTempArr.About}}
+                            </p>
+                            <div class="google-map" id='gmap_canvas' style="margin-top:15px"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>Services</h5>
+
+                            <div class="ibox-tools">
+                                <form ng-submit="addJobList()">
+                                    <input type="text" ng-model="jobListTempArr.JobTitle" />
+                                    <a class="" style="margin-left:10px">
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <label ng-if="jobListArr.length == 0">No Job List</label>
+
+                            <ul ng-repeat="a in jobListArr">
+                                <li ng-class="active">
+                                    <button><i class="fa fa-trash"></i></button>
+                                    <a href="" ng-click="getJobApplicant(a.JobId)"> {{a.JobTitle}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            <h5>Certifications</h5>
+                            <div class="ibox-tools">
+                                <a class="">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <label ng-if="profileTempArrCert.length == 0">No Certificate</label>
+
+                            <div ng-repeat="a in profileTempArrCert">
+                                <center style="margin-bottom:20px">
+                                    <img id="imgUpdate" class="img-container" style="width:200px;height:150px" alt="image" src="../Employer/RetrieveCertImg?id={{a.recNo}}" />
+                                    <h3 class="m-b-xs"><strong>{{a.Filename}}</strong></h3>
+                                    <div class="font-bold">{{a.Description}}</div>
+                                    <button ng-click="updateCert(a.recNo)"><i class="fa fa-pencil"></i></button>
+                                    <button ng-click="removeCert(a.recNo)"><i class="fa fa-trash"></i></button>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8"></div>
+    </div>
+
+    <div id="certModal" class="modal inmodal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeInLeft">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title"><i class="fa fa-plus"></i>&nbsp;&nbsp; Update Certificate</h6>
+                </div>
+
+                <div class="modal-body">
+                    <form ng-submit="saveUpdateCert()">
+                        <div style="margin-top:10px">
+
+                            <center class="contact-box center-version">
+                                <a ng-click="hideshow()">
+                                    <h4>Choose Picture</h4>
+                                </a>
+                            </center>
+
+                            <div id="imgPreview" class="thumbnail" style="display:none">
+                                <img class="img-responsive" id="targetImg" />
+                                <div class="caption">
+                                    <a href="#" onclick="ClearPreview()"><i class="fa fa-trash"></i></a>
+                                    <span id="description"></span>
+                                </div>
+                            </div>
+
+                            <div ng-show="updateImg" id="updateImg">
+                                <img class="img-responsive" alt="image" src="../Employer/RetrieveCertImg?id={{updateCertTempArr.recNo}}" />
+                            </div>
+
+                            <div class="btn btn-primary" ng-hide="true">
+                                <input type="file" id="imageBrowes" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-group has-warning" style="margin-top:10px;margin-bottom:10px">
+                                <input required type="text" class="form-control" placeholder="Filename" ng-model="updateCertTempArr.Filename">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group has-warning" style="margin-top:10px;margin-bottom:10px">
+                                <input required type="text" class="form-control" placeholder="Description" ng-model="updateCertTempArr.Description">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary" style="width:100%">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyALxrTX2HnaT0llLY5C5uHsJb8FdY64_X0'></script>
+<style>
+    #gmap_canvas img {
+        max-width: none !important;
+        background: none !important;
+    }
+</style>
+
+<script>
+
+    (function (global) {
+
+        if (typeof (global) === "undefined") {
+            throw new Error("window is undefined");
+        }
+
+        var _hash = "!";
+        var noBackPlease = function () {
+            global.location.href += "#";
+
+            // making sure we have the fruit available for juice....
+            // 50 milliseconds for just once do not cost much (^__^)
+            global.setTimeout(function () {
+                global.location.href += "!";
+            }, 50);
+        };
+
+        // Earlier we had setInterval here....
+        global.onhashchange = function () {
+            if (global.location.hash !== _hash) {
+                global.location.hash = _hash;
+            }
+        };
+
+        global.onload = function () {
+
+            noBackPlease();
+
+            // disables backspace on page except on input fields and textarea..
+            document.body.onkeydown = function (e) {
+                var elm = e.target.nodeName.toLowerCase();
+                if (e.which === 8 && (elm !== 'input' && elm !== 'textarea')) {
+                    e.preventDefault();
+                }
+                // stopping event bubbling up the DOM tree..
+                e.stopPropagation();
+            };
+
+        };
+
+    })(window);
+
+</script>

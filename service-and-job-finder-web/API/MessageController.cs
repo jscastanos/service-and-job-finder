@@ -23,7 +23,7 @@ namespace service_and_job_finder_web.API
         {
             try
             {
-                db.seenMessage(userID, friendID);
+             //   db.seenMessage(userID, friendID);
                 return Ok();
             }
             catch (Exception e)

@@ -14,6 +14,12 @@ namespace service_and_job_finder_web.Controllers
 
             return View();
         }
+
+        public ActionResult LandingPage()
+        {
+
+            return View();
+        }
         public ActionResult Chat()
         {
             return View();

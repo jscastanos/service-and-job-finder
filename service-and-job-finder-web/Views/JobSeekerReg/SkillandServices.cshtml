@@ -1,0 +1,597 @@
+﻿@{
+    ViewBag.Title = "SkillandServices";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/ngFillup.js"></script>
+<script src="~/Scripts/chosen.jquery.js"></script>
+<script src="~/Scripts/select2.full.min.js"></script>
+<link href="~/Content/select2.min.css" rel="stylesheet" />
+<link href="~/Content/chosen/chosen.css" rel="stylesheet" />
+<link href="~/Content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+
+<div ng-controller="SSFillUp" class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+
+        <div class="col-lg-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h3>Getting started</h3>
+
+                </div>
+
+                <div class="ibox-content">
+                    <div>
+                        <span class="fa fa-circle"></span>
+                        <label ng-show="check == 1" class="text-muted">Skills and Services </label>
+                        <a href="#" ng-show="check == 0"><label class="text"> Skills and Services </label></a>
+                    </div>
+                    <div>
+                        <span class="fa fa-circle"></span>
+                        <label ng-show="check == 0" class="text-muted"> Create Profile </label>
+                        <a href="#" ng-show="check == 1"><label class="text"> Create Profile </label></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*Skill and Services*@
+        <div ng-show="check == 0" class="col-lg-8 animated fadeInRight">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h3>Tell us about your skills and services.</h3>
+                </div>
+                <div class="ibox-content">
+                    <form>
+                        <fieldset>
+                            <h3 class="text-muted">
+                                What is the main service you offer to
+                                employers?
+                            </h3>
+
+                            <div class="input-group">
+                                <select data-placeholder="Select . . ." class="select2_this" style="width:400px;" tabindex="4" @*ng-model="tempSkills"*@ id="getIndustryID">
+                                    <option ng-repeat="a in industryTempArr" value="{{a.IndustryId}}">{{a.Description}}</option>
+                                </select>
+                            </div>
+                            <p>Select @*up to 4 types*@ of field of expertise.</p>
+                            <div class="checkbox checkbox-success" ng-repeat="a in fieldofExpertise">
+                                <input type="checkbox" id="checkbox{{a.recNo}}" ng-click="addService(a.ExpertiseId, a.recNo)">
+                                <label for="checkbox{{a.recNo}}">{{a.Description}}</label>
+                            </div>
+                            <div class="form-group">
+                                <h3 class="text-muted">What skills do you offer to employers?</h3>
+                                <div class="input-group">
+                                    <select data-placeholder="Select . . ." class="select2_this" multiple="multiple" style="width:400px;" tabindex="4" ng-model="tempSkills">
+                                        <option ng-repeat="a in skillTempArr" value="{{a.SkillId}}">{{a.Description}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <button class="btn btn-primary" type="submit" ng-click="SkillandService()">Next</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div ng-show="check == 1" class="col-lg-8 animated fadeInRight">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h3> Tell us more about you</h3>
+                </div>
+
+
+                <div class="ibox-content">
+
+                    @*portfolioModal*@
+                    <div id="portfolioModal" class="modal fade" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <form >
+                                            <div>
+                                                
+                                                <div class="form-group" @*ng-click="hideshow2()"*@ id="fa-user">
+                                                    <input type="file" id="files" style="display:none" />
+                                                    <button id="fileup" style="width:100%" type="button" class="btn btn-info">
+                                                        <span class="fa fa-upload" aria-hidden="true"></span> Upload Certification Image
+                                                    </button>
+                                                </div>
+                                                <div id="imgPreview2" class="thumbnail" style="display:none">
+                                                    <img class="img-responsive" id="targetImg2" />
+                                                    <div class="caption">
+                                                        <a href="#" onclick="ClearPreview()"><i class="fa fa-trash"></i></a>
+                                                        <span id="description2"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="btn btn-primary" ng-hide="true">
+                                                    <input type="file" id="imageBrowes2" required />
+                                                </div>
+                                                <div class="form-group"><label>Title</label> <input type="text" placeholder="Title" ng-model="TcertTempArr2.Title" class="form-control" required></div>
+
+                                                <div class="form-group"><label>Description</label> <input type="text" placeholder="Description" ng-model="TcertTempArr2.Description" class="form-control"></div>
+                                                <div class="form-group"><label>URL</label> <input type="text" placeholder="URL" ng-model="TcertTempArr2.URL" class="form-control"></div>
+                                                <input type="hidden" ng-model="TcertTempArr2.id" class="form-control">
+                                                <div>
+                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                                            ng-disabled="TcertTempArr2.Title.length <= 4 ||TcertTempArr2.Title == null ||TcertTempArr2.Description.length <= 4 || TcertTempArr2.Description == null" @*||certTempArr.URL.length <= 4 || certTempArr.URL == null|| certTempArr.ProjectImg == null*@
+                                                            ng-click="addToTableCert2(TcertTempArr2)">
+                                                        <strong>Continue</strong>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*employmentModal*@
+                    <div id="employmentModal" class="modal fade" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div>
+                                            <div class="form-group"><label>Company name</label> <input type="text" placeholder="Company name" ng-model="certTempArr.CompanyName" class="form-control" required></div>
+                                            <div class="form-group"><label>Company address</label> <input type="text" placeholder="Company address" ng-model="certTempArr.CompanyAddress" class="form-control" required></div>
+
+                                            <div class="form-group"><label>Position</label> <input type="text" placeholder="Position" ng-model="certTempArr.Position" class="form-control"></div>
+                                            <input type="hidden" ng-model="certTempArr.id" class="form-control">
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group"><label>Start date</label> <input type="month" placeholder="Start date" ng-model="certTempArr.StartedDate" class="form-control" required></div>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group"><label>End date</label> <input type="month" placeholder="End date" ng-model="certTempArr.EndedDate" class="form-control" required></div>
+
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                                        ng-disabled="certTempArr.CompanyName.length <= 4 ||certTempArr.CompanyName == null || certTempArr.CompanyAddress.length <= 4 ||certTempArr.CompanyAddress == null
+                                                                    || certTempArr.Position.length <= 4 ||certTempArr.Position == null || certTempArr.StartedDate == null || certTempArr.EndedDate == null"
+                                                        ng-click="SaveTempList()">
+                                                    <strong>Continue</strong>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*educationModal*@
+                    <div id="educationModal" class="modal fade" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div>
+                                            <div class="form-group"><label>School</label> <input type="text" placeholder="School name" ng-model="certTempArr.School" class="form-control" required></div>
+                                            <div class="form-group"><label>School address</label> <input type="text" placeholder="School address" ng-model="certTempArr.Address" class="form-control" required></div>
+
+                                            <div class="form-group"><label>Course</label> <input type="text" placeholder="Course" ng-model="certTempArr.Course" class="form-control"></div>
+                                            <input type="hidden" ng-model="certTempArr.id" class="form-control">
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group"><label>Start date</label> <input type="month" placeholder="Start date" ng-model="certTempArr.DateStared" class="form-control" required></div>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group"><label>End date</label> <input type="month" placeholder="End date" ng-model="certTempArr.DateEnded" class="form-control" required></div>
+
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                                        ng-disabled="certTempArr.School.length <= 4 ||certTempArr.School == null || certTempArr.Address.length <= 4 ||certTempArr.Address == null
+                                                                    || certTempArr.Course.length <= 4 ||certTempArr.Course == null || certTempArr.DateStared == null || certTempArr.DateEnded == null"
+                                                        ng-click="SaveTempList()">
+                                                    <strong>Continue</strong>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*trainingModal*@
+                    <div id="trainingModal" class="modal fade" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div>
+                                            <div class="form-group"><label>Training Title</label> <input type="text" placeholder="Training Title" ng-model="certTempArr.TrainingTitle" class="form-control" required></div>
+                                            <div class="form-group"><label>Training Venue</label> <input type="text" placeholder="Training Venue" ng-model="certTempArr.TrainingVenue" class="form-control" required></div>
+
+                                            <div class="form-group"><label>Description</label> <input type="text" placeholder="Description" ng-model="certTempArr.Description" class="form-control"></div>
+                                            <input type="hidden" ng-model="certTempArr.id" class="form-control">
+
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group"><label>Date</label> <input type="month" placeholder="Date" ng-model="certTempArr.Date" class="form-control" required></div>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    @*<div class="form-group"><label>End date</label> <input type="month" placeholder="End date" ng-model="certTempArr.EndedDate" class="form-control" required></div>*@
+
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                                        @*ng-disabled="certTempArr.TrainingTitle.length <= 4 ||certTempArr.TrainingTitle == null || certTempArr.TrainingVenue.length <= 4 ||certTempArr.TrainingVenue == null
+                                                                    || certTempArr.Description.length <= 4 ||certTempArr.Description == null || certTempArr.Date == null"*@
+                                                        ng-click="SaveTempList()">
+                                                    <strong>Continue</strong>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   @*<button  class="btn btn-primary" ng-click="checkdis()">asdasda</button>*@
+
+                    @*certificationModal*@
+                    <div id="certificationModal" class="modal fade" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <form ng-submit="addToTableCert()">
+                                            <div>
+                                                <div class="form-group" ng-click="hideshow()" id="fa-user">
+                                                    <input type="file" id="files" style="display:none" />
+                                                    <button id="fileup" style="width:100%" type="button" class="btn btn-info">
+                                                        <span class="fa fa-upload" aria-hidden="true"></span> Upload Certification Image
+                                                    </button>
+                                                </div>
+                                                <div id="imgPreview" class="thumbnail" style="display:none">
+                                                    <img class="img-responsive" id="targetImg" />
+                                                    <div class="caption">
+                                                        <a href="#" onclick="ClearPreview()"><i class="fa fa-trash"></i></a>
+                                                        <span id="description"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="btn btn-primary" ng-hide="true">
+                                                    <input type="file" id="imageBrowes" required />
+                                                </div>
+                                                <div class="form-group"><label>Filename</label> <input type="text" placeholder="Filename" ng-model="TcertTempArr.Filename" class="form-control" required></div>
+
+                                                <div class="form-group"><label>Description</label> <input type="text" placeholder="Description" ng-model="TcertTempArr.Description" class="form-control" required></div>
+                                                @*<input type="hidden" ng-model="certTempArr.id" class="form-control">*@
+                                                <div>
+                                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"
+                                                            ng-disabled="TcertTempArr.Filename.length <= 4 ||TcertTempArr.Filename == null ||TcertTempArr.Description.length <= 4 || TcertTempArr.Description == null" @*|| certTempArr.FileImg == null*@>
+                                                        <strong>Continue</strong>
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form  >
+                        <fieldset>
+
+                            @*<center class="contact-box center-version">
+                                    <a ng-click="hideshowCompany()">
+                                        <img src="~/images/user60.png" id="fa-user" alt="image" class="img-circle circle-border m-b-md" style="width:150px;height:150px;margin-bottom:-25px" />
+                                        <h4>Choose Company Logo</h4>
+                                    </a>
+
+                                    <div id="companyimgPreview" class="thumbnail" style="display:none; height:210px;width:250px">
+                                        <img class="img-circle circle-border m-b-md" id="targetPic" style="height:200px;width:200px" />
+                                    </div>
+
+                                </center>
+
+                                <div class="btn btn-primary" ng-hide="true">
+                                    <input type="file" id="companyPic" />
+                                </div>*@
+
+
+                            <div class="row">
+                                <div>
+                                    <div>
+                                        <span id="companyimgPreview" class="form-group" style="display:none; height:200px;width:200px">
+                                            <img class="img-circle circle-border m-b-md" id="targetPic" style="height:200px;width:200px" />
+                                        </span>
+
+                                        <img src="~/images/user60.png" id="fa-user" class="img-circle circle-border m-b-md" style="height:200px;width:200px" alt="image">
+                                        <label class="btn btn-primary"  ng-click="hideshowCompany()">
+                                            Update Photo
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="btn btn-primary" ng-hide="true">
+                                <input type="file" id="profilePic" required />
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Add a professional title</label>
+                                @*<input type="email" class="form-control">*@
+                                <div class="form-group">
+                                    <input type="text" placeholder="Title"
+                                           ng-model="profTempArr.Title"
+                                           class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Write about your self</label>
+                                <textarea class="form-control" ng-model="profTempArr.Introduction" rows="3"></textarea>
+                            </div>
+                            @*PORTFOLIO*@
+                            <div class="form-group">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <b>Portfolio</b>
+                                                <a data-toggle="modal" class="btn btn-default btn-circle" ng-click="PortAdd()"><i class="fa fa-plus"></i></a>
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="a in CertArr2">
+                                            <td class="text-muted">
+                                                <div class="col-sm-7">
+                                                    <div class="pull-left">
+                                                        <img alt="image" class="feed-photo" img-responsive" src="../JobSeekerProfile/RetrievePort?id={{a.recNo}}">
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="pull-left">
+
+                                                        <h4>{{a.Title}}</h4>
+                                                        <span>{{a.Description}}</span>
+                                                        <span>{{a.URL}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="text-align:right">
+                                                <button type="button" class="btn btn-default btn-sm btn-circle" ng-click="Editcert(x)"><i class="icon-pencil4"></i></button>
+                                                <button type="button" class="btn btn-default btn-sm btn-circle" ng-click="removePort(a.recNo)"><i class="icon-trash"></i></button>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            @*EDUCATIONAL BACKGROUND*@
+                            <div class="form-group">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+
+                                                <b>Educational Background</b>
+                                                <a data-toggle="modal" class="btn btn-default btn-circle" ng-click="EducationAdd()"><i class="fa fa-plus"></i></a>
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="t in EduArr">
+                                            <td class="text-muted">
+                                                <div class="col-sm-12">
+                                                    <h4>{{t.Course}} | {{t.School}}</h4>
+
+                                                    <span>{{t.DateStared| date:'yyyy'}}-{{t.DateEnded| date:'yyyy'}}</span>
+                                                </div>
+                                            </td>
+                                            <td style="text-align:right">
+                                                <button type="button" class="btn btn-default btn-sm btn-circle" ng-click="Editeduc(t)"><i class="icon-pencil4"></i></button>
+                                                <button type="button" class="btn btn-default btn-sm btn-circle" ng-click="Deleteduc(t)"><i class="icon-trash"></i></button>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            @*EMPLOYMENT HISTORY*@
+                            <div class="form-group">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <b>Employment History</b>
+                                                <a data-toggle="modal" class="btn btn-default btn-circle" ng-click="EmploymentAdd()"><i class="fa fa-plus"></i></a>
+
+                                            </th>
+                                            <th>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="w in EmpArr">
+                                            <td class="text-muted">
+                                                <div class="col-sm-12">
+                                                    <h4>{{w.Position}} | {{w.CompanyName}}</h4>
+
+                                                    <span>{{w.StartedDate| date:'yyyy'}}-{{w.EndedDate| date:'yyyy'}}</span>
+                                                </div>
+                                            </td>
+                                            <td style="text-align:right">
+                                                <button type="button" class="btn btn-default btn-sm btn-circle" ng-click="Editemp(w)"><i class="icon-pencil4"></i></button>
+                                                <button type="button" class="btn btn-default btn-sm btn-circle" ng-click="Deletemp(w)"><i class="icon-trash"></i></button>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            @*TRAINING*@
+                            <div class="form-group">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <b>Training</b>
+                                                <a data-toggle="modal" class="btn btn-default btn-circle" ng-click="TrainingAdd()"><i class="fa fa-plus"></i></a>
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="x in TrainArr">
+                                            <td class="text-muted">
+                                                <div class="col-sm-12">
+                                                    <h4>{{x.TrainingTitle}} | {{x.Description}}</h4>
+
+                                                    <span>{{x.Date| date:'MMM yyyy'}}</span>
+                                                </div>
+                                            </td>
+                                            <td style="text-align:right">
+                                                <button type="button" class="btn btn-default btn-sm btn-circle" ng-click="Editrn(x)"><i class="icon-pencil4"></i></button>
+                                                <button type="button" class="btn btn-default btn-sm btn-circle" ng-click="Deletetrn(x)"><i class="icon-trash"></i></button>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            @*CERTIFICATION*@
+                            <div class="form-group">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <b>Certification</b>
+                                                <a data-toggle="modal" class="btn btn-default btn-circle" ng-click="CertAdd()"><i class="fa fa-plus"></i></a>
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="a in CertArr">
+                                            <td class="text-muted">
+                                                <div class="col-sm-7">
+                                                    <div class="pull-left">
+                                                        <img alt="image" class="feed-photo" img-responsive" src="../JobSeekerProfile/RetrieveCertImg?id={{a.recNo}}">
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="pull-left">
+
+                                                        <h4>{{a.Filename}}</h4>
+
+                                                        <span>{{a.Description}}</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="text-align:right">
+                                                <button type="button" class="btn btn-default btn-sm btn-circle" ng-click="Editcert(x)"><i class="icon-pencil4"></i></button>
+                                                <button type="button" class="btn btn-default btn-sm btn-circle" ng-click="removeCert(a.recNo)"><i class="icon-trash"></i></button>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <label>Personal Info</label>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="First name"
+                                               ng-model="profTempArr.Firstname"
+                                               class="form-control">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Middle name"
+                                               ng-model="profTempArr.Middlename"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Last name"
+                                               ng-model="profTempArr.Lastname"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Full Address"
+                                               ng-model="profTempArr.Address"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Contact No."
+                                               ng-model="profTempArr.ContactNo"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="date" placeholder="Birthday"
+                                               ng-model="profTempArr.Birthdate"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <button class="btn btn-white" ng-click="GetBackSS()"><i class="fa fa-arrow-left"></i> Back</button>
+                            <button class="btn btn-primary" type="submit" ng-click="saveThis()" ng-disabled="profTempArr.Birthdate == null || profTempArr.ContactNo == null || profTempArr.Address == null || profTempArr.Lastname == null ||profTempArr.Firstname == null || profTempArr.Title == null || profTempArr.Introduction == null">Next</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(".select2_this").select2();
+
+    var config = {
+        '.chosen-select': {},
+        '.chosen-select-deselect': { allow_single_deselect: true },
+        '.chosen-select-no-single': { disable_search_threshold: 10 },
+        '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+        '.chosen-select-width': { width: "95%" }
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+</script>

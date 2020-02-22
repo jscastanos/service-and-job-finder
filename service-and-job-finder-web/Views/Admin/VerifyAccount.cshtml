@@ -1,0 +1,468 @@
+﻿@{
+    ViewBag.Title = "VerifyAccount";
+}
+
+
+
+<link href="~/Content/sweetalert.css" rel="stylesheet" />
+<script src="~/Scripts/sweetalert.min.js"></script>
+<script src="~/Scripts/controllers/VerifyAccount.js"></script>
+<div class="row" ng-app="SJF" ng-controller="VerifyAccount" ng-init="init()">
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content mailbox-content">
+                <div class="file-manager">
+
+
+                    <h5>Account Categories</h5>
+                    <ul class="category-list" style="padding: 0">
+                        <li><a ng-click="vUsersAccount(1)"> <i class="fa fa-circle text-navy"></i> <span class="font-{{fEmployer == 1? 'bold':'normal'}}">Employer</span> <span class="label label-warning pull-right">{{Employers.length != 0? Employers.length : ''}}</span> </a></li>
+                        <li><a ng-click="vUsersAccount(2)"> <i class="fa fa-circle text-navy"></i> <span class="font-{{fJSeeker == 1? 'bold':'normal'}}">Seeker</span>  <span class="label label-warning pull-right">{{JobSeekers.length != 0? JobSeekers.length : ''}}</span></a></li>
+                        <li><a ng-click="vUsersAccount(3)"> <i class="fa fa-circle text-navy"></i> <span class="font-{{fSWorker == 1? 'bold':'normal'}}">Service Worker</span>  <span class="label label-warning pull-right">{{ServiceWorkers.length != 0? ServiceWorkers.length : ''}}</span></a></li>
+                        <li><a ng-click="vUsersAccount(4)"> <i class="fa fa-circle text-navy"></i> <span class="font-{{fCustomer == 1? 'bold':'normal'}}">Customer</span>  <span class="label label-warning pull-right">{{Customers.length != 0? Customers.length : ''}}</span></a></li>
+                    </ul>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="tabEmployer == 1" class="col-lg-9 tabs-container animated fadeInRight">
+        <div class="mail-box-header">
+            <div class="pull-right mail-search">
+                <div style="border-radius:50px;border-color:#23c6c8" class="input-group fa-border ">
+
+                    <div class="input-group-btn">
+
+                        <i class="fa fa-search"></i>
+                        <input style="border-radius:50px;border:none" ng-show="typeEmployer == 0" type="text" class="form-control input-sm" name="search" ng-model="BusinessEntityName" placeholder="Search">
+                        <input style="border-radius:50px;border:none" ng-show="typeEmployer == 1" type="text" class="form-control input-sm" name="search" ng-model="vBusinessEntityName" placeholder="Search">
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+            <h2>
+                Employer Accounts
+            </h2>
+            <div class="mail-tools tooltip-demo m-t-md ">
+
+
+                <button ng-click="cTab(1,0)" class="btn btn-white btn-sm" data-toggle="tab" href="#tab-1" aria-expanded="true">
+                    <i class="fa fa-refresh count-info"></i> Review <span class="label label-warning">{{Employers.length != 0? Employers.length : ''}}</span>
+                </button>
+
+                <button ng-click="cTab(1,1)" class="btn btn-white btn-sm" data-toggle="tab" href="#tab-2" aria-expanded="false">
+                    <i class="fa fa-thumbs-o-up count-info"></i> Verified Accounts <span class="label label-primary">{{vEmployers.length != 0? vEmployers.length : ''}}</span>
+                </button>
+
+
+            </div>
+        </div>
+        <div class="mail-box">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <table class="table table-hover table-mail">
+                        <tbody>
+                            <tr ng-repeat="data in Employers | filter: BusinessEntityName" id="Emp">
+                                <td class="check-mail text-center" style="padding-bottom:0%">
+                                    <div class="chat-element"><img alt="image" class="img-circle" src="../images/a4.jpg"></div>
+                                </td>
+                                <td class="mail-ontact" style="width:80%">
+                                    <div class="font-bold">{{data.BusinessEntityName}}</div>
+                                    <div>{{data.BusinessEntityAddress}}</div>
+                                </td>
+
+                                <td class="text-right mail-date">
+                                    <button type="button" class="btn btn-outline btn-primary btn-rounded btn-sm" ng-click="vProfile(data.EntityId)">View Pofile</button>
+                                </td>
+                            </tr>
+                            <tr ng-show="Employers.length == 0 || isElementExistsAtDOM('Emp') != true">
+                                <td class="check-mail text-center">
+                                    <h3 style="color:red">
+                                        No data found.
+                                    </h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="tab-2" class="tab-pane ">
+
+                    <table class="table table-hover table-mail">
+                        <tbody>
+                            <tr ng-repeat="data in vEmployers | filter: vBusinessEntityName" id="vEmp">
+                                <td class="check-mail text-center" style="padding-bottom:0%">
+                                    <div class="chat-element"><img alt="image" class="img-circle" src="../images/a1.jpg"></div>
+                                </td>
+                                <td class="mail-ontact" style="width:80%">
+                                    <div class="font-bold">
+                                        {{data.vBusinessEntityName}}
+                                        <span class="label label-{{data.Status == 1? 'primary':'danger'}}">
+                                            <span style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{data.Status == 1? 'Active':'Deactivated'}}</span>
+                                        </span>
+                                    </div>
+                                    <div>{{data.BusinessEntityAddress}}</div>
+                                </td>
+
+                                <td class="text-right mail-date">
+                                    <button ng-click="cActivateDeactivateAccount(1,$index,0,data.UserId)" ng-if="data.Status == 1" type="button" class="btn btn-outline btn-danger btn-rounded btn-sm">Deactivate</button>
+                                    <button ng-click="cActivateDeactivateAccount(1,$index,1,data.UserId)" ng-if="data.Status == 2" type="button" class="btn btn-outline btn-primary btn-rounded btn-sm">Activate</button>
+                                </td>
+                            </tr>
+                            <tr ng-show="vEmployers.length == 0 || isElementExistsAtDOM('vEmp') != true">
+                                <td class="check-mail text-center">
+                                    <h3 style="color:red">
+                                        No data found.
+                                    </h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <div ng-if="tabJobSeeker == 1" class="col-lg-9 tabs-container animated fadeInRight">
+        <div class="mail-box-header">
+
+            <div class="pull-right mail-search">
+                <div style="border-radius:50px;border-color:#23c6c8" class="input-group fa-border ">
+
+                    <div class="input-group-btn">
+
+                        <i class="fa fa-search"></i>
+                        <input style="border-radius:50px;border:none" ng-show="typeJSeeker == 0" type="text" class="form-control input-sm" name="search" ng-model="fullname" placeholder="Search">
+                        <input style="border-radius:50px;border:none" ng-show="typeJSeeker == 1" type="text" class="form-control input-sm" name="search" ng-model="vfullname" placeholder="Search">
+
+                    </div>
+
+
+                </div>
+
+            </div>
+            <h2>
+                Job Seeker Accounts
+            </h2>
+            <div class="mail-tools tooltip-demo m-t-md ">
+
+
+                <button ng-click="cTab(2,0)" class="btn btn-white btn-sm" data-toggle="tab" href="#tab-1" aria-expanded="true">
+                    <i class="fa fa-refresh count-info"></i> Review <span class="label label-warning">{{JobSeekers.length != 0? JobSeekers.length : ''}}</span>
+                </button>
+
+                <button ng-click="cTab(2,1)" class="btn btn-white btn-sm" data-toggle="tab" href="#tab-2" aria-expanded="false">
+                    <i class="fa fa-thumbs-o-up count-info"></i> Verified Accounts <span class="label label-primary">{{vJobSeekers.length != 0? vJobSeekers.length : ''}}</span>
+                </button>
+
+
+
+
+            </div>
+        </div>
+        <div class="mail-box">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <table class="table table-hover table-mail">
+                        <tbody>
+                            <tr ng-repeat="data in JobSeekers | filter: fullname" id="JSeekers">
+                                <td class="check-mail text-center" style="padding-bottom:0%">
+                                    <div class="chat-element"><img alt="image" class="img-circle" src="../images/a2.jpg"></div>
+                                </td>
+                                <td class="mail-ontact" style="width:80%">
+                                    <div class="font-bold">{{data.fullname}}</div>
+                                    <div>{{data.Address}}</div>
+                                </td>
+
+                                <td class="text-right mail-date">
+                                    <button type="button" ng-click="vProfile(data.UserId)" class="btn btn-outline btn-primary btn-rounded btn-sm">View Pofile</button>
+                                </td>
+                            </tr>
+                            <tr ng-show="JobSeekers.length == 0 || isElementExistsAtDOM('JSeekers') != true">
+                                <td class="check-mail text-center">
+                                    <h3 style="color:red">
+                                        No data found.
+                                    </h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="tab-2" class="tab-pane ">
+
+                    <table class="table table-hover table-mail">
+                        <tbody>
+                            <tr ng-repeat="data in vJobSeekers | filter: vfullname" id="vJSeekers">
+                                <td class="check-mail text-center" style="padding-bottom:0%">
+                                    <div class="chat-element"><img alt="image" class="img-circle" src="../images/a1.jpg"></div>
+                                </td>
+                                <td class="mail-ontact" style="width:80%">
+                                    <div class="font-bold">
+                                        {{data.vfullname}}
+                                        <span class="label label-{{data.Status == 1? 'primary':'danger'}}">
+                                            <span style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{data.Status == 1? 'Active':'Deactivated'}}</span>
+                                        </span>
+                                    </div>
+                                    <div>{{data.Address}}</div>
+                                </td>
+
+                                <td class="text-right mail-date">
+                                    <button ng-click="cActivateDeactivateAccount(2,$index,0,data.UserId)" ng-if="data.Status == 1" type="button" class="btn btn-outline btn-danger btn-rounded btn-sm">Deactivate</button>
+                                    <button ng-click="cActivateDeactivateAccount(2,$index,1,data.UserId)" ng-if="data.Status == 2" type="button" class="btn btn-outline btn-primary btn-rounded btn-sm">Activate</button>
+                                </td>
+                            </tr>
+                            <tr ng-show="JobSeekers.length == 0 || isElementExistsAtDOM('vJSeekers') != true">
+                                <td class="check-mail text-center">
+                                    <h3 style="color:red">
+                                        No data found.
+                                    </h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <div ng-if="tabServiceWorker == 1" class="col-lg-9 tabs-container animated fadeInRight">
+        <div class="mail-box-header">
+
+            <div class="pull-right mail-search">
+                <div style="border-radius:50px;border-color:#23c6c8" class="input-group fa-border ">
+                    <div class="input-group-btn">
+
+                        <i class="fa fa-search"></i>
+                        <input style="border-radius:50px;border:none" ng-show="typeSWorker == 0" type="text" class="form-control input-sm" name="search" ng-model="BusinessEntityName" placeholder="Search">
+                        <input style="border-radius:50px;border:none" ng-show="typeSWorker == 1" type="text" class="form-control input-sm" name="search" ng-model="vBusinessEntityName" placeholder="Search">
+
+                    </div>
+
+                </div>
+
+            </div>
+            <h2>
+                Service Worker Accounts
+            </h2>
+            <div class="mail-tools tooltip-demo m-t-md ">
+
+
+                <button ng-click="cTab(3,0)" class="btn btn-white btn-sm" data-toggle="tab" href="#tab-1" aria-expanded="true">
+                    <i class="fa fa-refresh count-info"></i> Review <span class="label label-warning">{{ServiceWorkers.length != 0? ServiceWorkers.length : ''}}</span>
+                </button>
+
+                <button ng-click="cTab(3,1)" class="btn btn-white btn-sm" data-toggle="tab" href="#tab-2" aria-expanded="false">
+                    <i class="fa fa-thumbs-o-up count-info"></i> Verified Accounts <span class="label label-primary">{{vServiceWorkers.length != 0? vServiceWorkers.length : ''}}</span>
+                </button>
+
+
+
+
+            </div>
+        </div>
+        <div class="mail-box">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <table class="table table-hover table-mail">
+                        <tbody>
+                            <tr ng-repeat="data in ServiceWorkers | filter: BusinessEntityName" id="SWorker">
+                                <td class="check-mail text-center" style="padding-bottom:0%">
+                                    <div class="chat-element"><img alt="image" class="img-circle" src="../images/a7.jpg"></div>
+                                </td>
+                                <td class="mail-ontact" style="width:80%">
+                                    <div class="font-bold">{{data.BusinessEntityName}}</div>
+                                    <div>{{data.BusinessEntityAddress}}</div>
+                                </td>
+
+                                <td class="text-right mail-date">
+                                    <button type="button" ng-click="vProfile(data.EntityId)" class="btn btn-outline btn-primary btn-rounded btn-sm">View Pofile</button>
+                                </td>
+                            </tr>
+                            <tr ng-show="ServiceWorkers.length == 0 || isElementExistsAtDOM('SWorker') != true">
+                                <td class="check-mail text-center">
+                                    <h3 style="color:red">
+                                        No data found.
+                                    </h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="tab-2" class="tab-pane ">
+
+                    <table class="table table-hover table-mail">
+                        <tbody>
+                            <tr ng-repeat="data in vServiceWorkers | filter: vBusinessEntityName" id="vSWorker">
+                                <td class="check-mail text-center" style="padding-bottom:0%">
+                                    <div class="chat-element"><img alt="image" class="img-circle" src="../images/a1.jpg"></div>
+                                </td>
+                                <td class="mail-ontact" style="width:80%">
+                                    <div class="font-bold">
+                                        {{data.vBusinessEntityName}}
+                                        <span class="label label-{{data.Status == 1? 'primary':'danger'}}">
+                                            <span style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{data.Status == 1? 'Active':'Deactivated'}}</span>
+                                        </span>
+                                    </div>
+                                    <div>{{data.BusinessEntityAddress}}</div>
+                                </td>
+
+                                <td class="text-right mail-date">
+                                    <button ng-click="cActivateDeactivateAccount(3,$index,0,data.UserId)" ng-if="data.Status == 1" type="button" class="btn btn-outline btn-danger btn-rounded btn-sm">Deactivate</button>
+                                    <button ng-click="cActivateDeactivateAccount(3,$index,1,data.UserId)" ng-if="data.Status == 2" type="button" class="btn btn-outline btn-primary btn-rounded btn-sm">Activate</button>
+                                </td>
+                            </tr>
+                            <tr ng-show="vServiceWorkers.length == 0 || isElementExistsAtDOM('vSWorker') != true">
+                                <td class="check-mail text-center">
+                                    <h3 style="color:red">
+                                        No data found.
+                                    </h3>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <div ng-if="tabCustomer == 1" class="col-lg-9 tabs-container animated fadeInRight">
+        <div class="mail-box-header">
+
+            <div class="pull-right mail-search">
+                <div style="border-radius:50px;border-color:#23c6c8" class="input-group fa-border ">
+
+                    <div class="input-group-btn">
+
+                        <i class="fa fa-search"></i>
+                        <input style="border-radius:50px;border:none" ng-show="typeCustomer == 0" type="text" class="form-control input-sm" name="search" ng-model="fullname" placeholder="Search">
+                        <input style="border-radius:50px;border:none" ng-show="typeCustomer == 1" type="text" class="form-control input-sm" name="search" ng-model="vfullname" placeholder="Search">
+
+                    </div>
+
+                </div>
+
+            </div>
+            <h2>
+                Customer Accounts
+            </h2>
+            <div class="mail-tools tooltip-demo m-t-md ">
+
+
+                <button ng-click="cTab(4,0)" class="btn btn-white btn-sm" data-toggle="tab" href="#tab-1" aria-expanded="true">
+                    <i class="fa fa-refresh count-info"></i> Review <span class="label label-warning">{{Customers.length != 0? Customers.length : ''}}</span>
+                </button>
+
+                <button ng-click="cTab(4,1)" class="btn btn-white btn-sm" data-toggle="tab" href="#tab-2" aria-expanded="false">
+                    <i class="fa fa-thumbs-o-up count-info"></i> Verified Accounts <span class="label label-primary">{{vCustomers.length != 0? vCustomers.length : ''}}</span>
+                </button>
+
+
+
+
+            </div>
+        </div>
+        <div class="mail-box">
+            <div class="tab-content">
+                <div id="tab-1" class="tab-pane active">
+
+                    <table class="table table-hover table-mail">
+                        <tbody>
+                            <tr ng-repeat="data in Customers | filter: fullname" id="Customer">
+                                <td class="check-mail text-center" style="padding-bottom:0%">
+                                    <div class="chat-element"><img alt="image" class="img-circle" src="../images/a6.jpg"></div>
+                                </td>
+                                <td class="mail-ontact" style="width:80%">
+                                    <div class="font-bold">{{data.fullname}}</div>
+                                    <div>{{data.Address}}</div>
+                                </td>
+
+                                <td class="text-right mail-date">
+                                    <button type="button" class="btn btn-outline btn-primary btn-rounded btn-sm" ng-click="vProfile(data.UserId)">View Pofile</button>
+                                </td>
+                            </tr>
+                            <tr ng-show="Customers.length == 0 || isElementExistsAtDOM('Customer') != true">
+                                <td class="check-mail text-center">
+                                    <h3 style="color:red">
+                                        No data found.
+                                    </h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="tab-2" class="tab-pane ">
+
+                    <table class="table table-hover table-mail">
+                        <tbody>
+                            <tr ng-repeat="data in vCustomers | filter: vfullname" id="vCustomer">
+                                <td class="check-mail text-center" style="padding-bottom:0%">
+                                    <div class="chat-element"><img alt="image" class="img-circle" src="../images/a1.jpg"></div>
+                                </td>
+                                <td class="mail-ontact" style="width:80%">
+                                    <div class="font-bold">
+                                        {{data.vfullname}}
+                                        <span class="label label-{{data.Status == 1? 'primary':'danger'}}">
+                                            <span style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{data.Status == 1? 'Active':'Deactivated'}}</span>
+                                        </span>
+                                    </div>
+                                    <div>{{data.Address}}</div>
+                                </td>
+
+                                <td class="text-right mail-date">
+                                    <button ng-click="cActivateDeactivateAccount(4,$index,0,data.UserId)" ng-if="data.Status == 1" type="button" class="btn btn-outline btn-danger btn-rounded btn-sm">Deactivate</button>
+                                    <button ng-click="cActivateDeactivateAccount(4,$index,1,data.UserId)" ng-if="data.Status == 2" type="button" class="btn btn-outline btn-primary btn-rounded btn-sm">Activate</button>
+                                </td>
+                            </tr>
+                            <tr ng-show="vCustomers.length == 0 || isElementExistsAtDOM('vCustomer') != true">
+                                <td class="check-mail text-center">
+                                    <h3 style="color:red">
+                                        No data found.
+                                    </h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
