@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AppWorkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="AppWorkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tAccountType">
           <Key>
             <PropertyRef Name="recNo" />
@@ -350,6 +350,10 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
           <Property Name="ProfileImg" Type="varbinary(max)" />
           <Property Name="Status" Type="int" />
         </EntityType>
+        <Function Name="seenMessage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="frienID" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <EntityContainer Name="AppWorkModelStoreContainer">
           <EntitySet Name="tAccountType" EntityType="Self.tAccountType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tApplication" EntityType="Self.tApplication" Schema="dbo" store:Type="Tables" />
@@ -417,7 +421,8 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
     FROM [dbo].[vUsersAcctPersonStatus] AS [vUsersAcctPersonStatus]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AppWorkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -788,6 +793,10 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
           <EntitySet Name="vtJobApplicants" EntityType="Self.vtJobApplicant" />
           <EntitySet Name="vUsersAcctBusinessEntityStatus" EntityType="Self.vUsersAcctBusinessEntityStatu" />
           <EntitySet Name="vUsersAcctPersonStatus" EntityType="Self.vUsersAcctPersonStatu" />
+          <FunctionImport Name="seenMessage">
+            <Parameter Name="userID" Mode="In" Type="String" />
+            <Parameter Name="frienID" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -968,7 +977,6 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
           <EntitySetMapping Name="tMessages">
             <EntityTypeMapping TypeName="AppWorkModel.tMessage">
               <MappingFragment StoreEntitySet="tMessage">
-                <ScalarProperty Name="Seen" ColumnName="Seen" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
                 <ScalarProperty Name="MessageId" ColumnName="MessageId" />
                 <ScalarProperty Name="SenderId" ColumnName="SenderId" />
@@ -976,6 +984,7 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Seen" ColumnName="Seen" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1161,6 +1170,7 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="seenMessage" FunctionName="AppWorkModel.Store.seenMessage" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
