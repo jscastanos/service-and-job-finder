@@ -9,14 +9,16 @@ namespace service_and_job_finder_web
         {
 
             bundles.Add(new ScriptBundle("~/js").Include(
-                      "~/Scripts/jquery.min.js",
+                      "~/Scripts/jquery-2.1.1.js",
                       "~/Scripts/bootstrap.min.js",
                       "~/Scripts/jquery.metisMenu.js",
                       "~/Scripts/jquery.slimscroll.min.js",
                       "~/Scripts/pace.min.js",
+                      "~/Scripts/popper.js",
                       "~/Scripts/angular.min.js",
-                      "~/Scripts/ng-app.js",
-                      "~/Scripts/template.js"
+                      "~/Scripts/template.js",
+                      "~/Scripts/moment.min.js",
+                      "~/Scripts/ng-app.js"
                       ));
 
             bundles.Add(new StyleBundle("~/css").Include(

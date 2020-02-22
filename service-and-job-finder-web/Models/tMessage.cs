@@ -21,5 +21,6 @@ namespace service_and_job_finder_web.Models
         public string Message { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<int> Status { get; set; }
+        public Nullable<bool> Seen { get; set; }
     }
 }

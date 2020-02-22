@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MultipartDataMediaFormatter;
+using MultipartDataMediaFormatter.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -19,6 +21,7 @@ namespace service_and_job_finder_web
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            //GlobalConfiguration.Configuration.Formatters.Add(new FormMultipartEncodedMediaTypeFormatter(new MultipartFormatterSettings()));
         }
     }
 }

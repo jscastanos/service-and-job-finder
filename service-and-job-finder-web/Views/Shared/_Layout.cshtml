@@ -8,9 +8,38 @@
     <title>@ViewBag.Title | Jobs and Service Finder</title>
     @Styles.Render("~/css")
     @Scripts.Render("~/js")
+
+    <style>
+        .img-shadow {
+            /* -webkit-box-shadow: 0 0 3px 0 #919191; */
+            -moz-box-shadow: 0 0 3px 0 #dadada;
+            box-shadow: 0 0 3px 0 #dadada;
+        }
+
+        .border-radius {
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .word-break {
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-size: 14px;
+        }
+
+        .slide-content {
+            max-height: 85vh !important;
+            min-height: 55vh !important;
+        }
+    </style>
+
+    <script src="~/Scripts/jquery.signalR-2.3.0.js"></script>
+    <script src="~/signalr/js?@DateTime.Now.Ticks"></script>
+    <script src="~/Scripts/controllers/init-hub.js?@DateTime.Now.Ticks"></script>
 </head>
 
-<body class="top-navigation" ng-app="SJF">
+<body class="top-navigation" ng-app="SJF" ng-cloak>
+    <input type="hidden" id="userID" value="@Session["userID"]" />
     <div id="wrapper">
         <div id="page-wrapper" class="gray-bg">
             @Html.Partial("_navbar")
@@ -20,7 +49,7 @@
                 </div>
 
             </div>
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>

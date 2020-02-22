@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AppWorkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AppWorkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tAccountType">
           <Key>
             <PropertyRef Name="recNo" />
@@ -173,6 +173,7 @@
           <Property Name="Message" Type="nvarchar(max)" />
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="Status" Type="int" />
+          <Property Name="Seen" Type="bit" />
         </EntityType>
         <EntityType Name="tPersonInfo">
           <Key>
@@ -416,8 +417,7 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
     FROM [dbo].[vUsersAcctPersonStatus] AS [vUsersAcctPersonStatus]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AppWorkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -589,6 +589,7 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Int32" />
+          <Property Name="Seen" Type="Boolean" />
         </EntityType>
         <EntityType Name="tPersonInfo">
           <Key>
@@ -967,6 +968,7 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
           <EntitySetMapping Name="tMessages">
             <EntityTypeMapping TypeName="AppWorkModel.tMessage">
               <MappingFragment StoreEntitySet="tMessage">
+                <ScalarProperty Name="Seen" ColumnName="Seen" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
                 <ScalarProperty Name="MessageId" ColumnName="MessageId" />
                 <ScalarProperty Name="SenderId" ColumnName="SenderId" />
