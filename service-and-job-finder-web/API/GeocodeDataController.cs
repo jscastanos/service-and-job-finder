@@ -154,9 +154,9 @@ namespace service_and_job_finder_web.API
                             a.BusinessEntityAddress,
                             a.About,
                             a.ContactNo,
-                            services = db.tServiceSets.Where(s => s.UserId == b.UserId).Select(ss => new
+                            services = db.tServiceSets.Where(sst => sst.UserId == b.UserId).Select(ssst => new
                             {
-                                service = db.tServices.Where(s => s.ServiceId == ss.ServiceId).FirstOrDefault()
+                                service = db.tServices.Where(s => s.ServiceId == ssst.ServiceId).Select(ss => ss.Description).FirstOrDefault()
                             })
                         
                         }).FirstOrDefault();
