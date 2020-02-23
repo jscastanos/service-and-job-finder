@@ -245,6 +245,7 @@ namespace service_and_job_finder_web.API
                       y.Address,
                       y.PersonId,
                       vfullname = y.Lastname + ", " + y.Firstname + " " + (y.Middlename != null ? y.Middlename.Substring(0, 1) + "." : ""),
+                      msgFullname = y.Firstname + " " + (y.Middlename != null ? y.Middlename.Substring(0, 1) + ". " : "") + y.Lastname,
                       y.ProfileImg,
                       y.Status
                   }).ToList();

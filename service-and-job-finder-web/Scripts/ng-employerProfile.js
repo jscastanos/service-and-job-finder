@@ -1,48 +1,11 @@
 ﻿app.controller('employerJS', ['$scope', '$http', '$timeout', function (s, h, t) {
 
-    (function (global) {
+    var url = new URL(location.href);
 
-        if (typeof (global) === "undefined") {
-            throw new Error("window is undefined");
-        }
+    s.entityID = url.searchParams.get('e');
 
-        var _hash = "!";
-        var noBackPlease = function () {
-            global.location.href += "#";
+    //s.entityID = localStorage.getItem("userid");
 
-            // making sure we have the fruit available for juice....
-            // 50 milliseconds for just once do not cost much (^__^)
-            global.setTimeout(function () {
-                global.location.href += "!";
-            }, 50);
-        };
-
-        // Earlier we had setInterval here....
-        global.onhashchange = function () {
-            if (global.location.hash !== _hash) {
-                global.location.hash = _hash;
-            }
-        };
-
-        global.onload = function () {
-
-            noBackPlease();
-
-            // disables backspace on page except on input fields and textarea..
-            document.body.onkeydown = function (e) {
-                var elm = e.target.nodeName.toLowerCase();
-                if (e.which === 8 && (elm !== 'input' && elm !== 'textarea')) {
-                    e.preventDefault();
-                }
-                // stopping event bubbling up the DOM tree..
-                e.stopPropagation();
-            };
-
-        };
-
-    })(window);
-
-    s.userid = '0003';
     s.profileTempArr = {};
     s.profileTempArrCert = {};
     s.updateCertTempArrProPic = {};
@@ -81,15 +44,22 @@
                 var width = this.width;
                 var type = file.type;
                 var size = ~~(file.size / 1024) + "KB";
+                alert(s.profilePicBol);
 
-                $("#targetImg").attr('src', _file.target.result);
-                $("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
-                $("#imgPreview").show();
-                $("#fa-user").hide();
-
-                $("#targetImgproPic").show();
-                $("#targetImgproPic").attr('src', _file.target.result);
-                $("#imgPreviewproPic").hide();
+                if (s.profilePicBol == true)
+                {
+                    $("#targetImgproPic").show();
+                    $("#targetImgproPic").attr('src', _file.target.result);
+                    $("#imgPreviewproPic").hide();
+                } 
+                else
+                {
+                    $("#targetImg").attr('src', _file.target.result);
+                    $("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+                    $("#imgPreview").show();
+                    $("#fa-user").hide();
+                }
+                
             }
         }
     }
@@ -107,19 +77,19 @@
         reader.readAsDataURL(file);
     }
     function getCompanyData() {
-        h.get("../api/employerapi/CompanyData?id="+ s.userid ).then(function (d) {
+        h.get("../api/employerapi/CompanyData?id="+ s.entityID ).then(function (d) {
             s.profileTempArr = d.data;
             document.getElementById('about').innerHTML = s.profileTempArr.About;
         });
     }
     function getCompanyCert() {
-        h.get("../api/employerapi/CompanyCert?id=" + s.userid).then(function (d) {
+        h.get("../api/employerapi/CompanyCert?id=" + s.entityID).then(function (d) {
             s.profileTempArrCert = d.data;
             console.log(s.profileTempArrCert);
         });
     }
     function getCompanyService() {
-        h.get("../api/employerapi/CompanyService?id=" + s.userid).then(function (d) {
+        h.get("../api/employerapi/CompanyService?id=" + s.entityID).then(function (d) {
             s.profileTempArrServiceData = d.data;
 
             for (var a = 0; a < d.data.length; a++)
@@ -132,12 +102,12 @@
     }
     function getCompanyJobList() {
 
-        h.get("../api/employerapi/CompanyJobList?id=" + s.userid).then(function (d) {
+        h.get("../api/employerapi/CompanyJobList?id=" + s.entityID).then(function (d) {
             s.jobListArr = d.data;
         });
     }
     function getCoordinates() {
-        h.get("../api/employerapi/Coordinate?id=" + s.userid).then(function (d) {
+        h.get("../api/employerapi/Coordinate?id=" + s.entityID).then(function (d) {
             s.companyLat = d.data.lat;
             s.companyLng = d.data.lng;
             //console.log(s.companyLat + "-" + s.companyLng)
@@ -172,7 +142,7 @@
         });
     }
     function getUserID() {
-        h.get("../api/employerapi/userData?id=" + s.userid).then(function (d) {
+        h.get("../api/employerapi/userData?id=" + s.entityID).then(function (d) {
             s.userData = d.data;
             console.log(s.userData)
         });
@@ -195,6 +165,8 @@
     })
 
     s.addJobList = function () {
+
+        s.jobListTempArr.EntityId = s.entityID;
 
         s.jobListArr.push(s.jobListTempArr);
 
@@ -271,9 +243,11 @@
     s.saveUpdateCert = function () {
 
         s.updateCertArr.data = s.updateCertTempArr;
-
+        
         if (s.addTitle == true) {
 
+            s.updateCertArr.userid = s.entityID;
+            console.log(s.updateCertArr);
             h.post("../api/employerapi/saveCertificate", s.updateCertArr).then(function (d) {
 
                 s.uploadImgID = false;

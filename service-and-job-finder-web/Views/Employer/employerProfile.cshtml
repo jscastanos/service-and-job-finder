@@ -157,7 +157,7 @@
 
                             <div ng-repeat="a in jobListArr">
                                 <button class="btn btn-outline btn-link" ng-click="removeJob(a.recNo)"><i class="fa fa-trash"></i></button>
-                                <a href="" ng-click="getJobApplicant(a.JobId)"> {{a.JobTitle}}</a>
+                                <a href="../Employer/Applicants?id={{a.EntityId}}&jobId={{a.JobId}}" ng-click="getJobApplicant(a.JobId)"> {{a.JobTitle}}</a>
                             </div>
                         </div>
                     </div>

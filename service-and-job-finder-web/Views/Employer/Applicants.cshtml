@@ -17,7 +17,7 @@
                     <h5>Job Applicants</h5>
                     <ul class="category-list" style="padding: 0">
 
-                        <li ng-repeat="data in jobs"><a ng-click="vApplicants($index)"> <i class="fa fa-circle text-navy"></i> <span class="font-{{$index == index? 'bold':'normal'}}">{{data.JobTitle}}</span> <span class="label label-warning pull-right">{{data.applicants.length != 0? data.applicants.length : ''}}</span> </a></li>
+                        <li ng-repeat="data in jobs" class="active"><a ng-click="vApplicants($index)"> <i class="fa fa-circle text-navy"></i> <span class="font-{{$index == index? 'bold':'normal'}}">{{data.JobTitle}}</span> <span class="label label-warning pull-right">{{data.applicants.length != 0? data.applicants.length : ''}}</span> </a></li>
 
                     </ul>
 
@@ -74,7 +74,7 @@
                         <tbody>
                             <tr ng-repeat="data in data.applicants | filter: fullname" id="{{index}}1">
                                 <td class="check-mail text-center" style="padding-bottom:0%">
-                                    <div class="chat-element"><img alt="image" class="img-circle" src="../images/a4.jpg"></div>
+                                    <div class="chat-element"><img alt="image" class="img-circle" src="../Employer/RetrieveIMG?id={{data.recNo}}"></div>
                                 </td>
                                 <td class="mail-ontact" style="width:80%">
                                     <div class="font-bold">{{data.fullname}}</div>
@@ -82,7 +82,8 @@
                                 </td>
 
                                 <td class="text-right mail-date">
-                                    <button type="button" class="btn btn-outline btn-primary btn-rounded btn-sm">View Pofile</button>
+                                    <a href="../JobSeekerProfile/JobSeekerView?id={{data.UserId}}" class="btn btn-outline btn-primary btn-rounded btn-sm">View Pofile</a>
+                                    
                                 </td>
                             </tr>
                             <tr ng-show="data.applicants.length == 0 || isElementExistsAtDOM(index +'1') != true">
@@ -103,7 +104,7 @@
                         <tbody>
                             <tr ng-repeat="data in data.qualifiedApplicants | filter: vfullname" id="{{index}}2">
                                 <td class="check-mail text-center" style="padding-bottom:0%">
-                                    <div class="chat-element"><img alt="image" class="img-circle" src="../images/a4.jpg"></div>
+                                    <div class="chat-element"><img alt="image" class="img-circle" src="../Employer/RetrieveIMG?id={{data.recNo}}"></div>
                                 </td>
                                 <td class="mail-ontact" style="width:80%">
                                     <div class="font-bold">{{data.vfullname}}</div>
@@ -111,7 +112,7 @@
                                 </td>
 
                                 <td class="text-right mail-date">
-                                    <button type="button" class="btn btn-outline btn-primary btn-rounded btn-sm">Send Message</button>
+                                    <button type="button" class="btn btn-outline btn-primary btn-rounded btn-sm" ng-click="sendMsg(data.msgFullname, data.UserId)">Send Message</button>
                                 </td>
                             </tr>
                             <tr ng-show="data.qualifiedApplicants.length == 0 || isElementExistsAtDOM(index +'2') != true">

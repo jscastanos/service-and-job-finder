@@ -21,6 +21,11 @@ namespace service_and_job_finder_web.API
         public class skillAndServices
         {
             public string[] tempSkills { get; set; }
+            public string userid
+            {
+                get;
+                set;
+            }
             public List<tServiceSet> serviceArrID { get; set; }
 
         }
@@ -29,6 +34,11 @@ namespace service_and_job_finder_web.API
         {
             public tCertification data { get; set; }
             public string FileImg { get; set; }
+            public string userid
+            {
+                get;
+                set;
+            }
         }
         public class businessData
         {
@@ -72,7 +82,8 @@ namespace service_and_job_finder_web.API
             public string contact { get; set; }
             public string img { get; set; }
             public double lat { get; set; }
-            public double longitude { get; set; }
+            public double longitude { get; set; }  
+             public string userid { get; set; }
         }
 
         //GET
@@ -90,7 +101,7 @@ namespace service_and_job_finder_web.API
         [Route("api/employerapi/CompanyData")]
         public IHttpActionResult GetCompanyData(string id)
         {
-            var data = db.tBusinessEntities.FirstOrDefault(a => a.UserId == id);
+            var data = db.tBusinessEntities.FirstOrDefault(a => a.EntityId == id);
 
             return Json(data);
         }
@@ -98,7 +109,7 @@ namespace service_and_job_finder_web.API
         [Route("api/employerapi/CompanyCert")]
         public IHttpActionResult GetCompanyCert(string id)
         {
-            var data = db.tCertifications.Where(a => a.UserId == id && a.Status == 0).ToList();
+            var data = db.tCertifications.Where(a => a.UserId == db.tBusinessEntities.FirstOrDefault(x => x.EntityId == id).UserId && a.Status == 0).ToList();
 
             return Json(data);
         }
@@ -106,7 +117,7 @@ namespace service_and_job_finder_web.API
         [Route("api/employerapi/CompanyService")]
         public IHttpActionResult GetCompanyService(string id)
         {
-            var data = db.tServiceSets.Where(a => a.UserId == id && a.Status == 0).Select(x => new
+            var data = db.tServiceSets.Where(a => a.UserId ==  db.tBusinessEntities.FirstOrDefault(x => x.EntityId == id).UserId && a.Status == 0).Select(x => new
             {
                 name = db.tServices.FirstOrDefault(p => p.ServiceId == x.ServiceId).Description
             });
@@ -148,7 +159,7 @@ namespace service_and_job_finder_web.API
         public IHttpActionResult GetCoordinate(string id)
         {
 
-            var data = db.tBusinessEntities.SingleOrDefault(a => a.UserId == id && a.Status == 0);
+            var data = db.tBusinessEntities.SingleOrDefault(a => a.EntityId == id && a.Status == 0);
 
             return Json(new { lat = data.Latitude, lng = data.Longitude });
         }
@@ -157,7 +168,7 @@ namespace service_and_job_finder_web.API
         public IHttpActionResult GetuserData(string id)
         {
 
-            var data = db.tUsers.SingleOrDefault(a => a.UserId == id);
+            var data = db.tUsers.SingleOrDefault(a => a.UserId ==  db.tBusinessEntities.FirstOrDefault(x => x.EntityId == id).UserId);
 
             return Json(data);
         }
@@ -175,6 +186,7 @@ namespace service_and_job_finder_web.API
 
                 foreach (var a in data.tempSkills)
                 {
+                    obj.UserId = data.userid;
                     obj.SkillId = a;
                     obj.Status = 0;
 
@@ -187,6 +199,7 @@ namespace service_and_job_finder_web.API
             {
                 foreach (var a in data.serviceArrID)
                 {
+                    obj2.UserId = data.userid;
                     obj2.ServiceId = a.ServiceId;
                     obj2.Status = 0;
 
@@ -211,6 +224,7 @@ namespace service_and_job_finder_web.API
                 val.ProfileImg = imageBytes;
             }
 
+            val.UserId = obj.userid;
             val.BusinessEntityName = obj.name;
             val.BusinessEntityAddress = obj.add;
             val.About = obj.desc;
@@ -223,13 +237,14 @@ namespace service_and_job_finder_web.API
             db.Entry(val).State = EntityState.Added;
             db.SaveChanges();
 
-            return Json("Saved!");
+            return Json(val.EntityId);
         }
 
         [Route("api/employerapi/saveCertificate")]
         public IHttpActionResult PostsaveCertificate(certificateData value)
         {
             var obj = new tCertification();
+
             if (value.FileImg != null)
             {
                 byte[] imageBytes = Convert.FromBase64String(value.FileImg);
@@ -237,12 +252,21 @@ namespace service_and_job_finder_web.API
                 obj.FileImg = imageBytes;
             }
 
-
+            if (db.tBusinessEntities.Any(a => a.EntityId == value.userid))
+            {
+                obj.UserId = db.tBusinessEntities.FirstOrDefault(a => a.EntityId == value.userid).UserId;
+               
+            }
+            else
+            {
+                obj.UserId = value.data.UserId;
+            }
+            
+            obj.UserId = value.data.UserId;
             obj.Filename = value.data.Filename;
             obj.Description = value.data.Description;
             obj.DateCreated = DateTime.Now;
             obj.Status = 0;
-            obj.UserId = value.data.UserId;
 
             db.Entry(obj).State = EntityState.Added;
             db.SaveChanges();
@@ -254,7 +278,7 @@ namespace service_and_job_finder_web.API
         [Route("api/employerapi/saveJobList")]
         public IHttpActionResult PostsaveJobList(tJob data)
         {
-
+            
             data.JobId = Guid.NewGuid().ToString("N").Substring(0, 5).ToUpper();
             data.Status = 0;
 

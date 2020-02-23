@@ -1,5 +1,12 @@
 ﻿app.controller('employerJS', ['$scope', '$http', '$timeout', function (s, h, t) {
 
+    var url = new URL(location.href);
+
+    s.type = url.searchParams.get('type');
+    s.userid = url.searchParams.get('userid');
+
+    console.log(s.type + "-" + s.userid);
+
     s.skills = true;
     s.skillsBtn = true;
     s.skillsUpdate = false;
@@ -35,7 +42,7 @@
         var coordinates = document.getElementById('coordinates');
         var map = new mapboxgl.Map({
             container: 'map',
-            style: 'mapbox://styles/mapbox/satellite-v9',
+            style: 'mapbox://styles/mapbox/streets-v9',
             center: [lng, lat],
             zoom: 13
             //style: 'mapbox://styles/mapbox/streets-v11'
@@ -171,6 +178,7 @@
 
         if (s.tempSkills != "" && s.serviceArrID != "") {
 
+            s.data.userid = s.userid;
             s.data.tempSkills = s.tempSkills;
             s.data.serviceArrID = s.serviceArrID;
 
@@ -190,7 +198,7 @@
     s.updatecontinue = function () {
 
         if (s.tempSkills != "" && s.serviceArrID != "") {
-
+            s.data.userid = s.userid;
             s.data.tempSkills = s.tempSkills;
             s.data.serviceArrID = s.serviceArrID;
 
@@ -211,17 +219,19 @@
 
         s.companyTempArr.lat = s.selectedLat;
         s.companyTempArr.longitude = s.selectedLong;
+        s.companyTempArr.userid = s.userid;
 
         console.log(s.companyTempArr);
 
         if (s.tempSkills != "" && s.serviceArrID != "")
         {
             h.post("../api/employerapi/saveProfile", s.companyTempArr).then(function (d) {
-
+                
                 h.post("../api/employerapi/PostSaveSkillandService", s.data).then(function (d) {
-                    window.location = "../employer/employerprofile";
+                   
                     s.companyTempArr = {};
                 });
+                window.location = "../employer/employerprofile?e=" + d.data;
             });
         }
         else {
@@ -233,6 +243,7 @@
         $("#certModal").modal("hide");
 
         s.tempArr.data = s.certTempArr;
+        s.tempArr.userid = s.userid;
         
         h.post("../api/employerapi/saveCertificate", s.tempArr).then(function (d) {
 
@@ -307,7 +318,7 @@
 
         var map = new mapboxgl.Map({
             container: 'map',
-            style: 'mapbox://styles/mapbox/satellite-v9',
+            style: 'mapbox://styles/mapbox/streets-v9',
             center: [long, lat],
             zoom: 14
             //style: 'mapbox://styles/mapbox/streets-v11'

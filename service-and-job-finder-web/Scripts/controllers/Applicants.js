@@ -1,10 +1,15 @@
-﻿app.controller("Applicants", ["$scope", "$http", "$filter", function (s, r, f) {
+﻿app.controller("Applicants", ["$scope", "$http", "$filter", "$rootScope", function (s, r, f, rs) {
 
 
+    var url = new URL(location.href);
 
-    s.EntityId = "929EA";
+    s.jobId = url.searchParams.get('jobId');
+    s.EntityId = url.searchParams.get('id');
+
+
+    //s.EntityId = "929EA";
     s.jobs = [];
-
+    s.sendMsgTempArr = {};
 
     s.index = 0;
     s.activeTab1 = 'tab-pane active';
@@ -73,6 +78,14 @@
         }
         console.log(s.isElementExistsAtDOMboolean)
         return s.isElementExistsAtDOMboolean;
+    }
+
+    s.sendMsg = function (name, id) {
+
+        s.sendMsgTempArr.UserId = id;
+        s.sendMsgTempArr.Name = name;
+                       
+        rs.sendMessage(s.sendMsgTempArr);
     }
 
 }]);

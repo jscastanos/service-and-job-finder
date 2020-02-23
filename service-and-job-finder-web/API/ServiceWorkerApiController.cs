@@ -19,7 +19,7 @@ namespace service_and_job_finder_web.API
         private AppWorkEntities db = new AppWorkEntities();
 
         [Route("api/serviceworkerapi/PostSaveService")]
-        public IHttpActionResult PostSaveService(string data)
+        public IHttpActionResult PostSaveService(string data, string userid)
         {
             var obj = new tServiceSet();
             
@@ -29,6 +29,7 @@ namespace service_and_job_finder_web.API
 
                 foreach (var a in serviceID)
                 {
+                    obj.UserId = userid;
                     obj.ServiceId = a.ToString();
                     obj.Status = 0;
 

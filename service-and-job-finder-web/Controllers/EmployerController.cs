@@ -58,6 +58,23 @@ namespace service_and_job_finder_web.Controllers
 
         }
 
+        public ActionResult RetrieveIMG(int id)
+        {
+            var q = db.tPersonInfoes.SingleOrDefault(w => w.recNo == id).ProfileImg;
+            byte[] cover = q;
+
+            if (cover != null)
+            {
+                return File(cover, "image/jpeg");
+            }
+            else
+            {
+                //return null;
+                return File("~/images/user60.png", "image/png");
+            }
+
+        }
+
         public ActionResult Applicants()
         {
 
