@@ -12,6 +12,8 @@ namespace service_and_job_finder_web.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class AppWorkEntities : DbContext
     {
@@ -26,7 +28,6 @@ namespace service_and_job_finder_web.Models
         }
     
         public virtual DbSet<tAccountType> tAccountTypes { get; set; }
-        public virtual DbSet<tApplication> tApplications { get; set; }
         public virtual DbSet<tBarangay> tBarangays { get; set; }
         public virtual DbSet<tBusinessEntity> tBusinessEntities { get; set; }
         public virtual DbSet<tCertification> tCertifications { get; set; }
@@ -52,5 +53,19 @@ namespace service_and_job_finder_web.Models
         public virtual DbSet<vtJobApplicant> vtJobApplicants { get; set; }
         public virtual DbSet<vUsersAcctBusinessEntityStatu> vUsersAcctBusinessEntityStatus { get; set; }
         public virtual DbSet<vUsersAcctPersonStatu> vUsersAcctPersonStatus { get; set; }
+        public virtual DbSet<tApplication> tApplications { get; set; }
+    
+        public virtual int seenMessage(string userID, string frienID)
+        {
+            var userIDParameter = userID != null ?
+                new ObjectParameter("userID", userID) :
+                new ObjectParameter("userID", typeof(string));
+    
+            var frienIDParameter = frienID != null ?
+                new ObjectParameter("frienID", frienID) :
+                new ObjectParameter("frienID", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("seenMessage", userIDParameter, frienIDParameter);
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿app.controller('post', ['$scope', '$http','$filter', '$interval', function (s, h, _f, _i) {
+﻿app.controller('post', ['$scope', '$http','$filter', '$interval', '$rootScope', function (s, h, _f, _i, _r) {
 
     loadJobPost();
 
@@ -27,7 +27,7 @@
         var newComment = {
             PostId: data.PostId,
             Comment: data.newComment,
-            UserId: s.userID
+            UserId: $('#userID').val()
         }
         if (e.keyCode == 13 && !event.shiftKey) {
             e.preventDefault();
@@ -38,6 +38,25 @@
             return false;
         }
     }
+
+    s.isApplicationSent = function (applicants) {
+        return applicants.includes($('#userID').val())
+    }
+    s.sendApplication = function (obj) {
+        console.log(obj)
+        var newApplication = {
+            PersonId: $("#userID").val(),
+            EntityID: obj.UserId,
+            PostId: obj.PostId,
+            JobId: obj.JobId
+        }
+        h.post('../api/feed/sendapplication', newApplication).then(function (d) {
+            if (d.data == 1) {
+                obj.Applicants.push($("#userID").val())
+            }
+        })
+    }
+    
     s.getTimeElapsed = function (datetime) {
         var eventTime = new Date(datetime).getTime();
         var currentTime = new Date().getTime();
@@ -56,6 +75,7 @@
         }
        
     }
+
     function loadJobPost() {
         h.post('../api/feed/jobpost').then(function (d) {
             s.jobPostFeed = d.data;

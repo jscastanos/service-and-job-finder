@@ -46,22 +46,10 @@ namespace service_and_job_finder_web.API
 
         public class businessDataProfile
         {
-            public tBusinessEntity data
-            {
-                get;
-                set;
-            }
-            public string[] serviceData
-            {
-                get;
-                set;
-            }
+            public tBusinessEntity data  { get; set; }
+            public string[] serviceData { get; set; }
 
-            public string userID
-            {
-                get;
-                set;
-            }
+            public string userID { get; set; }
         }
 
         public class imgBase64Str

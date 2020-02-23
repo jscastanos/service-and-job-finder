@@ -29,8 +29,33 @@ namespace service_and_job_finder_web.API
             var titles = db.tJobs.Where(w => w.EntityId == entityId);
             return Json(titles);
         }
+        [Route("sendapplication")]
+        public IHttpActionResult PostJobTitles(tApplication applicant)
+        {
+            try
+            {
+            retryID:
+                string generatedID = new Utilities().GenerateCoupon(5);
+                if (db.tApplications.Any(a => a.ApplicationId == generatedID))
+                {
+                    goto retryID;
+                }
+                applicant.ApplicationId = generatedID;
+                applicant.DateCreated = DateTime.Now;
+                applicant.DateUpdated = DateTime.Now;
+                applicant.Status = 0;
+
+                db.tApplications.Add(applicant);
+                db.SaveChanges();
+                return Json(1);
+            }
+            catch (Exception e)
+            {
+                return Json(e.Message);
+            }
+        }
         [Route("jobpost")]
-        public IHttpActionResult PostJobTitles()
+        public IHttpActionResult PostJobPosts()
         {
             var jobPosts = db.tPosts.Select(s => new
             {
@@ -40,6 +65,7 @@ namespace service_and_job_finder_web.API
                 s.PostId,
                 s.Title,
                 s.UserId,
+                s.JobId,
                 HasFile = db.tPosts.Any(a => a.PostId == s.PostId && s.FileImg != null) ? true : false,
                 Name = db.tBusinessEntities.FirstOrDefault(f => f.UserId == s.UserId).BusinessEntityName,
                 JobTitle = db.tJobs.FirstOrDefault(f => f.JobId == s.JobId).JobTitle,
@@ -51,9 +77,10 @@ namespace service_and_job_finder_web.API
                     ss.Comment,
                     ss.PostId,
                     ss.UserId,
-                    Name = db.tBusinessEntities.Any(b => b.UserId == ss.UserId) ? db.tBusinessEntities.FirstOrDefault(f => f.UserId == ss.UserId).BusinessEntityName : db.tPersonInfoes.Where(p => p.UserId == ss.UserId).Select(sss => new { Name = sss.Firstname + " " + (sss.Middlename != null ? sss.Middlename.Substring(0,1) : "") + sss.Lastname }).FirstOrDefault().Name,
+                    Name = db.tBusinessEntities.Any(b => b.UserId == ss.UserId) ? db.tBusinessEntities.FirstOrDefault(f => f.UserId == ss.UserId).BusinessEntityName : db.tPersonInfoes.Where(p => p.UserId == ss.UserId).Select(sss => new { Name = sss.Firstname + " " + (sss.Middlename != null ? sss.Middlename.Substring(0, 1) + ". " : "") + sss.Lastname }).FirstOrDefault().Name,
                     UserType = db.tBusinessEntities.Any(b => b.UserId == ss.UserId) ? 1 : 0
-                })
+                }),
+                Applicants = db.tApplications.Where(ap => ap.PostId == s.PostId).Select(ss => ss.PersonId)
             });
             return Json(jobPosts);
         }
@@ -61,9 +88,10 @@ namespace service_and_job_finder_web.API
         [Route("newcomment")]
         public IHttpActionResult PostNewComment(tComment comment)
         {
-            retryId:
+        retryId:
             string commentID = new Utilities().GenerateCoupon(5);
-            if(db.tComments.Any(a => a.CommentId == commentID)){
+            if (db.tComments.Any(a => a.CommentId == commentID))
+            {
                 goto retryId;
             }
 
@@ -80,7 +108,7 @@ namespace service_and_job_finder_web.API
                 ss.Comment,
                 ss.PostId,
                 ss.UserId,
-                Name = db.tBusinessEntities.Any(b => b.UserId == ss.UserId) ? db.tBusinessEntities.FirstOrDefault(f => f.UserId == ss.UserId).BusinessEntityName : db.tPersonInfoes.Where(p => p.UserId == ss.UserId).Select(sss => new { Name = sss.Firstname + " " + (sss.Middlename != null ? sss.Middlename.Substring(0, 1) : "") + sss.Lastname }).FirstOrDefault().Name,
+                Name = db.tBusinessEntities.Any(b => b.UserId == ss.UserId) ? db.tBusinessEntities.FirstOrDefault(f => f.UserId == ss.UserId).BusinessEntityName : db.tPersonInfoes.Where(p => p.UserId == ss.UserId).Select(sss => new { Name = sss.Firstname + " " + (sss.Middlename != null ? sss.Middlename.Substring(0, 1) + ". " : "") + sss.Lastname }).FirstOrDefault().Name,
                 UserType = db.tBusinessEntities.Any(b => b.UserId == ss.UserId) ? 1 : 0
             }).FirstOrDefault();
 

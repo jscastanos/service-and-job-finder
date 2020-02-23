@@ -14,7 +14,7 @@
         }
 
         .welcome {
-            display:none;
+            display: none;
         }
     }
 </style>
@@ -59,15 +59,19 @@
         </div>
     </div>
     <div class="col-md-8">
-        <div class="pull-right m-t-sm">
-            <button class="btn btn-outline btn-primary" data-toggle="modal" data-target="#newPostModal">
-                <b>
-                    <i class="icon icon-pencil6"></i>
-                </b>
-                Write Post
-            </button>
-        </div>
-        <h2 class="forum-item-title">Job Posts</h2>
+        @if (Session["AccountType"].ToString() == "1" || Session["AccountType"].ToString() == "3")
+        {
+
+            <div class="pull-right m-t-sm">
+                <button class="btn btn-outline btn-primary" data-toggle="modal" data-target="#newPostModal">
+                    <b>
+                        <i class="icon icon-pencil6"></i>
+                    </b>
+                    Write Post
+                </button>
+            </div>
+        }
+        <h2 class="forum-item-title">&nbsp; Job Posts</h2>
         @Html.Partial("_jobPosts")
     </div>
 </div>

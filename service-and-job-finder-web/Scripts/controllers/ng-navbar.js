@@ -1,7 +1,7 @@
-﻿app.controller('navbar', ['$scope', '$http', '$interval', '$timeout', function (s, h, _i, _t) {
-
+﻿app.controller('navbar', ['$scope', '$http', '$interval', '$timeout', '$rootScope', function (s, h, _i, _t, _r) {
     s.loadingMessages = false;
     s.messages = [];
+    s.openedMessages = {};
 
     $('.open-small-chat').click(function () {
         $(this).children().toggleClass('fa-comments').toggleClass('fa-remove');
@@ -41,11 +41,21 @@
    
     s.getMessageBadge = function () {
         var unSeen = s.messages.filter(f => !f.Seen && f.SenderId != $('#userID').val());
+        console.log('--------')
+        console.log(s.messages)
+        console.log(unSeen)
+        console.log('--------')
         return unSeen.length;
     }
-    s.openedMessages = {}
-
+    _r.sendMessage = function (obj) {
+        var newObj = {
+            friendID: obj.UserId,
+            friendName: obj.Name
+        }
+        s.openMessage(newObj)
+    }
     s.openMessage = function (obj) {
+        console.log(obj)
         obj.Seen = true;
         s.activeChatObj = obj;
         s.messageSeen()
@@ -64,7 +74,7 @@
     }
     s.sendMessage = function(){
         var newMessage = {
-            SenderId: s.userID,
+            SenderId: $('#userID').val(),
             RecipientId: s.activeChatObj.friendID,
             Message: s.newMessage
         }
@@ -88,7 +98,7 @@
 
 
     function loadPersonalMessage(obj){
-        h.post('../api/message/personalMessages/'+ s.userID +'/' + obj.friendID).then(function(d){
+        h.post('../api/message/personalMessages/'+ $('#userID').val() +'/' + obj.friendID).then(function(d){
             if (s.openedMessages.hasOwnProperty(obj.friendID)) {
                 s.openedMessages[obj.friendID].messages = s.openedMessages[obj.friendID].messages.concat(d.data);
             }
@@ -130,6 +140,7 @@
     function scrollToBottom() {
         $('.small-chat-box').removeClass('active')
         $('.small-chat-box').addClass('active')
+        $('#chat-input').focus()
     }
     s.loadUserMessages();
 }]);

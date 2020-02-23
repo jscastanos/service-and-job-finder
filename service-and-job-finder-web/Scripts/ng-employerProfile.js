@@ -42,7 +42,7 @@
 
     })(window);
 
-    s.userid = '0003';
+    s.userid = '1';
     s.profileTempArr = {};
     s.profileTempArrCert = {};
     s.updateCertTempArrProPic = {};

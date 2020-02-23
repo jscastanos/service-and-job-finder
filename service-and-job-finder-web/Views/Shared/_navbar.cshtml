@@ -107,7 +107,7 @@
         width: 290px;
     }
 </style>
-<div ng-controller="navbar" ng-init="userID=@Session["userID"]">
+<div ng-controller="navbar" @*ng-init="userID=@Session["userID"]"*@>
     @*Change Session*@
     <div class="row border-bottom white-bg">
         <nav class="navbar navbar-static-top" role="navigation">
@@ -117,35 +117,38 @@
                 </button>
                 <a class="navbar-brand">APP WORK</a>
             </div>
+            <div class="navbar-header">
+                <a class="navbar-brand" style="font-family:Trade Winds">@Session["entityID"]</a>
+            </div>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a aria-expanded="false" role="button" href="" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
                             <li><a href="">Menu item</a></li>
-                                        </ul>
-                                            </li>
+                        </ul>
+                    </li>
 
-                                        </ul>
+                </ul>
                 <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown">
                         <a class="dropdown-toggle count-info" data-toggle="dropdown" @*ng-click="loadUserMessages()"*@>
                             <i class="fa fa-envelope"></i>  <span class="label label-warning" ng-show="getMessageBadge() > 0">{{getMessageBadge()}}</span>
-                                                </a>
+                        </a>
                         <ul class="dropdown-menu dropdown-messages fadeInRight animated" style="padding:10px 0;">
                             <li>
                                 <div class="messages-container">
                                     <div class="dropdown-messages-box" style="cursor:pointer;padding:6px 10px; height: 55px; position:relative" ng-repeat="m in messages | orderBy:'-DateCreated'" ng-click="openMessage(m)">
                                         <div class="pull-left" style="padding: 3px 10px 2px 0;">
                                             <img alt="image" class="img-circle" src="~/images/a1.jpg">
-                                                    </div>
+                                        </div>
                                         <div class="media-body" style="padding-top:5px">
                                             <small class="pull-right text-muted" style="font-size:9.5px">{{messageTimeElapsed(m.DateCreated)}}</small>
                                             <strong>{{m.friendName}}</strong>
-                                            <div class="message-preview {{(m.Seen == false && m.SenderId != userID )? 'text-navy' : 'text-muted'}}"><i ng-show="(m.Seen == false && m.SenderId != userID )" class="icon icon-circle-small"></i>{{m.SenderId == userID ? 'You: ':''}}{{m.Message}}</div>
-                                    </div>
+                                            <div class="message-preview {{(m.Seen == false && m.SenderId != '@Session["userID"].ToString()' )? 'text-navy' : 'text-muted'}}"><i ng-show="(m.Seen == false && m.SenderId != '@Session["userID"].ToString()' )" class="icon icon-circle-small"></i>{{m.SenderId == '@Session["userID"].ToString()' ? 'You: ':''}}{{m.Message}}</div>
+                                        </div>
                                         <hr class="separator" />
-                                </div>
+                                    </div>
                                     <div ng-show="loadingMessages && messages.length == 0" class="sk-spinner sk-spinner-double-bounce" style="width: 25px; height: 25px;">
                                         <div class="sk-double-bounce1"></div>
                                         <div class="sk-double-bounce2"></div>
@@ -154,26 +157,38 @@
                                         <h6 class="text-muted font-bold" style="text-align:center;">Inbox is empty.</h6>
                                     </div>
                                 </div>
-            </li>
+                            </li>
                             @*<li>
-                                    <div class="text-center link-block">
-                                        <a>
-                                            <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
-                </a>
-                            </div>
-                                </li>*@
+                                                    <div class="text-center link-block">
+                                                        <a>
+                                                            <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                                </a>
+                                            </div>
+                                                </li>*@
 
-                    </ul>
-            </li>
+                        </ul>
+                    </li>
                     <li>
-                        <a>
-                            <i class="icon icon-switch2"></i> Log out
-                </a>
-            </li>
-        </ul>
-    </div>
+
+                    </li>
+                    <li>
+                        <a class="dropdown-toggle count-info" aria-expanded="false" role="button" href="" data-toggle="dropdown" style="padding-bottom: 0; padding-top: 12px">
+                            <img src="~/images/a1.jpg" class="img-circle" alt="" width="30" />
+                            &nbsp;
+                            @Session["name"]
+                        </a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li>
+                                <a href="@Url.Action("Logout", "Account")">
+                                    <i class="icon icon-switch2"></i> Log out
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </nav>
-                            </div>
+    </div>
 
 
 
@@ -182,59 +197,52 @@
             <div class="heading media">
                 <div class="pull-left">
                     <img src="~/images/a{{activeChatObj.friendID}}.jpg" class="img-circle" width="25" alt="{{activeChatObj.friendName}}" />
-                        </div>
+                </div>
                 <small class="pull-right" style="vertical-align:middle">
                     <span class="small-chat-box-close" style="vertical-align:middle" ng-click="hideChatBox()"><i class="icon icon-minus3"></i></span>
                 </small>
                 <span style="vertical-align:middle;cursor:pointer;">{{activeChatObj.friendName}}</span>
-                    </div>
+            </div>
 
             <div class="content" scroll-to-bottom="openedMessages[activeChatObj.friendID].messages" id="message-scrollable-container" style="height:234px; overflow: auto">
 
                 <div id="messages">
-                    <div class="{{b.SenderId==userID? 'right':'left'}}" ng-repeat="b in openedMessages[activeChatObj.friendID].messages | orderBy:'DateCreated'">
+                    <div class="{{(b.SenderId=='@Session["userID"].ToString()')? 'right':'left'}}" ng-repeat="b in openedMessages[activeChatObj.friendID].messages | orderBy:'DateCreated'">
                         <div class="author-name">
                             <small class="chat-date">
                                 {{messageTimeElapsed(b.DateCreated)}}
                             </small>
-                            </div>
-                        <div class="chat-message word-break {{b.SenderId==userID? '':'active'}}" style="max-width:145px">{{b.Message}}</div>
+                        </div>
+                        <div class="chat-message word-break {{(b.SenderId=='@Session["userID"].ToString()')? '':'active'}}" style="max-width:145px">{{b.Message}}</div>
 
-                            </div>
-                            </div>
+                    </div>
+                </div>
 
 
-                            </div>
+            </div>
             <div class="form-chat" style="padding: 4px 10px;">
                 <div class="input-group input-group-sm">
-                    <textarea class="form-control message-textarea" placeholder="Message to {{activeChatObj.friendName}}" ng-model="newMessage" ng-keypress="keypress($event)" style="resize:none;"></textarea>
+                    <textarea class="form-control message-textarea" id="chat-input" placeholder="Message to {{activeChatObj.friendName}}" ng-model="newMessage" ng-keypress="keypress($event)" style="resize:none;"></textarea>
                     <span class="input-group-btn">
                         <button class="btn btn-primary" type="button" ng-click="sendMessage()">
                             <i class="fa fa-send"></i>
                         </button>
                     </span>
-                            </div>
-            <div class="left">
-                <div class="author-name">
-                    Mick Lane
-                    <small class="chat-date">
-                        08:45 pm
-                    </small>
-                        </div>
-
-                    </div>
-                                                    </div>
+                </div>
+            </div>
 
 
+        </div>
+    </div>
     <div id="small-chat" class="small-chat-btn-{{k}} img-shadow" ng-repeat="(k,v) in openedMessages" style="bottom:{{((($index)*50)+20)}}px;border-radius:50%;">
 
         <a ng-click="closeMessageAvatar(k)" class="img-shadow">
             <span class="badge badge-danger pull-right small-chat-avatar-close">
                 <i class="icon icon-cross3"></i>
-                                </span>
+            </span>
         </a>
         <a class="open-small-chat no-padding" style="box-shadow: 0 1px 10px 3px rgba(0,0,0,0.2);" ng-click="openChatBox(v.info)">
             <img alt="image" class="img-circle" src="~/images/a{{k}}.jpg" width="38">
-                                                </a>
+        </a>
     </div>
 </div>
