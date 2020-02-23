@@ -28,6 +28,7 @@ namespace service_and_job_finder_web.Models
         }
     
         public virtual DbSet<tAccountType> tAccountTypes { get; set; }
+        public virtual DbSet<tApplication> tApplications { get; set; }
         public virtual DbSet<tBarangay> tBarangays { get; set; }
         public virtual DbSet<tBusinessEntity> tBusinessEntities { get; set; }
         public virtual DbSet<tCertification> tCertifications { get; set; }
@@ -53,10 +54,6 @@ namespace service_and_job_finder_web.Models
         public virtual DbSet<vtJobApplicant> vtJobApplicants { get; set; }
         public virtual DbSet<vUsersAcctBusinessEntityStatu> vUsersAcctBusinessEntityStatus { get; set; }
         public virtual DbSet<vUsersAcctPersonStatu> vUsersAcctPersonStatus { get; set; }
-<<<<<<< HEAD
-        public virtual DbSet<tApplication> tApplications { get; set; }
-=======
->>>>>>> 4dca222a3ee1b0e5ac9a0cac838b52a4581627f4
     
         public virtual int seenMessage(string userID, string frienID)
         {

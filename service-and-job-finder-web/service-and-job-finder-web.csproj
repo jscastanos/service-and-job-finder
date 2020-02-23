@@ -517,13 +517,6 @@
     <Content Include="App_Data\BodyPart_3a419ddc-3e9f-463f-bb16-599b4772b05f" />
     <Content Include="App_Data\BodyPart_4fce4fb4-1fd8-426c-8e00-4a873d4eabfe" />
     <Content Include="App_Data\BodyPart_f78f55c3-97cb-43ae-9733-cc01293e1c6e" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <Content Include="Content\font-families\open-sans\fonts\memnYaGs126MiZpBA-UFUKWyV9hmIqOjjg.woff2" />
     <Content Include="Content\font-families\open-sans\fonts\memnYaGs126MiZpBA-UFUKWyV9hvIqOjjg.woff2" />
     <Content Include="Content\font-families\open-sans\fonts\memnYaGs126MiZpBA-UFUKWyV9hnIqOjjg.woff2" />
@@ -594,6 +587,13 @@
     <Content Include="Content\font-families\open-sans\fonts\memnYaGs126MiZpBA-UFUKXGUdhoIqOjjg.woff2" />
     <Content Include="Content\font-families\open-sans\fonts\memnYaGs126MiZpBA-UFUKXGUdhrIqM.woff2" />
     <Content Include="Content\font-families\open-sans\fonts\memnYaGs126MiZpBA-UFUKXGUdhvIqOjjg.woff2" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

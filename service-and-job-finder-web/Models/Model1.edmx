@@ -436,6 +436,20 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
           <Property Name="AccountName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Status" Type="Int32" />
         </EntityType>
+        <EntityType Name="tApplication">
+          <Key>
+            <PropertyRef Name="recNo" />
+          </Key>
+          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApplicationId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PersonId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EntityId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="PostId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JobId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="tBarangay">
           <Key>
             <PropertyRef Name="recNo" />
@@ -755,6 +769,7 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
         </EntityType>
         <EntityContainer Name="AppWorkEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tAccountTypes" EntityType="Self.tAccountType" />
+          <EntitySet Name="tApplications" EntityType="Self.tApplication" />
           <EntitySet Name="tBarangays" EntityType="Self.tBarangay" />
           <EntitySet Name="tBusinessEntities" EntityType="Self.tBusinessEntity" />
           <EntitySet Name="tCertifications" EntityType="Self.tCertification" />
@@ -784,25 +799,7 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
             <Parameter Name="userID" Mode="In" Type="String" />
             <Parameter Name="frienID" Mode="In" Type="String" />
           </FunctionImport>
-<<<<<<< HEAD
-          <EntitySet Name="tApplications" EntityType="AppWorkModel.tApplication" />
-=======
->>>>>>> 4dca222a3ee1b0e5ac9a0cac838b52a4581627f4
         </EntityContainer>
-        <EntityType Name="tApplication">
-          <Key>
-            <PropertyRef Name="recNo" />
-          </Key>
-          <Property Name="recNo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ApplicationId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PersonId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EntityId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="PostId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="JobId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -816,6 +813,21 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
                 <ScalarProperty Name="AccountTypeId" ColumnName="AccountTypeId" />
                 <ScalarProperty Name="AccountName" ColumnName="AccountName" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tApplications">
+            <EntityTypeMapping TypeName="AppWorkModel.tApplication">
+              <MappingFragment StoreEntitySet="tApplication">
+                <ScalarProperty Name="recNo" ColumnName="recNo" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1162,24 +1174,6 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="seenMessage" FunctionName="AppWorkModel.Store.seenMessage" />
-<<<<<<< HEAD
-          <EntitySetMapping Name="tApplications">
-            <EntityTypeMapping TypeName="AppWorkModel.tApplication">
-              <MappingFragment StoreEntitySet="tApplication">
-                <ScalarProperty Name="JobId" ColumnName="JobId" />
-                <ScalarProperty Name="PostId" ColumnName="PostId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
-                <ScalarProperty Name="PersonId" ColumnName="PersonId" />
-                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-                <ScalarProperty Name="recNo" ColumnName="recNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-=======
->>>>>>> 4dca222a3ee1b0e5ac9a0cac838b52a4581627f4
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
