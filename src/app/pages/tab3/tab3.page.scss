@@ -1,3 +1,36 @@
-ion-content ion-toolbar {
-  --background: translucent;
+.main-details {
+  text-align: center;
+
+  .profileImage {
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    margin-top: 20px;
+    border: 3px solid white;
+  }
+  background-color: var(--ion-color-primary);
+  padding: 20px 0;
+  color: white;
+}
+
+ion-icon {
+  color: var(--ion-color-primary);
+  font-size: 25px;
+  margin-top: 8px;
+}
+
+.fixed-header {
+  position: fixed;
+  height: 50px;
+  width: 100%;
+  z-index: 22;
+  text-align: right !important;
+
+  .back-button {
+    padding: 10px;
+    margin-right: 18px;
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+  }
 }

@@ -190,6 +190,9 @@
     "@ionic/angular-toolkit:page": {
       "styleext": "scss",
       "spec": false
+    },
+    "@ionic/angular-toolkit:service": {
+      "spec": false
     }
   }
 }

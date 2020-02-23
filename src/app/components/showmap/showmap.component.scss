@@ -15,7 +15,7 @@
   }
 }
 
-.geocoder {
+#geocoder {
   position: absolute;
   z-index: 1;
   width: calc(100% - 40px);
@@ -24,4 +24,15 @@
 }
 .mapboxgl-ctrl-geocoder {
   min-width: 100%;
+}
+
+#detail {
+  position: absolute;
+  z-index: 2;
+  width: calc(100% - 20px);
+  left: 10px;
+  bottom: 70px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px 5px 0px 0px;
 }

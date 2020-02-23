@@ -1,0 +1,20 @@
+ion-button {
+  font-weight: 600;
+  --box-shadow: none;
+  margin-top: 15px;
+  height: 45px;
+
+  &.login > ion-text {
+    color: white;
+  }
+
+  &.create > ion-text {
+    color: var(--ion-color-medium);
+  }
+}
+
+h1 {
+  text-align: center;
+  color: var(--ion-color-primary);
+  font-size: 40px;
+}

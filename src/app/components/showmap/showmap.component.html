@@ -5,3 +5,14 @@
 <div id="map"></div>
 
 <div id="geocoder" class="geocoder"></div>
+
+<div id="detail" *ngIf="currentServices.id != null">
+  <div style="float: right">
+    <ion-icon name="close" (click)="closeDetails()"></ion-icon>
+  </div>
+  <h5>{{ currentServices.title }}</h5>
+  <p>{{ currentServices.description }}</p>
+  <ion-button (click)="navigate()" style="color: white"
+    >View Details</ion-button
+  >
+</div>

@@ -1,0 +1,102 @@
+<ion-content *ngIf="serviceWorkerData != null">
+  <div class="fixed-header">
+    <a routerLink="/home/tab2" class="back-button">
+      <ion-icon name="arrow-back"></ion-icon
+    ></a>
+  </div>
+  <img
+    src="{{url}}/something/fo/"
+    onerror="this.onerror = null; this.src = '../../assets/bg.jpg'"
+  />
+
+  <div style="padding: 10px;">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-text>
+            <h4>{{serviceWorkerData.BusinessEntityName}}</h4>
+          </ion-text></ion-col
+        >
+        <ion-col size="4" class="chat">
+          <ion-icon name="chatbox"></ion-icon><br />
+          <ion-text>Message</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-list>
+      <ion-list-header>
+        <ion-text>
+          Overview
+        </ion-text>
+      </ion-list-header>
+      <ion-item>
+        <ion-avatar slot="start">
+          <ion-icon name="location-outline"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <h4>
+            {{serviceWorkerData.BusinessEntityAddress != null ?
+            serviceWorkerData.BusinessEntityAddress : "No Address"}}
+          </h4>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start"
+          ><ion-icon name="information-circle-outline"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <h4>
+            {{serviceWorkerData.About != null ? serviceWorkerData.About : "No
+            About"}}
+          </h4>
+        </ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar slot="start"
+          ><ion-icon name="call-outline"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <h4>
+            {{serviceWorkerData.ContactNo != null ? serviceWorkerData.ContactNo
+            : "No Contact Details"}}
+          </h4>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-list-header>
+        <ion-text>Services</ion-text>
+      </ion-list-header>
+
+      <div *ngIf="serviceWorkerData.services.length > 0; else noresult">
+        <ion-item *ngFor="let service of serviceWorkerData.services">
+          <ion-avatar slot="start">
+            <ion-icon name="build"></ion-icon>
+          </ion-avatar>
+
+          <ion-label>
+            <h4>
+              {{service.service}}
+            </h4>
+          </ion-label>
+        </ion-item>
+      </div>
+      <ng-template #noresult>
+        <ion-item>
+          <ion-avatar slot="start">
+            <ion-icon name="build"></ion-icon>
+          </ion-avatar>
+
+          <ion-label>
+            <h4>
+              No Services
+            </h4>
+          </ion-label>
+        </ion-item>
+      </ng-template>
+    </ion-list>
+  </div>
+</ion-content>

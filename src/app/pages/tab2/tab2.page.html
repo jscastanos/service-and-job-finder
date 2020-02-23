@@ -1,17 +1,20 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card *ngFor="let s of services">
+    <img
+      src="{{url}}/something/fo/"
+      onerror="this.onerror = null; this.src = '../../assets/bg.jpg'"
+    />
+    <ion-card-header>
+      <ion-card-title>{{s.properties.title}}</ion-card-title>
+    </ion-card-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+    <ion-card-content>
+      {{s.properties.description}}
+      <div style="float: right;">
+        <ion-button (click)="navigate(s.properties.id)" class="view-button"
+          >View Details</ion-button
+        >
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
