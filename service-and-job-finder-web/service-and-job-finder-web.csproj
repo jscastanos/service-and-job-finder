@@ -182,6 +182,7 @@
     <Compile Include="API\MessageController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="API\OtherUtilityController.cs" />
     <Compile Include="API\ServiceWorkerApiController.cs">
       <SubType>Code</SubType>
     </Compile>

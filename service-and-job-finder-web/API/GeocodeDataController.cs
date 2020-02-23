@@ -15,6 +15,7 @@ namespace service_and_job_finder_web.API
 
         public class BusinessEntityToPartialGeoData
         {
+            public int recNo { get; set; }
             public string EntityId { get; set; }
             public string BusinessEntityName { get; set; }
             public string BusinessEntityAddress { get; set; }
@@ -39,6 +40,7 @@ namespace service_and_job_finder_web.API
 
         public class GeoDataProperties
         {
+            public int recNo { get; set; }
             public string id { get; set; }
             public string title { get; set; }
             public string description { get; set; }
@@ -65,7 +67,7 @@ namespace service_and_job_finder_web.API
             foreach (var d in data)
             {
                 BusinessEntityToPartialGeoData betpg = new BusinessEntityToPartialGeoData();
-
+                betpg.recNo = d.recNo;
                 betpg.EntityId = d.EntityId;
                 betpg.BusinessEntityName = d.BusinessEntityName;
                 betpg.BusinessEntityAddress = d.BusinessEntityAddress;
@@ -94,6 +96,7 @@ namespace service_and_job_finder_web.API
                 geodata.type = "Feature";
 
                 GeoDataProperties gdprop = new GeoDataProperties();
+                gdprop.recNo = d.recNo;
                 gdprop.id = d.EntityId;
                 gdprop.title = d.BusinessEntityName;
                 gdprop.description = d.BusinessEntityAddress;
@@ -143,26 +146,6 @@ namespace service_and_job_finder_web.API
 
         }
 
-        [Route("api/serviceworker/{id}")]
-        public IHttpActionResult GetServiceDetails(string id)
-        {
-            var data = (from a in db.tBusinessEntities
-                        join b in db.tUsers on a.UserId equals b.UserId
-                        where a.EntityId == id
-                        select new { 
-                            a.BusinessEntityName,
-                            a.BusinessEntityAddress,
-                            a.About,
-                            a.ContactNo,
-                            services = db.tServiceSets.Where(sst => sst.UserId == b.UserId).Select(ssst => new
-                            {
-                                service = db.tServices.Where(s => s.ServiceId == ssst.ServiceId).Select(ss => ss.Description).FirstOrDefault()
-                            })
-                        
-                        }).FirstOrDefault();
-
-            return Json(data);
-        }
 
     }
 }
