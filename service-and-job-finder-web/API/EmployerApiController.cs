@@ -38,7 +38,7 @@ namespace service_and_job_finder_web.API
             {
                 get;
                 set;
-            }
+        }
         }
         public class businessData
         {
@@ -82,7 +82,7 @@ namespace service_and_job_finder_web.API
             public string contact { get; set; }
             public string img { get; set; }
             public double lat { get; set; }
-            public double longitude { get; set; }  
+            public double longitude { get; set; }
              public string userid { get; set; }
         }
 
@@ -261,7 +261,7 @@ namespace service_and_job_finder_web.API
             {
                 obj.UserId = value.data.UserId;
             }
-            
+
             obj.UserId = value.data.UserId;
             obj.Filename = value.data.Filename;
             obj.Description = value.data.Description;
@@ -278,7 +278,7 @@ namespace service_and_job_finder_web.API
         [Route("api/employerapi/saveJobList")]
         public IHttpActionResult PostsaveJobList(tJob data)
         {
-            
+
             data.JobId = Guid.NewGuid().ToString("N").Substring(0, 5).ToUpper();
             data.Status = 0;
 

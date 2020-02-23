@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using service_and_job_finder_web.Models;
+using System.Web;
 
 
 namespace service_and_job_finder_web.API
@@ -328,6 +329,11 @@ namespace service_and_job_finder_web.API
             tUser.Status = 0;
             db.tUsers.Add(tUser);
             db.SaveChanges();
+
+            var session = HttpContext.Current.Session;
+            session["userID"] = tUser.UserId.ToString();
+            session["name"] = "";
+            session["entityID"] = "";
 
             return Ok(tUser);
         }

@@ -54,12 +54,12 @@
                 } 
                 else
                 {
-                    $("#targetImg").attr('src', _file.target.result);
-                    $("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
-                    $("#imgPreview").show();
-                    $("#fa-user").hide();
+                $("#targetImg").attr('src', _file.target.result);
+                $("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+                $("#imgPreview").show();
+                $("#fa-user").hide();
                 }
-                
+
             }
         }
     }
@@ -243,7 +243,7 @@
     s.saveUpdateCert = function () {
 
         s.updateCertArr.data = s.updateCertTempArr;
-        
+
         if (s.addTitle == true) {
 
             s.updateCertArr.userid = s.entityID;
@@ -262,16 +262,16 @@
         }
         else {
 
-            h.put("../api/employerapi/saveUpdateCert", s.updateCertArr).then(function (d) {
-                s.profileTempArrCert = {};
-                s.updateCertArr = {};
-                s.updateCertTempArr = {};
-                $("#certModal").modal("hide");
+        h.put("../api/employerapi/saveUpdateCert", s.updateCertArr).then(function (d) {
+            s.profileTempArrCert = {};
+            s.updateCertArr = {};
+            s.updateCertTempArr = {};
+            $("#certModal").modal("hide");
 
-                getCompanyCert();
-            });
+            getCompanyCert();
+        });
 
-        }
+    }
 
     }
 

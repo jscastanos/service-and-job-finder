@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Feed";
+}
+<link href="~/Content/sweetalert.css" rel="stylesheet" />
+<script src="~/Scripts/sweetalert.min.js"></script>
+<style>
+    .modal-header {
+        padding: 8px 15px !important;
+    }
+
+    @@media screen and (max-width: 990px) {
+        .m-t-sm {
+            margin-top: -10px;
+        }
+
+        .welcome {
+            display: none;
+        }
+    }
+</style>
+<div class="row">
+    <div class="col-md-4 animated fadeInLeft welcome" style="z-index:0">
+        <h2>&nbsp;</h2>
+        <div class="ibox img-shadow border-radius">
+            <div class="ibox-title no-borders">
+                <h2>Welcome!</h2>
+            </div>
+            <div class="ibox-content">
+                <div>
+                    Lorem Ipsum is simply dummy text of the
+                    printing and typesetting industry. Lorem
+                    Ipsum has been the industry's standard
+                    dummy text ever since the 1500s.
+
+
+                    When an unknown printer took a galley
+                    of type and scrambled it to make a type
+                    specimen book
+                </div>
+            </div>
+        </div>
+        <div class="ibox img-shadow border-radius">
+            <div class="ibox-title no-borders">
+                <h2>Welcome!</h2>
+            </div>
+            <div class="ibox-content">
+                <div>
+                    Lorem Ipsum is simply dummy text of the
+                    printing and typesetting industry. Lorem
+                    Ipsum has been the industry's standard
+                    dummy text ever since the 1500s.
+
+
+                    When an unknown printer took a galley
+                    of type and scrambled it to make a type
+                    specimen book
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        @if (Session["AccountType"].ToString() == "1" || Session["AccountType"].ToString() == "3")
+        {
+
+            <div class="pull-right m-t-sm">
+                <button class="btn btn-outline btn-primary" data-toggle="modal" data-target="#newPostModal">
+                    <b>
+                        <i class="icon icon-pencil6"></i>
+                    </b>
+                    Write Post
+                </button>
+            </div>
+        }
+        <h2 class="forum-item-title">&nbsp; Job Posts</h2>
+        @Html.Partial("_jobPosts")
+    </div>
+</div>
+@Html.Partial("_newPost")

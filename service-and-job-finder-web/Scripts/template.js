@@ -76,27 +76,28 @@ $(document).ready(function () {
     });
 
     // Open close small chat
-    //$('.open-small-chat').click(function () {
-    //    $(this).children().toggleClass('fa-comments').toggleClass('fa-remove');
-    //    $('.small-chat-box').toggleClass('active');
+    $('.open-small-chat').click(function () {
+        $(this).children().toggleClass('fa-comments').toggleClass('fa-remove');
+        $('.small-chat-box').toggleClass('active');
+    });
+
+    //// Initialize slimscroll for small chat
+    //$('.small-chat-box .content').slimScroll({
+    //    height: '234px',
+    //    size: '5px',
+    //    color: '#00000090',
+    //    railOpacity: 0.4,
+    //    wheelStep: 5
     //});
 
-    // Initialize slimscroll for small chat
-    $('.small-chat-box .content').slimScroll({
-        height: '234px',
-        size: '5px',
-        color: '#00000090',
-        railOpacity: 0.4,
-        wheelStep: 5
-    });
-    // Initialize slimscroll for messages dropdown
-    $('.messages-container').slimScroll({
-        height: '350px',
-        size: '5px',
-        color: '#00000090',
-        railOpacity: 0.4,
-        wheelStep: 5
-    }); 
+    //// Initialize slimscroll for messages dropdown
+    //$('.messages-container').slimScroll({
+    //    height: '250px',
+    //    size: '5px',
+    //    color: '#00000090',
+    //    railOpacity: 0.4,
+    //    wheelStep: 5
+    //}); 
 
     // Small todo handler
     $('.check-link').click(function () {
