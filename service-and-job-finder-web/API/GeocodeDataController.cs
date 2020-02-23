@@ -48,6 +48,7 @@ namespace service_and_job_finder_web.API
         {
             public double?[] coordinates { get; set; }
             public string type { get; set; }
+            public double PointsToOrigin { get; set; }
         }
 
 
@@ -56,7 +57,7 @@ namespace service_and_job_finder_web.API
         public IHttpActionResult GetGeoJSON(double latFrom, double longFrom)
         {
             //get data
-            var data = db.tBusinessEntities.ToList();
+            var data = db.tBusinessEntities.Where(b => b.Status == 3).ToList();
 
             var partialData = new List<BusinessEntityToPartialGeoData>();
 
@@ -107,6 +108,7 @@ namespace service_and_job_finder_web.API
 
                     gdgeometry.coordinates = coords;
                     gdgeometry.type = "Point";
+                    gdgeometry.PointsToOrigin = d.PointsFromOrigin;
 
                     geodata.geometry = gdgeometry;
                 }
@@ -140,7 +142,27 @@ namespace service_and_job_finder_web.API
             return d;
 
         }
+
+        [Route("api/serviceworker/{id}")]
+        public IHttpActionResult GetServiceDetails(string id)
+        {
+            var data = (from a in db.tBusinessEntities
+                        join b in db.tUsers on a.UserId equals b.UserId
+                        where a.EntityId == id
+                        select new { 
+                            a.BusinessEntityName,
+                            a.BusinessEntityAddress,
+                            a.About,
+                            a.ContactNo,
+                            services = db.tServiceSets.Where(s => s.UserId == b.UserId).Select(ss => new
+                            {
+                                service = db.tServices.Where(s => s.ServiceId == ss.ServiceId).FirstOrDefault()
+                            })
+                        
+                        }).FirstOrDefault();
+
+            return Json(data);
+        }
+
     }
-
-
 }
