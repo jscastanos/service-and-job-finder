@@ -23,7 +23,7 @@ namespace service_and_job_finder_web.API
         {
             try
             {
-             //   db.seenMessage(userID, friendID);
+                db.seenMessage(userID, friendID);
                 return Ok();
             }
             catch (Exception e)
@@ -82,7 +82,7 @@ namespace service_and_job_finder_web.API
                 s.SenderId,
                 s.Seen,
                 friendID = userID == s.SenderId ? s.RecipientId : s.SenderId,
-                friendName = db.tBusinessEntities.Any(b => b.UserId == (userID == s.SenderId ? s.RecipientId : s.SenderId)) ? db.tBusinessEntities.FirstOrDefault(f => f.UserId == (userID == s.SenderId ? s.RecipientId : s.SenderId)).BusinessEntityName : db.tPersonInfoes.Where(p => p.UserId == (userID == s.SenderId ? s.RecipientId : s.SenderId)).Select(sss => new { Name = sss.Firstname + " " + (sss.Middlename != null ? sss.Middlename.Substring(0, 1) : "") + sss.Lastname }).FirstOrDefault().Name,
+                friendName = db.tBusinessEntities.Any(b => b.UserId == (userID == s.SenderId ? s.RecipientId : s.SenderId)) ? db.tBusinessEntities.FirstOrDefault(f => f.UserId == (userID == s.SenderId ? s.RecipientId : s.SenderId)).BusinessEntityName : db.tPersonInfoes.Where(p => p.UserId == (userID == s.SenderId ? s.RecipientId : s.SenderId)).Select(sss => new { Name = sss.Firstname + " " + (sss.Middlename != null ? sss.Middlename.Substring(0, 1) + ". ": "") + sss.Lastname }).FirstOrDefault().Name,
             }).GroupBy(g => g.friendID).Select(s => s.OrderByDescending(o => o.DateCreated).FirstOrDefault());
             return Json(messages);
         }

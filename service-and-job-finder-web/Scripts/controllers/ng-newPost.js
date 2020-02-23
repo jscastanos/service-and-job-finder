@@ -4,7 +4,7 @@
 
 
     function loadJobTitles() {
-        h.post('../api/feed/jobtitle/' + $('#userID').val()).then(function (d) { 
+        h.post('../api/feed/jobtitle/' + $('#entityID').val()).then(function (d) {
             s.jobTitles = d.data;
         })
     }
@@ -40,7 +40,7 @@
         s.imgSrc = null;
     }
     s.savePost = function () {
-        s.post.UserId = s.userID;
+        s.post.UserId = $('#userID').val();
         var formdata = new FormData();
 
 

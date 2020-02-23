@@ -25,6 +25,7 @@
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="DateUpdated" Type="datetime" />
           <Property Name="Status" Type="int" />
+          <Property Name="PostId" Type="varchar" MaxLength="50" />
           <Property Name="JobId" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tBarangay">
@@ -446,6 +447,7 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Int32" />
+          <Property Name="PostId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="JobId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tBarangay">
@@ -824,6 +826,7 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
                 <ScalarProperty Name="JobId" ColumnName="JobId" />
               </MappingFragment>
             </EntityTypeMapping>

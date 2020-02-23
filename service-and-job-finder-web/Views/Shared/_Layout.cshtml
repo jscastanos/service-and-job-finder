@@ -7,8 +7,9 @@
 
     <title>@ViewBag.Title | Jobs and Service Finder</title>
     @Styles.Render("~/css")
-    @Scripts.Render("~/js")
-
+        @Scripts.Render("~/js")
+    <link href="~/Content/font-families/open-sans/open-sans.css" rel="stylesheet" />
+    @*<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,800,800i|Open+Sans:400,400i,600,600i,700,700i&display=swap" rel="stylesheet">*@
     <style>
         .img-shadow {
             /* -webkit-box-shadow: 0 0 3px 0 #919191; */
@@ -40,6 +41,7 @@
 
 <body class="top-navigation" ng-app="SJF" ng-cloak>
     <input type="hidden" id="userID" value="@Session["userID"]" />
+    <input type="hidden" id="entityID" value="@Session["entityID"]" />
     <div id="wrapper">
         <div id="page-wrapper" class="gray-bg">
             @Html.Partial("_navbar")

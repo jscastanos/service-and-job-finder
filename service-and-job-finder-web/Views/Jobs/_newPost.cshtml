@@ -15,7 +15,7 @@
 </style>
 
 
-<div class="modal inmodal" id="newPostModal" tabindex="-1" role="dialog" aria-hidden="true" ng-controller="newPost" ng-init="userID=@Session["userID"]" style="margin-top: 15vh;">
+<div class="modal inmodal" id="newPostModal" tabindex="-1" role="dialog" aria-hidden="true" ng-controller="newPost" @*ng-init="userID=@Session["userID"]"*@ style="margin-top: 15vh;">
     <div class="modal-dialog">
         <form ng-submit="savePost()" name="postForm">
             <div class="modal-content">

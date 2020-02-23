@@ -3,9 +3,7 @@ var myHub = $.connection.myHub;
 
 $.connection.hub.start()
    .done(function (d) {
-       console.error('Connected')
-       console.error(d.id)
-
+       console.log(d)
        myHub.server.register($('#userID').val());
    })
    .fail(function (d) {

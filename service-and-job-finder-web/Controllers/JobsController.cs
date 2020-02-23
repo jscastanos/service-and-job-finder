@@ -17,9 +17,9 @@ namespace service_and_job_finder_web.Controllers
         AppWorkEntities db = new AppWorkEntities();
         IHubContext context = GlobalHost.ConnectionManager.GetHubContext<MyHub>();
 
-        public ActionResult Feed(string id) // id is for session purpose only remove in production
+        public ActionResult Feed() // id is for session purpose only remove in production
         {
-            Session["userID"] = id;
+            //Session["userID"] = id;
             return View();
         }
 
