@@ -273,10 +273,12 @@
     <Content Include="images\zender_logo.png" />
     <Content Include="packages.config" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\blueimp-gallery.min.css" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\cropper.min.js" />
     <Content Include="Scripts\croppie.js" />
+    <Content Include="Scripts\jquery.blueimp-gallery.min.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\controllers\ng-navbar.js" />
     <Content Include="Scripts\ng-employerProfile.js" />

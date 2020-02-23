@@ -247,9 +247,17 @@
     s.hideJobListApplicant = function () {
         s.jobDiv = false;
     }
-
+    s.addCert = function () {
+        s.updateCertTempArr = {};
+        $("#updateImg").hide();
+        s.updateTitle = false;
+        s.addTitle = true;
+        $("#certModal").modal("show");
+    }
     s.updateCert = function (id) {
-
+        $("#updateImg").show();
+        s.updateTitle = true;
+        s.addTitle = false;
         h.get("../api/employerapi/updateCert?id=" + id).then(function (d) {
             s.updateCertTempArr = d.data;
             s.updateImg = true;
@@ -264,18 +272,32 @@
 
         s.updateCertArr.data = s.updateCertTempArr;
 
-        h.put("../api/employerapi/saveUpdateCert", s.updateCertArr).then(function (d) {
-            s.profileTempArrCert = {};
-            s.updateCertArr = {};
-            s.updateCertTempArr = {};
-            $("#certModal").modal("hide");
+        if (s.addTitle == true) {
 
-            var el = document.getElementById("imgUpdate");
+            h.post("../api/employerapi/saveCertificate", s.updateCertArr).then(function (d) {
 
-            el.src = "../Employer/RetrieveCertImg?id=" + d.data;
+                s.uploadImgID = false;
 
-            getCompanyCert();
-        });
+                s.profileTempArrCert.push(d.data);
+                s.updateCertArr = {};
+
+                $("#certModal").modal("hide");
+                $("#imgPreview").hide();
+            });
+
+        }
+        else {
+
+            h.put("../api/employerapi/saveUpdateCert", s.updateCertArr).then(function (d) {
+                s.profileTempArrCert = {};
+                s.updateCertArr = {};
+                s.updateCertTempArr = {};
+                $("#certModal").modal("hide");
+
+                getCompanyCert();
+            });
+
+        }
 
     }
 

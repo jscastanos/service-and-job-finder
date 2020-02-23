@@ -12,11 +12,13 @@
 <script src="~/Scripts/chosen.jquery.js"></script>
 <script src="~/Scripts/cropper.min.js"></script>
 <script src="~/Scripts/croppie.js"></script>
+<script src="~/Scripts/jquery.blueimp-gallery.min.js"></script>
 <link href="~/Content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
 <link href="~/Content/select2.min.css" rel="stylesheet" />
 <link href="~/Content/chosen/chosen.css" rel="stylesheet" />
 <link href="~/Content/croppie.css" rel="stylesheet" />
 <link href="~/Content/cropper.min.css" rel="stylesheet" />
+<link href="~/Scripts/blueimp-gallery.min.css" rel="stylesheet" />
 
 <script src='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js'></script>
 <link href='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
@@ -96,13 +98,8 @@
                         </table>
                     </div>
                 </div>
-
             </div>
-
         </div>
-            
-
-        
     </div>
     <div class="col-lg-6">
         <div class="pull-right" ng-if="userData.Status == 0">
@@ -170,7 +167,7 @@
                         <div class="ibox-title">
                             <h5>Certifications</h5>
                             <div class="ibox-tools">
-                                <a class="">
+                                <a ng-click="addCert()">
                                     <i class="fa fa-plus"></i>
                                 </a>
                             </div>
@@ -179,12 +176,25 @@
                             <label ng-if="profileTempArrCert.length == 0">No Certificate</label>
 
                             <div ng-repeat="a in profileTempArrCert">
-                                <center style="margin-bottom:20px">
-                                    <img id="imgUpdate" class="img-container" style="width:200px;height:150px" alt="image" src="../Employer/RetrieveCertImg?id={{a.recNo}}" />
+                                <center style="margin-bottom:20px" class="lightBoxGallery">
+                                    <a href="../Employer/RetrieveCertImg?id={{a.recNo}}" title="Image from Unsplash" data-gallery="">
+                                        <img id="imgUpdate" class="img-container" style="width:200px;height:150px" alt="image" src="../Employer/RetrieveCertImg?id={{a.recNo}}" />
+
+                                    </a>
                                     <h3 class="m-b-xs"><strong>{{a.Filename}}</strong></h3>
                                     <div class="font-bold">{{a.Description}}</div>
-                                    <button ng-click="updateCert(a.recNo)"><i class="fa fa-pencil"></i></button>
-                                    <button ng-click="removeCert(a.recNo)"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-default" ng-click="updateCert(a.recNo)"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-default" ng-click="removeCert(a.recNo)"><i class="fa fa-trash"></i></button>
+
+                                    <div id="blueimp-gallery" class="blueimp-gallery">
+                                        <div class="slides"></div>
+                                        <h3 class="title"></h3>
+                                        <a class="prev">‹</a>
+                                        <a class="next">›</a>
+                                        <a class="close">×</a>
+                                        <a class="play-pause"></a>
+                                        <ol class="indicator"></ol>
+                                    </div>
                                 </center>
                             </div>
 
@@ -222,7 +232,8 @@
             <div class="modal-content animated fadeInLeft">
                 <div class="modal-header bg-primary">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h6 class="modal-title"><i class="fa fa-plus"></i>&nbsp;&nbsp; Update Certificate</h6>
+                    <h6 class="modal-title" ng-show="updateTitle"><i class="fa fa-pencil"></i>&nbsp;&nbsp; Update Certificate</h6>
+                    <h6 class="modal-title" ng-show="addTitle"><i class="fa fa-plus"></i>&nbsp;&nbsp; Add Certificate</h6>
                 </div>
 
                 <div class="modal-body">
@@ -264,7 +275,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary" style="width:100%">Update</button>
+                                <button ng-show="updateTitle" type="submit" class="btn btn-primary" style="width:100%">Update</button>
+                                <button ng-show="addTitle" type="submit" class="btn btn-primary" style="width:100%">Save</button>
                             </div>
                         </div>
                     </form>
@@ -277,7 +289,7 @@
 <script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyALxrTX2HnaT0llLY5C5uHsJb8FdY64_X0'></script>
 <style>
     #gmap_canvas img {
-        max-width: none !important;
+        max-width: none !important;            
         background: none !important;
     }
 </style>
