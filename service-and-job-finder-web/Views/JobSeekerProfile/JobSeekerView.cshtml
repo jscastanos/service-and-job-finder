@@ -1,0 +1,1123 @@
+﻿@{
+    ViewBag.Title = "JobSeekerView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/Scripts/ngJobSView.js"></script>
+<script src="~/Scripts/chosen.jquery.js"></script>
+<script src="~/Scripts/select2.full.min.js"></script>
+<script src="~/Scripts/jquery.blueimp-gallery.min.js"></script>
+
+<link href="~/Content/select2.min.css" rel="stylesheet" />
+<link href="~/Content/chosen/chosen.css" rel="stylesheet" />
+<link href="~/Content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+<link href="~/Content/blueimp/css/blueimp-gallery.min.css" rel="stylesheet" />
+<style>
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .mylist li::before {
+        content: "";
+        width: 9px;
+        height: 9px;
+        background: #1ab394;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .img-square {
+        width: 250px;
+        height: 250px;
+        object-fit: cover;
+    }
+    .blueimp-gallery>.slides>.slide>.slide-content{
+        height: 80vh;
+    }
+
+.profile-pic {
+	position: relative;
+	display: inline-block;
+}
+
+.profile-pic:hover .edit {
+	display: block;
+}
+
+.edit {
+	padding-top: 5px;	
+	padding-right:15px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: none;
+}
+</style>
+
+<div ng-controller="JSView" >
+    <div id="blueimp-gallery" class="blueimp-gallery">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+    </div>
+
+    <div id="empInfo" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <button type="button" class="close" ng-click="refresh()" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">
+                        <i class="icon-add-to-list"></i> Edit Profile
+                    </h6>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div>
+                            <form>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="employmentDataSelect.CompanyName" placeholder="ContactNo" data-popup="tooltip" title="ContactNo" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="employmentDataSelect.CompanyAddress" placeholder="Address" data-popup="tooltip" title="Address" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="employmentDataSelect.Position" placeholder="Title" data-popup="tooltip" title="Title" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="month" ng-model="employmentDataSelect.StartedDate" placeholder="Date Started" data-popup="tooltip" title="Date Started" class="form-control" required>
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="month" ng-model="employmentDataSelect.EndedDate" placeholder="Date Ended" data-popup="tooltip" title="Date Ended" class="form-control" required>
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button style="width:100%" class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                            @*ng-disabled=""*@ ng-click="SaveEmpInfo(employmentDataSelect)">
+                                        <strong>Continue</strong>
+                                    </button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="nameInfo" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <button type="button" class="close" ng-click="refresh()" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">
+                        <i class="icon-add-to-list"></i> Edit Profile
+                    </h6>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div>
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="text" ng-model="nameInfoSelect.Firstname" placeholder="Birthday" data-popup="tooltip" title="Firstname" class="form-control" required>
+                                                <span class="input-group-addon"><i class="icon-user"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="text" ng-model="nameInfoSelect.Lastname" placeholder="Birthday" data-popup="tooltip" title="Lastname" class="form-control" required>
+                                                <span class="input-group-addon"><i class="icon-user"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="text" ng-model="nameInfoSelect.Middlename" placeholder="Birthday" data-popup="tooltip" title="Middlename" class="form-control" required>
+                                                <span class="input-group-addon"><i class="icon-user"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="date" ng-model="nameInfoSelect.Birthdate" placeholder="Birthday" data-popup="tooltip" title="Birthday" class="form-control" required>
+                                                <span class="input-group-addon"><i class="fa fa-birthday-cake"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="nameInfoSelect.ContactNo" placeholder="ContactNo" data-popup="tooltip" title="ContactNo" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="nameInfoSelect.Address" placeholder="Address" data-popup="tooltip" title="Address" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="nameInfoSelect.Title" placeholder="Title" data-popup="tooltip" title="Title" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <textarea ng-model="nameInfoSelect.Introduction" type="text" placeholder="Introduction" data-popup="tooltip" title="Introduction" class="form-control" required></textarea>
+                                        <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button style="width:100%" class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                            @*ng-disabled=""*@ ng-click="SaveProfInfo(nameInfoSelect)">
+                                        <strong>Continue</strong>
+                                    </button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="trainingInfo" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <button type="button" class="close" ng-click="refresh()" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">
+                        <i class="icon-add-to-list"></i> Edit Profile
+                    </h6>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div>
+                            <form>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="trainDataSelect.TrainingTitle" placeholder="TrainingTitle" data-popup="tooltip" title="TrainingTitle" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="trainDataSelect.TrainingVenue" placeholder="TrainingVenue" data-popup="tooltip" title="TrainingVenue" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="trainDataSelect.Description" placeholder="Description" data-popup="tooltip" title="Description" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="month" ng-model="trainDataSelect.Date" placeholder="Date" data-popup="tooltip" title="Date" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button style="width:100%" class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                            @*ng-disabled=""*@ ng-click="SaveTrainInfo(trainDataSelect)">
+                                        <strong>Continue</strong>
+                                    </button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="eduInfo" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <button type="button" class="close" ng-click="refresh()" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">
+                        <i class="icon-add-to-list"></i> Edit Profile
+                    </h6>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div>
+                            <form>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="EducationDataSelect.School" placeholder="School" data-popup="tooltip" title="School" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="EducationDataSelect.Course" placeholder="Address" data-popup="tooltip" title="Course" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="EducationDataSelect.Address" placeholder="Address" data-popup="tooltip" title="Address" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="month" ng-model="EducationDataSelect.DateStared" placeholder="Date Started" data-popup="tooltip" title="Date Started" class="form-control" required>
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="month" ng-model="EducationDataSelect.DateEnded" placeholder="Date Ended" data-popup="tooltip" title="Date Ended" class="form-control" required>
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button style="width:100%" class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                            @*ng-disabled=""*@ ng-click="SaveEduInfo(EducationDataSelect)">
+                                        <strong>Continue</strong>
+                                    </button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="portInfo" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <button type="button" class="close" ng-click="refresh()" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">
+                        <i class="icon-add-to-list"></i> Edit Profile
+                    </h6>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div>
+                            <form>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="portInfoSelect.Title" placeholder="Title" data-popup="tooltip" title="Title" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="portInfoSelect.Description" placeholder="TrainingVenue" data-popup="tooltip" title="TrainingVenue" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="portInfoSelect.URL" placeholder="Description" data-popup="tooltip" title="Description" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                    <div class="input-group">
+                                        <input type="month" ng-model="trainDataSelect.Date" placeholder="Date" data-popup="tooltip" title="Date" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                    </div>
+                                </div>*@
+                                <div>
+                                    <button style="width:100%" class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                            @*ng-disabled=""*@ ng-click="SaveportInfo(portInfoSelect)">
+                                        <strong>Continue</strong>
+                                    </button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="certInfo" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <button type="button" class="close" ng-click="refresh()" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">
+                        <i class="icon-add-to-list"></i> Edit Profile
+                    </h6>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div>
+                            <form>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="certInfoSelect.Filename" placeholder="Filename" data-popup="tooltip" title="Filename" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="certInfoSelect.Description" placeholder="Description" data-popup="tooltip" title="Description" class="form-control" required>
+                                        <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+                                        <div class="input-group">
+                                            <input type="month" ng-model="trainDataSelect.Date" placeholder="Date" data-popup="tooltip" title="Date" class="form-control" required>
+                                            <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                        </div>
+                                    </div>*@
+                                <div>
+                                    <button style="width:100%" class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                            @*ng-disabled=""*@ ng-click="SavecertInfo(certInfoSelect)">
+                                        <strong>Continue</strong>
+                                    </button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*portfolioModal*@
+    <div id="portfolioModal" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <form>
+                            <div>
+                                <button id="fileup" style="width:100%" type="button" class="btn btn-info">
+                                    <span class="fa fa-upload" aria-hidden="true"></span> Upload Certification Image
+                                </button>
+                                <div class="form-group" @*ng-click="hideshow2()"*@ id="fa-user">
+                                    <input type="file" id="files" style="display:none" />
+
+                                </div>
+                                <div id="imgPreview2" class="thumbnail" style="display:none">
+                                    <img class="img-responsive" id="targetImg2" />
+                                    <div class="caption">
+                                        <a href="#" onclick="ClearPreview()"><i class="fa fa-trash"></i></a>
+                                        <span id="description2"></span>
+                                    </div>
+                                </div>
+                                <div class="btn btn-primary" ng-hide="true">
+                                    <input type="file" id="imageBrowes2" required />
+                                </div>
+                                <div class="form-group"><label>Title</label> <input type="text" placeholder="Title" ng-model="TcertTempArr2.Title" class="form-control" required></div>
+
+                                <div class="form-group"><label>Description</label> <input type="text" placeholder="Description" ng-model="TcertTempArr2.Description" class="form-control"></div>
+                                <div class="form-group"><label>URL</label> <input type="text" placeholder="URL" ng-model="TcertTempArr2.URL" class="form-control"></div>
+                                <input type="hidden" ng-model="TcertTempArr2.id" class="form-control">
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                            ng-disabled="TcertTempArr2.Title.length <= 4 ||TcertTempArr2.Title == null ||TcertTempArr2.Description.length <= 4 || TcertTempArr2.Description == null" @*||certTempArr.URL.length <= 4 || certTempArr.URL == null|| certTempArr.ProjectImg == null*@
+                                            ng-click="addToTableCert2(TcertTempArr2)">
+                                        <strong>Continue</strong>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*certificationModal*@
+    <div id="certificationModal" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <form ng-submit="addToTableCert()">
+                            <div>
+                                <div class="form-group" ng-click="hideshow()" id="fa-user">
+                                    <input type="file" id="files" style="display:none" />
+                                    <button id="fileup" style="width:100%" type="button" class="btn btn-info">
+                                        <span class="fa fa-upload" aria-hidden="true"></span> Upload Certification Image
+                                    </button>
+                                </div>
+                                <div id="imgPreview" class="thumbnail" style="display:none">
+                                    <img class="img-responsive" id="targetImg" />
+                                    <div class="caption">
+                                        <a href="#" onclick="ClearPreview()"><i class="fa fa-trash"></i></a>
+                                        <span id="description"></span>
+                                    </div>
+                                </div>
+                                <div class="btn btn-primary" ng-hide="true">
+                                    <input type="file" id="imageBrowes" required />
+                                </div>
+                                <div class="form-group"><label>Filename</label> <input type="text" placeholder="Filename" ng-model="TcertTempArr.Filename" class="form-control" required></div>
+
+                                <div class="form-group"><label>Description</label> <input type="text" placeholder="Description" ng-model="TcertTempArr.Description" class="form-control" required></div>
+                                @*<input type="hidden" ng-model="certTempArr.id" class="form-control">*@
+                                <div>
+                                    <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"
+                                            ng-disabled="TcertTempArr.Filename.length <= 4 ||TcertTempArr.Filename == null ||TcertTempArr.Description.length <= 4 || TcertTempArr.Description == null" @*|| certTempArr.FileImg == null*@>
+                                        <strong>Continue</strong>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*educationModal*@
+    <div id="educationModal" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <button type="button" class="close" ng-click="refresh()" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">
+                        <i class="icon-add-to-list"></i> Edit Profile
+                    </h6>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div>
+                            <div class="form-group"><label>School</label> <input type="text" placeholder="School name" ng-model="certTempArr.School" class="form-control" required></div>
+                            <div class="form-group"><label>School address</label> <input type="text" placeholder="School address" ng-model="certTempArr.Address" class="form-control" required></div>
+
+                            <div class="form-group"><label>Course</label> <input type="text" placeholder="Course" ng-model="certTempArr.Course" class="form-control"></div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group"><label>Start date</label> <input type="month" placeholder="Start date" ng-model="certTempArr.DateStared" class="form-control" required></div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group"><label>End date</label> <input type="month" placeholder="End date" ng-model="certTempArr.DateEnded" class="form-control" required></div>
+
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                        ng-disabled="certTempArr.School.length <= 4 ||certTempArr.School == null || certTempArr.Address.length <= 4 ||certTempArr.Address == null
+                                                                    || certTempArr.Course.length <= 4 ||certTempArr.Course == null || certTempArr.DateStared == null || certTempArr.DateEnded == null"
+                                        ng-click="Edu()">
+                                    <strong>Continues</strong>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*trainingModal*@
+    <div id="trainingModal" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <button type="button" class="close" ng-click="refresh()" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">
+                        <i class="icon-add-to-list"></i> Edit Profile
+                    </h6>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div>
+                            <div class="form-group"><label>Training Title</label> <input type="text" placeholder="Training Title" ng-model="trainTempArr.TrainingTitle" class="form-control" required></div>
+                            <div class="form-group"><label>Training Venue</label> <input type="text" placeholder="Training Venue" ng-model="trainTempArr.TrainingVenue" class="form-control" required></div>
+
+                            <div class="form-group"><label>Description</label> <input type="text" placeholder="Description" ng-model="trainTempArr.Description" class="form-control"></div>
+                            <input type="hidden" ng-model="trainTempArr.id" class="form-control">
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group"><label>Date</label> <input type="month" placeholder="Date" ng-model="trainTempArr.Date" class="form-control" required></div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    @*<div class="form-group"><label>End date</label> <input type="month" placeholder="End date" ng-model="certTempArr.EndedDate" class="form-control" required></div>*@
+
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                        @*ng-disabled="certTempArr.TrainingTitle.length <= 4 ||certTempArr.TrainingTitle == null || certTempArr.TrainingVenue.length <= 4 ||certTempArr.TrainingVenue == null
+                                                                    || certTempArr.Description.length <= 4 ||certTempArr.Description == null || certTempArr.Date == null"*@
+                                        ng-click="Trn()">
+                                    <strong>Continue</strong>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*employmentModal*@
+    <div id="employmentModal" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success">
+                    <button type="button" class="close" ng-click="refresh()" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title">
+                        <i class="icon-add-to-list"></i> Edit Profile
+                    </h6>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div>
+                            <div class="form-group"><label>Company name</label> <input type="text" placeholder="Company name" ng-model="empTempArr.CompanyName" class="form-control" required></div>
+                            <div class="form-group"><label>Company address</label> <input type="text" placeholder="Company address" ng-model="empTempArr.CompanyAddress" class="form-control" required></div>
+
+                            <div class="form-group"><label>Position</label> <input type="text" placeholder="Position" ng-model="empTempArr.Position" class="form-control"></div>
+                            <input type="hidden" ng-model="certTempArr.id" class="form-control">
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group"><label>Start date</label> <input type="month" placeholder="Start date" ng-model="empTempArr.StartedDate" class="form-control" required></div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group"><label>End date</label> <input type="month" placeholder="End date" ng-model="empTempArr.EndedDate" class="form-control" required></div>
+
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs"
+                                        ng-disabled="empTempArr.CompanyName.length <= 4 ||empTempArr.CompanyName == null || empTempArr.CompanyAddress.length <= 4 ||empTempArr.CompanyAddress == null
+                                                                    || empTempArr.Position.length <= 4 ||empTempArr.Position == null || empTempArr.StartedDate == null || empTempArr.EndedDate == null"
+                                        ng-click="Emp()">
+                                    <strong>Continue</strong>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row m-b-lg m-t-lg">
+            <div class="btn btn-primary" ng-hide="true">
+                <input type="file" id="picProf" required />
+            </div>
+
+            <div class="col-md-6" ng-repeat="i in profileData">
+                
+                <div class="profile-image profile-pic">
+                    <img class="img-circle circle-border m-b-md" id="targetPic" ng-if="switchpic == 0" />
+                    <img src="../JobSeekerProfile/RetrieveProfile?id={{i.recNo}}" ng-if="switchpic == 1" alt="image" class="img-circle circle-border m-b-md">
+                    <div class="edit"><a href="#"><i class="fa fa-pencil fa-lg" ng-click="upProfile()"></i></a></div>
+                </div>
+
+                <div class="profile-info">
+                    <div class="">
+                        <div>
+
+                            <h2 class="no-margins">
+                                {{(i.Firstname + (i.Middlename != null ? ' ' + (i.Middlename | limitTo:1) + '.' : '')+ ' '  + i.Lastname ) }}
+                                <a ng-if="statusProf == 0" data-toggle=" modal" class="btn btn-default btn-circle" ng-click="nameProfEdit(i)"><i class="fa fa-pencil"></i></a>
+                            </h2>
+                            <h4>{{i.Title}}</h4>
+                            <small>
+                                {{i.Address}}|{{i.ContactNo}}
+                            </small>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-3 col-md-offset-3">
+                <table class="small m-b-xs" ng-if="statusProf == 2">
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-outline " style="margin-bottom:4px;margin-right:4px;width:105px">Qualify</button>
+
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn  btn-outline btn-danger " style="width:105px">Unqualify</button>
+                        </td>
+
+                    </tr>
+                </table>
+
+                <table class="small m-b-xs" ng-if="statusProf == 1">
+                    <tr>
+                        <td>
+
+                            <button type="button" class="btn btn-primary btn-outline " style="margin-bottom:4px;margin-right:4px;width:105px">Approve</button>
+
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn  btn-outline btn-danger ">Dissapprove</button>
+                        </td>
+
+                    </tr>
+                </table>
+
+                <table class="table small m-b-xs" ng-if="statusProf == 0">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>18</strong> Appointments
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>18</strong> Appointments
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    <div class="row">
+
+        <div class="col-lg-8">
+
+            <div class="ibox img-shadow">
+                <div class="ibox-content" ng-repeat="i in profileData">
+                    <b>Introduction</b>
+                    @*<a data-toggle="modal" class="btn btn-default btn-circle" ng-click="PortAdd()"><i class="fa fa-pencil"></i></a>*@
+                    <p>{{i.Introduction}}</p>
+                </div>
+            </div>
+
+            <div class="ibox img-shadow">
+                <div class="ibox-content">
+                    <b>Portfolio</b>
+                    <a data-toggle="portfolioModal" class="btn btn-default btn-circle" ng-click="PortAdd()" ng-if="statusProf == 0"><i class="fa fa-plus"></i></a>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="j in portfolioData">
+                                <td class="text-muted">
+                                    <div class="col-sm-7">
+                                        <div class="pull-left">
+
+
+                                            <div class="lightBoxGallery">
+
+                                                <a href="../JobSeekerProfile/RetrievePort?id={{j.recNo}}" class="feed-photo img-square" title="{{j.Title}}" data-gallery="{{'portfolio'}}">
+                                                    <img class="feed-photo img-square" src="../JobSeekerProfile/RetrievePort?id={{j.recNo}}"></a>                                        
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-5">
+                                        <div class="pull-left">
+
+                                            <h4>{{j.Title}}</h4>
+                                            <span>{{j.Description}}</span><br>
+                                            <label>URL: {{j.URL}}</label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="text-align:right">
+                                    <button ng-if="statusProf == 0" type="button" class="btn btn-default btn-sm btn-circle" ng-click="portEdit(j)"><i class="icon-pencil4"></i></button>
+                                    <button ng-if="statusProf == 0" type="button" class="btn btn-default btn-sm btn-circle" ng-click="RemovePort(j.recNo)"><i class="icon-trash"></i></button>
+                                </td>
+
+                            </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="ibox img-shadow">
+                <div class="ibox-content">
+                    <b>Employment History</b>
+                    <a data-toggle="modal" ng-if="statusProf == 0" class="btn btn-default btn-circle" ng-click="AddEmp()"><i class="fa fa-plus"></i></a>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="k in employmentData">
+                                <td class="text-muted">
+                                    <div class="col-sm-12">
+                                        <b>
+                                            {{k.Position}} <br />
+                                            {{k.CompanyName}}<br />
+
+                                        </b>
+                                        <span>{{k.CompanyAddress}} <br />{{k.StartedDate| date:'yyyy'}}-{{k.EndedDate| date:'yyyy'}}</span>
+
+
+                                    </div>
+
+                                <td style="text-align:right">
+
+                                    <button ng-if="statusProf == 0" type="button" class="btn btn-default btn-sm btn-circle" ng-click="empInfo(k)"><i class="icon-pencil4"></i></button>
+                                    <button ng-if="statusProf == 0" type="button" class="btn btn-default btn-sm btn-circle" ng-click="DeleteEmp(k)"><i class="icon-trash"></i></button>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="ibox img-shadow">
+                <div class="ibox-content">
+                    <b>Trainings</b>
+                    <a data-toggle="modal" ng-if="statusProf == 0" class="btn btn-default btn-circle" ng-click="AddTrn()"><i class="fa fa-plus"></i></a>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="l in TrainingsData">
+                                <td class="text-muted">
+                                    <div class="col-sm-12">
+                                        <b>
+                                            {{l.TrainingTitle}} <br />
+                                            <label>
+                                                {{l.TrainingVenue}}<br />
+                                            </label><br>
+                                        </b>
+
+                                        <span>
+                                            {{l.Description}}<br />
+                                            {{l.Date| date:'yyyy'}}
+                                        </span>
+
+                                    </div>
+
+                                <td style="text-align:right">
+
+                                    <button ng-if="statusProf == 0" type="button" class="btn btn-default btn-sm btn-circle" ng-click="trainingInfo(l)"><i class="icon-pencil4"></i></button>
+                                    <button ng-if="statusProf == 0" type="button" class="btn btn-default btn-sm btn-circle" ng-click="DeleteTrn(l)"><i class="icon-trash"></i></button>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="ibox img-shadow">
+                <div class="ibox-content">
+                    <b>
+                        Certifications
+                    </b>
+                    <a data-toggle="modal" ng-if="statusProf == 0" class="btn btn-default btn-circle" ng-click="CertAdd()"><i class="fa fa-plus"></i></a>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="m in CertificateData">
+                                <td class="text-muted">
+                                    <div class="col-sm-7">
+                                        <div class="pull-left">
+                                            <div class="lightBoxGallery">
+
+                                                <a href="../JobSeekerProfile/RetrieveCertImg/{{m.recNo}}" class="feed-photo img-square" title="{{m.Filename}}" data-gallery="{{'certificate'}}">
+                                                    <img class="feed-photo img-square" src="../JobSeekerProfile/RetrieveCertImg/{{m.recNo}}">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="pull-left">
+
+                                            <h4>{{m.Filename}}</h4>
+                                            <span>{{m.Description}}</span><br>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="text-align:right">
+                                    <button type="button" ng-if="statusProf == 0" class="btn btn-default btn-sm btn-circle" ng-click="certEdit(m)"><i class="icon-pencil4"></i></button>
+                                    <button type="button" ng-if="statusProf == 0" class="btn btn-default btn-sm btn-circle" ng-click="RemoveCert(m.recNo)"><i class="icon-trash"></i></button>
+                                </td>
+
+                            </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="social-feed-box img-shadow">
+
+                <div class="social-avatar">
+                    <b>Basic Info</b>
+                    @*<a data-toggle="modal" class="btn btn-default btn-circle" ng-click="PortAdd()"><i class="fa fa-pencil"></i></a>*@
+                </div>
+                <div class="social-body" ng-repeat="i in profileData">
+                    <p>
+                        Birthdate: {{i.Birthdate | date:'MMM dd, yyyy'}}<br>
+                        @*Age: 24 Years old<br>
+                            Gender: Male*@
+                    </p>
+                </div>
+            </div>
+
+            <div class="social-feed-box img-shadow">
+                <div class="social-avatar">
+                    <b>Educational Background</b>
+                    <a data-toggle="modal" ng-if="statusProf == 0" class="btn btn-default btn-circle" ng-click="AddEdu()"><i class="fa fa-plus"></i></a>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="n in EducationData">
+                            <td>
+                                <div class="social-body">
+
+
+                                    <b>
+                                        {{n.Course}} <br /> {{n.School}}
+                                    </b>
+                                    <p>
+                                        {{n.DateStared| date:'yyyy'}}-{{n.DateEnded| date:'yyyy'}}
+                                    </p>
+                                    <button ng-if="statusProf == 0" type="button" class="btn btn-default btn-sm btn-circle" ng-click="eduInfo(n)"><i class="icon-pencil4"></i></button>
+                                    <button ng-if="statusProf == 0" type="button" class="btn btn-default btn-sm btn-circle" ng-click="DeleteEdu(n)"><i class="icon-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+
+
+            @*Expertise*@
+            <div class="social-feed-box img-shadow" ng-show="option == 1">
+                <div class="social-avatar">
+                    <b>Field of Expertise</b>
+                    <a ng-if="statusProf == 0" data-toggle="modal" ng-show="option == 1" class="btn btn-default btn-circle" ng-click="SavefieldExpInfo(o)"><i class="fa fa-save"></i></a>
+                    <a ng-if="statusProf == 0" data-toggle="modal" ng-show="option == 1" class="btn btn-default btn-circle" ng-click="Dont()"><i class="fa fa-close"></i></a>
+
+                </div>
+                <div class="social-body">
+
+                    <div class="input-group">
+                        <select data-placeholder="Select . . ." class="select2_this" style="width:290px;" tabindex="4" id="getIndustryID">
+                            <option ng-repeat="a in industryTempArr" value="{{a.IndustryId}}">{{a.Description}}</option>
+                        </select>
+                    </div>
+                    <div class="checkbox checkbox-success" ng-repeat="a in fieldofExpertise">
+                        <input type="checkbox" id="checkbox{{a.recNo}}" ng-click="addService(a.ExpertiseId, a.recNo)">
+                        <label for="checkbox{{a.recNo}}">{{a.Description}}</label>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="social-feed-box img-shadow" ng-show="option != 1">
+                <div class="social-avatar">
+                    <b>Field of Expertise</b>
+                    <a data-toggle="modal" ng-if="statusProf == 0" ng-show="option != 1" class="btn btn-default btn-circle" ng-click="fieldExp(o)"><i class="fa fa-pencil"></i></a>
+
+                </div>
+                <div class="social-body">
+                    <div ng-repeat="k in ExpertiseData">
+                        <ul class=" mylist" ng-repeat="o in k.ExpertiseDesc">
+                            <li>
+                                {{o.Description}}
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            @*End Expertise*@
+
+
+            @*Start Skill*@
+            <div class="social-feed-box img-shadow">
+                <div class="social-avatar">
+                    <b>Skills</b>
+                    @*<a ng-if="statusProf == 0" data-toggle="modal" ng-show="option2 == 1" class="btn btn-default btn-circle" ng-click="SaveSkillExpInfo(o)"><i class="fa fa-save"></i></a>*@
+                    <a ng-if="statusProf == 0" data-toggle="modal" ng-show="option2 == 1" class="btn btn-default btn-circle" ng-click="Dont2()"><i class="fa fa-close"></i></a>
+                    <a ng-if="statusProf == 0" data-toggle="modal" ng-show="option2 == 0" class="btn btn-default btn-circle" ng-click="SkillEdit()"><i class="fa fa-pencil"></i></a>
+                </div>
+
+                <div class="social-body">
+                    <div class="form-group" ng-show="option2 == 1">
+
+                        <div class="input-group">
+                            <select data-placeholder="Select . . ." class="select2_this" style="width:290px;" tabindex="4" id="getIDskill" ng-model="tempSkills">
+                                <option ng-repeat="a in skillTempArr" value="{{a.SkillId}}">{{a.Description}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div ng-repeat="k in SkillsData">
+                        <ul class=" mylist" ng-repeat="p in k.SkillDesc">
+                            <li>
+                                {{p.Description}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            @*End Skill*@
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+    (function (global) {
+
+        if (typeof (global) === "undefined") {
+            throw new Error("window is undefined");
+        }
+
+        var _hash = "!";
+        var noBackPlease = function () {
+            global.location.href += "#";
+
+            // making sure we have the fruit available for juice....
+            // 50 milliseconds for just once do not cost much (^__^)
+            global.setTimeout(function () {
+                global.location.href += "!";
+            }, 50);
+        };
+
+        // Earlier we had setInterval here....
+        global.onhashchange = function () {
+            if (global.location.hash !== _hash) {
+                global.location.hash = _hash;
+            }
+        };
+
+        global.onload = function () {
+
+            noBackPlease();
+
+            // disables backspace on page except on input fields and textarea..
+            document.body.onkeydown = function (e) {
+                var elm = e.target.nodeName.toLowerCase();
+                if (e.which === 8 && (elm !== 'input' && elm !== 'textarea')) {
+                    e.preventDefault();
+                }
+                // stopping event bubbling up the DOM tree..
+                e.stopPropagation();
+            };
+
+        };
+
+    })(window);
+
+
+    $(".select2_this").select2();
+
+    var config = {
+        '.chosen-select': {},
+        '.chosen-select-deselect': { allow_single_deselect: true },
+        '.chosen-select-no-single': { disable_search_threshold: 10 },
+        '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+        '.chosen-select-width': { width: "95%" }
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+
+</script>
