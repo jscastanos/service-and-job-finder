@@ -61,6 +61,32 @@
 
 
         r.post("../api/tUsers/createaccount", s.user).then(function (d) {
+            if (d.data.AccountTypeId == 1) {
+
+                //  Employer's Registration
+                location.href = "../employer/employerregistration";
+                localStorage.setItem("userid", d.data.UserId);
+            }
+
+            else if (d.data.AccountTypeId == 2) {
+
+                //  Job Seeker's Registration
+                location.href = "../JobSeekerReg/SkillandServices?type=" + d.data.AccountTypeId + "&userid=" + d.data.UserId;
+            }
+
+            else if (d.data.AccountTypeId == 3) {
+
+                //  Service Worker's Registration
+                location.href = "../serviceworker/serviceWorkerRegistration";
+                localStorage.setItem("userid", d.data.UserId);
+            }
+
+            else if (d.data.AccountTypeId == 4) {
+
+                //  Customer's Registration
+                location.href = "../JobSeekerReg/SkillandServices?type=" + d.data.AccountTypeId + "&userid=" + d.data.UserId;
+            }
+
 
             console.log(d.data)
             s.user = {};

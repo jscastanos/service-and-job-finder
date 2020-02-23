@@ -34,28 +34,28 @@ namespace service_and_job_finder_web.API
             public string FileImg2 { get; set; }
         }
 
-        //[Route("api/employerapi/savePortfolio")]
-        //public IHttpActionResult PostsavePortfolio(portFolioData value)
-        //{
-        //    var obj = new tPortfolio();
-        //    byte[] imageBytes = Convert.FromBase64String(value.FileImg2);
+        [Route("api/employerapi/savePortfolio")]
+        public IHttpActionResult PostsavePortfolio(portFolioData value)
+        {
+            var obj = new tPortfolio();
+            byte[] imageBytes = Convert.FromBase64String(value.FileImg2);
 
 
-        //    obj.Description = value.datacert2.Description;
-        //    obj.URL = value.datacert2.URL;
-        //    obj.Title = value.datacert2.Title;
-        //    obj.ProjectImg = imageBytes;
-        //    obj.PersonId = value.globalID;
-        //    obj.DateCreated = DateTime.Now;
-        //    obj.PersonId = value.globalID;
-        //    obj.Status = 0;
+            obj.Description = value.datacert2.Description;
+            obj.URL = value.datacert2.URL;
+            obj.Title = value.datacert2.Title;
+            obj.ProjectImg = imageBytes;
+            obj.PersonId = value.globalID;
+            obj.DateCreated = DateTime.Now;
+            obj.PersonId = value.globalID;
+            obj.Status = 0;
 
-        //    db.Entry(obj).State = EntityState.Added;
-        //    db.SaveChanges();
+            db.Entry(obj).State = EntityState.Added;
+            db.SaveChanges();
 
-        //    var data = db.tPortfolios.OrderByDescending(a => a.recNo).FirstOrDefault();
-        //    return Json(data);
-        //}
+            var data = db.tPortfolios.OrderByDescending(a => a.recNo).FirstOrDefault();
+            return Json(data);
+        }
 
         //[Route("api/employerapi/saveCertificate")]
         //public IHttpActionResult PostsaveCertificate(certificateData value)
@@ -78,25 +78,25 @@ namespace service_and_job_finder_web.API
         //}
 
 
-        //[Route("api/employerapi/removeCert")]
-        //public IHttpActionResult PutremoveCert(int id)
-        //{
-        //    db.tCertifications.Where(a => a.recNo == id).ToList()
-        //       .ForEach(b => b.Status = 1);
-        //    db.SaveChanges();
+        [Route("api/employerapi/removeCert")]
+        public IHttpActionResult PutremoveCert(int id)
+        {
+            db.tCertifications.Where(a => a.recNo == id).ToList()
+               .ForEach(b => b.Status = 1);
+            db.SaveChanges();
 
-        //    return Ok();
-        //}
+            return Ok();
+        }
 
-        //[Route("api/employerapi/removePort")]
-        //public IHttpActionResult PutremovePort(int id)
-        //{
-        //    db.tPortfolios.Where(a => a.recNo == id).ToList()
-        //       .ForEach(b => b.Status = 1);
-        //    db.SaveChanges();
+        [Route("api/employerapi/removePort")]
+        public IHttpActionResult PutremovePort(int id)
+        {
+            db.tPortfolios.Where(a => a.recNo == id).ToList()
+               .ForEach(b => b.Status = 1);
+            db.SaveChanges();
 
-        //    return Ok();
-        //}
+            return Ok();
+        }
 
 
 

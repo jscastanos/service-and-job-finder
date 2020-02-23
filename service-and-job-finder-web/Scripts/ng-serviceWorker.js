@@ -1,5 +1,12 @@
 ﻿app.controller('serviceWorkerJS', ['$scope', '$http', '$timeout', function (s, h, t) {
 
+    var url = new URL(location.href);
+
+    s.type = url.searchParams.get('type');
+    s.userid = url.searchParams.get('userid');
+
+    console.log(s.type + "-" + s.userid);
+
     s.skills = true;
     s.skillsBtn = true;
     s.skillsUpdate = false;
@@ -134,15 +141,18 @@
 
         s.serviceTempArrData.lat = s.selectedLat;
         s.serviceTempArrData.longitude = s.selectedLong;
+        s.serviceTempArrData.userid = s.userid;
 
+        s.tempMainService = s.userid;
         if (s.tempMainService != "" && s.tempService != "") {
             h.post("../api/employerapi/saveProfile", s.serviceTempArrData).then(function (d) {
-                h.post("../api/serviceworkerapi/PostSaveService?data=" + s.tempService).then(function (d) {
+                h.post("../api/serviceworkerapi/PostSaveService?data=" + s.tempService + "&userid=" + s.userid).then(function (d) {
                     h.post("../api/serviceworkerapi/PostSaveMainService", s.tempMainService).then(function (d) {
-                        window.location = "../serviceworker/serviceWorkerprofile";
+                       
                         s.serviceTempArrData = {};
                     });
                 });
+                window.location = "../serviceworker/serviceWorkerprofile?e=" + d.data;
             });
         }
         else {
@@ -218,7 +228,16 @@
     s.profilePic = function () {
         $('#companyPic').click();
     }
+    s.addJobList = function () {
 
+        s.jobListArr.push(s.jobListTempArr);
+
+        h.post("../api/employerapi/saveJobList", s.jobListTempArr).then(function (d) {
+            console.log(d.data);
+            s.jobListTempArr = {};
+
+        });
+    }
     $("#brgyID").change(function () {
 
         var lat = $("#brgyID").val().toString().split('-')[0];

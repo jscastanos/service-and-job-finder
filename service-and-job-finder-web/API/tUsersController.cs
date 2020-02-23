@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using service_and_job_finder_web.Models;
+using System.Web;
 
 
 namespace service_and_job_finder_web.API
@@ -245,6 +246,7 @@ namespace service_and_job_finder_web.API
                       y.Address,
                       y.PersonId,
                       vfullname = y.Lastname + ", " + y.Firstname + " " + (y.Middlename != null ? y.Middlename.Substring(0, 1) + "." : ""),
+                      msgFullname = y.Firstname + " " + (y.Middlename != null ? y.Middlename.Substring(0, 1) + ". " : "") + y.Lastname,
                       y.ProfileImg,
                       y.Status
                   }).ToList();
@@ -327,6 +329,11 @@ namespace service_and_job_finder_web.API
             tUser.Status = 0;
             db.tUsers.Add(tUser);
             db.SaveChanges();
+
+            var session = HttpContext.Current.Session;
+            session["userID"] = tUser.UserId.ToString();
+            session["name"] = "";
+            session["entityID"] = "";
 
             return Ok(tUser);
         }

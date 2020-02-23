@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AppWorkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AppWorkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tAccountType">
           <Key>
             <PropertyRef Name="recNo" />
@@ -25,8 +25,8 @@
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="DateUpdated" Type="datetime" />
           <Property Name="Status" Type="int" />
-          <Property Name="PostId" Type="varchar" MaxLength="50" />
           <Property Name="JobId" Type="varchar" MaxLength="50" />
+          <Property Name="PostId" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tBarangay">
           <Key>
@@ -422,8 +422,7 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
     FROM [dbo].[vUsersAcctPersonStatus] AS [vUsersAcctPersonStatus]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AppWorkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -447,8 +446,8 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Int32" />
-          <Property Name="PostId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="JobId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PostId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tBarangay">
           <Key>
@@ -819,6 +818,7 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
           <EntitySetMapping Name="tApplications">
             <EntityTypeMapping TypeName="AppWorkModel.tApplication">
               <MappingFragment StoreEntitySet="tApplication">
+                <ScalarProperty Name="PostId" ColumnName="PostId" />
                 <ScalarProperty Name="recNo" ColumnName="recNo" />
                 <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
                 <ScalarProperty Name="PersonId" ColumnName="PersonId" />
@@ -826,7 +826,6 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="PostId" ColumnName="PostId" />
                 <ScalarProperty Name="JobId" ColumnName="JobId" />
               </MappingFragment>
             </EntityTypeMapping>

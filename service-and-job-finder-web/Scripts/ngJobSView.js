@@ -1,5 +1,11 @@
 ﻿app.controller('JSView', ["$scope", "$http", "$filter", function (s, h, _f) {
 
+    var url = new URL(location.href);
+
+    s.personalID = url.searchParams.get('id');
+
+    console.log(s.personalID);
+
     s.test = "mictest"
     s.globalID = "65B6F";
     s.switchpic = 1;

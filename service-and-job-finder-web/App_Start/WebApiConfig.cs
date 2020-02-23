@@ -10,6 +10,9 @@ namespace service_and_job_finder_web
 {
     public static class WebApiConfig
     {
+       // public static string UrlPrefix { get { return "api"; } }
+        public static string UrlPrefixRelative { get { return "~/api"; } }
+
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
@@ -22,6 +25,7 @@ namespace service_and_job_finder_web
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
+
                 defaults: new { id = RouteParameter.Optional }
             );
             //GlobalConfiguration.Configuration.Formatters.Add(new FormMultipartEncodedMediaTypeFormatter(new MultipartFormatterSettings()));

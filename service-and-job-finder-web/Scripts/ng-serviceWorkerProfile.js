@@ -1,14 +1,24 @@
-﻿app.controller('serviceWorkerJS', ['$scope', '$http', '$timeout', function (s, h, t) {
+﻿app.controller('employerJS', ['$scope', '$http', '$timeout', function (s, h, t) {
 
-    s.userid = '0003';
+    var url = new URL(location.href);
+
+    s.entityID = url.searchParams.get('e');
+
+    //s.entityID = localStorage.getItem("userid");
+
     s.profileTempArr = {};
     s.profileTempArrCert = {};
+    s.updateCertTempArrProPic = {};
     s.jobListTempArr = {};
     s.updateCertArr = {};
+    s.updateCertArrProPic = {};
+    s.data = {};
     s.profileTempArrService = [];
     s.jobListArr = [];
     s.jobDiv = false;
-
+    s.profilePicBol = false;
+    $("#targetImgproPic").hide();
+    s.profileService = "";
     s.countCert = 0;
 
     getCompanyData();
@@ -16,6 +26,8 @@
     getCompanyService();
     getCompanyJobList();
     getCoordinates();
+    getService();
+    getUserID();
 
     function ReadImage(file) {
 
@@ -37,8 +49,17 @@
                 $("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
                 $("#imgPreview").show();
                 $("#fa-user").hide();
+
+                $("#targetImgproPic").show();
+                $("#targetImgproPic").attr('src', _file.target.result);
+                $("#imgPreviewproPic").hide();
             }
         }
+    }
+    function getService() {
+        h.get("../api/employerapi").then(function (d) {
+            s.serviceTempArr = d.data;
+        });
     }
     function convertToBinary(file, callBack) {
         var reader = new FileReader();
@@ -49,19 +70,19 @@
         reader.readAsDataURL(file);
     }
     function getCompanyData() {
-        h.get("../api/employerapi/CompanyData?id=" + s.userid).then(function (d) {
+        h.get("../api/employerapi/CompanyData?id=" + s.entityID).then(function (d) {
             s.profileTempArr = d.data;
-            console.log(s.profileTempArr)
+            document.getElementById('about').innerHTML = s.profileTempArr.About;
         });
     }
     function getCompanyCert() {
-        h.get("../api/employerapi/CompanyCert?id=" + s.userid).then(function (d) {
+        h.get("../api/employerapi/CompanyCert?id=" + s.entityID).then(function (d) {
             s.profileTempArrCert = d.data;
             console.log(s.profileTempArrCert);
         });
     }
     function getCompanyService() {
-        h.get("../api/employerapi/CompanyService?id=" + s.userid).then(function (d) {
+        h.get("../api/employerapi/CompanyService?id=" + s.entityID).then(function (d) {
             s.profileTempArrServiceData = d.data;
 
             for (var a = 0; a < d.data.length; a++) {
@@ -73,18 +94,53 @@
     }
     function getCompanyJobList() {
 
-        h.get("../api/employerapi/CompanyJobList?id=" + s.userid).then(function (d) {
+        h.get("../api/employerapi/CompanyJobList?id=" + s.entityID).then(function (d) {
             s.jobListArr = d.data;
         });
     }
     function getCoordinates() {
-        h.get("../api/employerapi/Coordinate?id=" + s.userid).then(function (d) {
+        h.get("../api/employerapi/Coordinate?id=" + s.entityID).then(function (d) {
             s.companyLat = d.data.lat;
             s.companyLng = d.data.lng;
-            console.log(s.companyLat + "-" + s.companyLng)
+            //console.log(s.companyLat + "-" + s.companyLng)
+
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/outdoors-v11',
+                center: [d.data.lng, d.data.lat],
+                zoom: 12
+                //style: 'mapbox://styles/mapbox/streets-v11'
+            });
+
+            var marker = new mapboxgl.Marker({
+                draggable: true
+            }).setLngLat([d.data.lng, d.data.lat]).addTo(map);
+
+            function onDragEnd() {
+                var lngLat = marker.getLngLat();
+                //coordinates.style.display = 'block';
+                //coordinates.innerHTML =
+                //'Longitude: ' + lngLat.lng + '<br />Latitude: ' + lngLat.lat;
+
+                s.selectedLat = lngLat.lat;
+                s.selectedLong = lngLat.lng;
+
+            }
+
+            marker.on('dragend', onDragEnd);
+
+            console.log("Lat" + s.selectedLat);
+            console.log("Long" + s.selectedLong);
+        });
+    }
+    function getUserID() {
+        h.get("../api/employerapi/userData?id=" + s.entityID).then(function (d) {
+            s.userData = d.data;
+            console.log(s.userData)
         });
 
     }
+
     $("#imageBrowes").change(function () {
         s.certIMGFile = this.files;
         if (s.certIMGFile && s.certIMGFile[0]) {
@@ -122,34 +178,53 @@
     }
 
     s.removeCert = function (id) {
-        h.put("../api/employerapi/removeCert?id=" + id).then(function (d) {
-            s.IDfoundCert = false;
+        swal({
+            title: "Are you sure?",
+            //text: "You will not be able to recover this!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function () {
+            h.put("../api/employerapi/removeCert?id=" + id).then(function (d) {
+                s.IDfoundCert = false;
 
-            for (var i = 0; i < s.profileTempArrCert.length; i++) {
-                if (s.profileTempArrCert[i].recNo == id) {
-                    s.IDfoundCert = true;
-                    s.countCert = i;
-                    break;
+                for (var i = 0; i < s.profileTempArrCert.length; i++) {
+                    if (s.profileTempArrCert[i].recNo == id) {
+                        s.IDfoundCert = true;
+                        s.countCert = i;
+                        break;
+                    }
                 }
-            }
 
-            if (s.IDfoundCert == true) {
-                s.profileTempArrCert.splice(s.countCert, 1);
-            }
+                if (s.IDfoundCert == true) {
+                    s.profileTempArrCert.splice(s.countCert, 1);
+                }
+                swal("Successfully Remove!", "", "success");
+            });
         });
     }
 
     s.hideJobListApplicant = function () {
         s.jobDiv = false;
     }
-
+    s.addCert = function () {
+        s.updateCertTempArr = {};
+        $("#updateImg").hide();
+        s.updateTitle = false;
+        s.addTitle = true;
+        $("#certModal").modal("show");
+    }
     s.updateCert = function (id) {
-
+        $("#updateImg").show();
+        s.updateTitle = true;
+        s.addTitle = false;
         h.get("../api/employerapi/updateCert?id=" + id).then(function (d) {
             s.updateCertTempArr = d.data;
             s.updateImg = true;
             s.updatedImg = false;
-            $("#certModal").modal("show")
+            $("#certModal").modal("show");
         });
 
 
@@ -159,60 +234,128 @@
 
         s.updateCertArr.data = s.updateCertTempArr;
 
-        h.put("../api/employerapi/saveUpdateCert", s.updateCertArr).then(function (d) {
-            s.profileTempArrCert = {};
-            s.updateCertArr = {};
-            s.updateCertTempArr = {};
-            $("#certModal").modal("hide")
+        if (s.addTitle == true) {
 
-            getCompanyCert();
-        });
+            h.post("../api/employerapi/saveCertificate", s.updateCertArr).then(function (d) {
+
+                s.uploadImgID = false;
+
+                s.profileTempArrCert.push(d.data);
+                s.updateCertArr = {};
+
+                $("#certModal").modal("hide");
+                $("#imgPreview").hide();
+            });
+
+        }
+        else {
+
+            h.put("../api/employerapi/saveUpdateCert", s.updateCertArr).then(function (d) {
+                s.profileTempArrCert = {};
+                s.updateCertArr = {};
+                s.updateCertTempArr = {};
+                $("#certModal").modal("hide");
+
+                getCompanyCert();
+            });
+
+        }
 
     }
 
     s.hideshow = function () {
         $("#imageBrowes").click();
     }
+    s.removeJob = function (id) {
+        swal({
+            title: "Are you sure?",
+            //text: "You will not be able to recover this!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            closeOnConfirm: false
+        }, function () {
+            h.put("../api/employerapi/removeJob?id=" + id).then(function (d) {
+                s.IDfoundCert = false;
 
+                for (var i = 0; i < s.jobListArr.length; i++) {
+                    if (s.jobListArr[i].recNo == id) {
+                        s.IDfoundCert = true;
+                        s.countCert = i;
+                        break;
+                    }
+                }
 
+                if (s.IDfoundCert == true) {
+                    s.jobListArr.splice(s.countCert, 1);
+                }
 
-    function init_map() {
-        var lat = s.companyLat;
-        var lng = s.companyLng;
-
-        var myOptions = {
-            zoom: 20,
-            //center: new google.maps.LatLng(7.4472, 125.8093),
-            center: new google.maps.LatLng(lat, lng),
-            mapTypeId: google.maps.MapTypeId.HYBRID
-        };
-
-        map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
-
-        marker = new google.maps.Marker({
-            map: map,
-            //position: new google.maps.LatLng(7.4472, 125.8093)
-            position: new google.maps.LatLng(lat, lng)
+                swal("Successfully Remove!", "", "success");
+            });
         });
-
-        //infowindow = new google.maps.InfoWindow({
-        //content: '<strong>Layout</strong><br><br>8100 <br>'
-        //});
-        //google.maps.event.addListener(marker, 'click', function () {
-        //    infowindow.open(map, marker);
-        //}); infowindow.open(map, marker); addListenerOnce
-
-        //google.maps.event.addListener(map, 'click', function (event) {
-        //    //alert("Latitude: " + event.latLng.lat() + " " + ", longitude: " + event.latLng.lng());
-
-        //    s.selectedLat = event.latLng.lat();
-        //    s.selectedLong = event.latLng.lng();
-
-
-        //});
-
     }
+    s.saveUpdateCompanyDesc = function (recno) {
+        var str = $("#aboutTextArea").val();
+        var msg = str.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '<br />')
+        console.log(str);
+        console.log(msg);
+        h.put("../api/employerapi/saveUpdateCompanyDesc?recno=" + recno + "&desc=" + msg).then(function (d) {
+            getCompanyData();
+        });
+    }
+    s.changeProPic = function (recno) {
+        $("#updateProPicInput").click();
 
-    google.maps.event.addDomListener(window, 'load', init_map(7.4472, 125.8093));
+        $("#updateProPicInput").change(function () {
+            s.certIMGFileProPic = this.files;
+            s.profilePicBol = true;
+            console.log(s.certIMGFileProPic[0])
+            ReadImage(s.certIMGFileProPic[0]);
+
+            var file = s.certIMGFileProPic[0];
+            convertToBinary(file, function (e) {
+                var data = e.split(',')[1];
+                s.updateCertArrProPic.FileImg = data
+            });
+
+            s.updateCertTempArrProPic.recNo = recno;
+            s.updateCertArrProPic.data = s.updateCertTempArrProPic;
+
+            console.log(s.updateCertArrProPic);
+
+            h.put("../api/employerapi/saveUpdateProPic", s.updateCertArrProPic).then(function (d) {
+                s.profileTempArrCert = {};
+                s.updateCertArrProPic = {};
+                s.updateCertTempArrProPic = {};
+            });
+        });
+    }
+    s.saveUpdateProfile = function () {
+
+        s.data.data = s.profileTempArr;
+        s.data.serviceData = s.tempSkills;
+
+        console.log(s.data);
+
+        h.put("../api/employerapi/saveUpdateProfile", s.data).then(function (d) {
+            s.data = {};
+            s.profileService = "";
+            console.log(s.profileService + "asd");
+            getService();
+            getCompanyData();
+            s.profileTempArrServiceData = d.data;
+            s.profileTempArrService = [];
+
+            for (var a = 0; a < d.data.length; a++) {
+                s.profileTempArrService.push(s.profileTempArrServiceData[a].name);
+            }
+
+            s.profileService = s.profileTempArrService.join(" | ");
+
+            console.log(s.profileTempArrService + "asdddd");
+
+        });
+    }
 
 }])
