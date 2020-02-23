@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AppWorkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="AppWorkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tAccountType">
           <Key>
             <PropertyRef Name="recNo" />
@@ -422,7 +422,8 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
     FROM [dbo].[vUsersAcctPersonStatus] AS [vUsersAcctPersonStatus]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AppWorkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -783,7 +784,10 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
             <Parameter Name="userID" Mode="In" Type="String" />
             <Parameter Name="frienID" Mode="In" Type="String" />
           </FunctionImport>
+<<<<<<< HEAD
           <EntitySet Name="tApplications" EntityType="AppWorkModel.tApplication" />
+=======
+>>>>>>> 4dca222a3ee1b0e5ac9a0cac838b52a4581627f4
         </EntityContainer>
         <EntityType Name="tApplication">
           <Key>
@@ -1158,6 +1162,7 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="seenMessage" FunctionName="AppWorkModel.Store.seenMessage" />
+<<<<<<< HEAD
           <EntitySetMapping Name="tApplications">
             <EntityTypeMapping TypeName="AppWorkModel.tApplication">
               <MappingFragment StoreEntitySet="tApplication">
@@ -1173,6 +1178,8 @@ warning 6002: The table/view 'AppWork.dbo.vUsersAcctPersonStatus' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+=======
+>>>>>>> 4dca222a3ee1b0e5ac9a0cac838b52a4581627f4
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
