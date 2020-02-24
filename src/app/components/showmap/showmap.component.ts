@@ -57,6 +57,23 @@ export class ShowmapComponent implements OnInit {
         //setup markers
         this.drawMarkers();
 
+        //add text layer
+        this.map.addSource("places", {
+          type: "geojson",
+          data: res
+        });
+
+        this.map.addLayer({
+          id: "name-place",
+          type: "symbol",
+          source: "places",
+          layout: {
+            "text-field": ["get", "title"],
+            "text-variable-anchor": ["top", "bottom", "left", "right"],
+            "text-justify": "auto"
+          }
+        });
+
         function forwardGeocoder(query) {
           var matchingFeatures = [];
           for (var i = 0; i < res["features"].length; i++) {
