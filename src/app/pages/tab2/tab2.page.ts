@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { EnvService } from "src/app/services/env-service.service";
 import { GeoDataService } from "src/app/services/geo-data.service";
 import { get, set } from "../../services/storage.service";
@@ -9,7 +9,7 @@ import { NavController } from "@ionic/angular";
   templateUrl: "tab2.page.html",
   styleUrls: ["tab2.page.scss"]
 })
-export class Tab2Page implements OnInit {
+export class Tab2Page implements OnInit, OnDestroy {
   services;
   userLngLat;
 
@@ -39,5 +39,9 @@ export class Tab2Page implements OnInit {
 
   navigate(id) {
     this.nav.navigateForward("/service-profile?id=" + id);
+  }
+
+  ngOnDestroy() {
+    this.getGeoData.unsubscribe();
   }
 }

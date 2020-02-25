@@ -25,7 +25,7 @@ export class AppComponent {
   isUserLogin() {
     get("user").then(e => {
       if (e != null) {
-        this.router.navigateByUrl("/home/tab3");
+        this.router.navigateByUrl("/home/tab2");
       } else {
         this.router.navigateByUrl("/login");
       }

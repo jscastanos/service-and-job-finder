@@ -70,6 +70,7 @@ export class ShowmapComponent implements OnInit {
           layout: {
             "text-field": ["get", "title"],
             "text-variable-anchor": ["top", "bottom", "left", "right"],
+            "text-radial-offset": 0.5,
             "text-justify": "auto"
           }
         });

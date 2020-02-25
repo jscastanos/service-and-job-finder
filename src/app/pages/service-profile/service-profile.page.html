@@ -15,10 +15,12 @@
         <ion-col>
           <ion-text>
             <h4>{{serviceWorkerData.BusinessEntityName}}</h4>
-          </ion-text></ion-col
-        >
+            <app-rating
+              serviceId="{{serviceWorkerData.serviceId}}"
+            ></app-rating> </ion-text
+        ></ion-col>
         <ion-col size="4" class="chat">
-          <ion-icon name="chatbox"></ion-icon><br />
+          <ion-icon name="chatbox" (click)="goToMessage()"></ion-icon><br />
           <ion-text>Message</ion-text>
         </ion-col>
       </ion-row>
@@ -97,6 +99,96 @@
           </ion-label>
         </ion-item>
       </ng-template>
+    </ion-list>
+    <ion-list>
+      <ion-list-header>
+        <ion-text>Rating</ion-text>
+      </ion-list-header>
+
+      <div class="ratingDiv" *ngIf="rateData.userRating == 0">
+        <p>Share your experience to help others</p>
+        <h1>
+          <ion-label (click)="rateNow(1)">
+            <ion-icon name="star-outline"></ion-icon>
+          </ion-label>
+          <ion-label (click)="rateNow(2)">
+            <ion-icon name="star-outline"></ion-icon>
+          </ion-label>
+          <ion-label (click)="rateNow(3)">
+            <ion-icon name="star-outline"></ion-icon>
+          </ion-label>
+          <ion-label (click)="rateNow(4)">
+            <ion-icon name="star-outline"></ion-icon>
+          </ion-label>
+          <ion-label (click)="rateNow(5)">
+            <ion-icon name="star-outline"></ion-icon>
+          </ion-label>
+        </h1>
+      </div>
+      <div *ngIf="serviceWorkerData.services">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="8">
+              <ion-row>
+                <ion-col size="1">5</ion-col>
+                <ion-col>
+                  <ion-progress-bar
+                    color="primary"
+                    value="{{rateDetails['5']}}"
+                  ></ion-progress-bar>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="1">4</ion-col>
+                <ion-col>
+                  <ion-progress-bar
+                    color="primary"
+                    value="{{rateDetails['4']}}"
+                  ></ion-progress-bar>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="1">3</ion-col>
+                <ion-col>
+                  <ion-progress-bar
+                    color="primary"
+                    value="{{rateDetails['3']}}"
+                  ></ion-progress-bar>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="1">2</ion-col>
+                <ion-col>
+                  <ion-progress-bar
+                    color="primary"
+                    value="{{rateDetails['2']}}"
+                  ></ion-progress-bar>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col size="1">1</ion-col>
+                <ion-col>
+                  <ion-progress-bar
+                    color="primary"
+                    value="{{rateDetails['1']}}"
+                  ></ion-progress-bar>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col class="rateCount">
+              <h1>{{rateData.totalRate}}</h1>
+              <p>
+                {{rateData.rateCount}} {{rateData.rateCount != 1 ? 'ratings' :
+                'rating'}}
+              </p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
     </ion-list>
   </div>
 </ion-content>

@@ -4,9 +4,9 @@ import { FormsModule } from "@angular/forms";
 
 import { IonicModule } from "@ionic/angular";
 
-import { ServiceProfilePageRoutingModule } from "./service-profile-routing.module";
+import { PrivateMessagePageRoutingModule } from "./private-message-routing.module";
 
-import { ServiceProfilePage } from "./service-profile.page";
+import { PrivateMessagePage } from "./private-message.page";
 import ComponentModule from "src/app/components/components.module";
 
 @NgModule({
@@ -14,9 +14,9 @@ import ComponentModule from "src/app/components/components.module";
     CommonModule,
     FormsModule,
     IonicModule,
-    ServiceProfilePageRoutingModule,
+    PrivateMessagePageRoutingModule,
     ComponentModule
   ],
-  declarations: [ServiceProfilePage]
+  declarations: [PrivateMessagePage]
 })
-export class ServiceProfilePageModule {}
+export class PrivateMessagePageModule {}

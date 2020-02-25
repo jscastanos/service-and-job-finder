@@ -44,3 +44,25 @@ ion-list {
     color: var(--ion-color-primary);
   }
 }
+
+.ratingDiv {
+  text-align: center;
+  padding: 20px auto;
+  ion-label {
+    padding: 0 15px;
+  }
+}
+
+ion-progress-bar {
+  margin: 5px auto;
+  height: 4px;
+  border-radius: 5px;
+}
+
+.rateCount {
+  text-align: center;
+  h1 {
+    font-size: 45px;
+    margin-top: 25px;
+  }
+}

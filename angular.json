@@ -45,7 +45,14 @@
                 "input": "node_modules/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
               }
             ],
-            "scripts": []
+            "scripts": [
+              {
+                "input": "node_modules/jquery/dist/jquery.min.js"
+              },
+              {
+                "input": "node_modules/signalr/jquery.signalR.js"
+              }
+            ]
           },
           "configurations": {
             "production": {
