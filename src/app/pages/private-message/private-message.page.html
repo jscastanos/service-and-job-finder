@@ -1,10 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <a (click)="navigate(e)">
-      <ion-icon name="arrow-back-outline"></ion-icon
-    ></a>
+    <a (click)="navigate()"> <ion-icon name="arrow-back-outline"></ion-icon></a>
     <img
-      src="{{url}}/something/Foo"
+      src="{{url}}/Employer/RetrieveCompanyLogo?id={{serviceRecNo}}"
       onerror="this.onerror = null; this.src = '../../assets/bg.jpg'"
       [routerLink]="['/profile']"
     />

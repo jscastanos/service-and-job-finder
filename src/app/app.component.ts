@@ -5,6 +5,7 @@ import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { get } from "./services/storage.service";
 import { Router } from "@angular/router";
+import { SignalRService } from "./services/signal-r.service";
 
 @Component({
   selector: "app-root",
@@ -16,7 +17,8 @@ export class AppComponent {
     private router: Router,
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private signalR: SignalRService
   ) {
     this.isUserLogin();
     this.initializeApp();
@@ -25,7 +27,8 @@ export class AppComponent {
   isUserLogin() {
     get("user").then(e => {
       if (e != null) {
-        this.router.navigateByUrl("/home/tab2");
+        this.signalR.register(e);
+        this.router.navigateByUrl("/home/tab3");
       } else {
         this.router.navigateByUrl("/login");
       }

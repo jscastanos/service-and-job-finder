@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">serviceandjobfinderapp</string>
-    <string name="title_activity_main">serviceandjobfinderapp</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="app_name">AppWork</string>
+    <string name="title_activity_main">AppWork</string>
+    <string name="package_name">io.appwork.servicecustomer</string>
+    <string name="custom_url_scheme">io.appwork.servicecustomer</string>
 </resources>

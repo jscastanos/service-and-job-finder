@@ -15,7 +15,7 @@ import { SignalRModule, SignalRConfiguration } from "ng2-signalr";
 export function createConfig(): SignalRConfiguration {
   const c = new SignalRConfiguration();
   c.hubName = "myHub";
-  c.url = "http://localhost:1912/signalr";
+  c.url = "http://servicefinder-001-site1.etempurl.com/signalr";
   c.logging = true;
 
   c.executeErrorsInZone = true;

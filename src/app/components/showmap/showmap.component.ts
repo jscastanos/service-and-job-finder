@@ -23,6 +23,7 @@ export class ShowmapComponent implements OnInit {
     description: null,
     id: null
   };
+  userId;
 
   //api
   geodata;
@@ -30,6 +31,9 @@ export class ShowmapComponent implements OnInit {
   constructor(private nav: NavController, private geoService: GeoDataService) {
     mapboxgl.accessToken =
       "pk.eyJ1Ijoic2VydmljZWZpbmRlci13ZWIiLCJhIjoiY2s2dXBoaHVoMGJhczNsbzNnbTh1Mjk1YyJ9.AjVFCfErae5fBJTT0o9OIw";
+    get("user").then(data => {
+      this.userId = data;
+    });
   }
 
   ngOnInit() {
@@ -211,7 +215,18 @@ export class ShowmapComponent implements OnInit {
   }
 
   navigate() {
-    this.nav.navigateForward("/service-profile?id=" + this.currentServices.id);
+    let data = {
+      id: this.currentServices.id,
+      userId: this.userId
+    };
+
+    let params = {
+      queryParams: {
+        q: JSON.stringify(data)
+      }
+    };
+
+    this.nav.navigateForward(["/service-profile"], params);
     this.closeDetails();
   }
 
@@ -221,5 +236,9 @@ export class ShowmapComponent implements OnInit {
       description: null,
       id: null
     };
+  }
+
+  ionViewDidLeave() {
+    this.geodata.unsubscribe();
   }
 }

@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <ion-card *ngFor="let s of services">
     <img
-      src="{{url}}/something/fo/"
+      src="{{url}}/Employer/RetrieveCompanyLogo?id={{s.properties.recNo}}"
       onerror="this.onerror = null; this.src = '../../assets/bg.jpg'"
     />
     <ion-card-header>

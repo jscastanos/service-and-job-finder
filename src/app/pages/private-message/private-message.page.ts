@@ -5,6 +5,7 @@ import { SignalRService } from "src/app/services/signal-r.service";
 import { get } from "../../services/storage.service";
 import { BroadcastEventListener } from "ng2-signalr";
 import { ActivatedRoute } from "@angular/router";
+import { EnvService } from "src/app/services/env-service.service";
 
 @Component({
   selector: "app-private-message",
@@ -17,23 +18,30 @@ export class PrivateMessagePage implements OnInit {
   userId;
   serviceId;
   serviceName;
+  serviceRecNo;
   connection;
   scrolled = false;
+  url;
+
+  sentMessage;
 
   constructor(
     private nav: NavController,
     private messageService: MessageService,
     private signalR: SignalRService,
-    private router: ActivatedRoute
+    private router: ActivatedRoute,
+    private env: EnvService
   ) {
     get("user").then(data => {
       this.userId = data;
+      this.url = env.URL;
 
       this.router.queryParams.subscribe(e => {
         let data = JSON.parse(e.q);
 
         this.serviceId = data["id"];
         this.serviceName = data["name"];
+        this.serviceRecNo = data["recno"];
       });
 
       this.messageService
@@ -73,7 +81,7 @@ export class PrivateMessagePage implements OnInit {
   }
 
   sendMessage(m) {
-    this.messageService
+    this.sentMessage = this.messageService
       .postMessage(this.userId, this.serviceId, m)
       .subscribe(e => {
         this.messages.push(e["message"]);
@@ -86,7 +94,22 @@ export class PrivateMessagePage implements OnInit {
     this.createMessage = "";
   }
 
-  navigate(e) {
-    this.nav.navigateRoot("/home/tab3");
+  navigate() {
+    let data = {
+      id: this.serviceId,
+      userId: this.userId
+    };
+
+    let params = {
+      queryParams: {
+        q: JSON.stringify(data)
+      }
+    };
+
+    this.nav.navigateForward(["/service-profile"], params);
+  }
+
+  ionViewDidLeave() {
+    this.sentMessage.unsubscribe();
   }
 }

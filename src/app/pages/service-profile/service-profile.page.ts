@@ -5,13 +5,14 @@ import { NavController } from "@ionic/angular";
 import { RatingService } from "src/app/services/rating.service";
 import { get } from "../../services/storage.service";
 import { RatingComponent } from "src/app/components/rating/rating.component";
+import { EnvService } from "src/app/services/env-service.service";
 
 @Component({
   selector: "app-service-profile",
   templateUrl: "./service-profile.page.html",
   styleUrls: ["./service-profile.page.scss"]
 })
-export class ServiceProfilePage implements OnInit, OnDestroy {
+export class ServiceProfilePage implements OnInit {
   @ViewChild(RatingComponent, { static: false })
   _ratingComponent: RatingComponent;
 
@@ -24,6 +25,7 @@ export class ServiceProfilePage implements OnInit, OnDestroy {
     totalRate: null,
     rateCount: null
   };
+  url;
 
   rateDetails = {
     5: 0,
@@ -39,10 +41,15 @@ export class ServiceProfilePage implements OnInit, OnDestroy {
     private serviceWorker: ServiceWorkerService,
     private route: ActivatedRoute,
     private nav: NavController,
-    private ratingService: RatingService
+    private ratingService: RatingService,
+    private env: EnvService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.serviceId = params["id"];
+      let data = JSON.parse(params.q);
+      this.url = env.URL;
+
+      this.serviceId = data["id"];
+      this.userId = data["userId"];
     });
   }
 
@@ -54,7 +61,6 @@ export class ServiceProfilePage implements OnInit, OnDestroy {
 
         get("user").then(e => {
           this.userId = e;
-          console.log(this.userId);
           this.computeRating(e);
         });
       });
@@ -75,6 +81,14 @@ export class ServiceProfilePage implements OnInit, OnDestroy {
   }
 
   aggregateRateCount(rateCountArray) {
+    this.rateDetails = {
+      5: 0,
+      4: 0,
+      3: 0,
+      2: 0,
+      1: 0
+    };
+
     //count
     for (let index in rateCountArray) {
       this.rateDetails[rateCountArray[index]] += 1;
@@ -92,7 +106,8 @@ export class ServiceProfilePage implements OnInit, OnDestroy {
   goToMessage() {
     let data = {
       id: this.serviceWorkerData["UserId"],
-      name: this.serviceWorkerData["BusinessEntityName"]
+      name: this.serviceWorkerData["BusinessEntityName"],
+      recno: this.serviceWorkerData["recNo"]
     };
 
     let params = {
@@ -114,7 +129,7 @@ export class ServiceProfilePage implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
+  ionViewDidLeave() {
     this.getServiceWorker.unsubscribe();
   }
 }

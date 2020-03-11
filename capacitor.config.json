@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "serviceandjobfinderapp",
+  "appId": "io.appwork.servicecustomer",
+  "appName": "AppWork",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",

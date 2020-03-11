@@ -6,6 +6,9 @@ import { Injectable } from "@angular/core";
 export class EnvService {
   constructor() {}
 
-  API_URL = "http://192.168.1.10/appwork/api/";
-  URL = "http://192.168.1.10/appwork/";
+  API_URL = "http://servicefinder-001-site1.etempurl.com/api/";
+  URL = "http://servicefinder-001-site1.etempurl.com/";
+
+  // API_URL = "http://localhost:70/api/";
+  //  URL = "http://localhost:70";
 }

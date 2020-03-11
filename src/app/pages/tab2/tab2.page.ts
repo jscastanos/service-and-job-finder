@@ -9,9 +9,10 @@ import { NavController } from "@ionic/angular";
   templateUrl: "tab2.page.html",
   styleUrls: ["tab2.page.scss"]
 })
-export class Tab2Page implements OnInit, OnDestroy {
+export class Tab2Page implements OnInit {
   services;
   userLngLat;
+  userId;
 
   url;
   //api
@@ -26,22 +27,39 @@ export class Tab2Page implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    get("user").then(e => {
+      this.userId = e;
+    });
+
     get("LngLat").then(e => {
       this.userLngLat = e != null ? e : [125.8093, 7.4472];
 
       this.getGeoData = this.geodataService
-        .GetLocalGeoData(this.userLngLat[0], this.userLngLat[1])
+        .GetLocalGeoData(this.userLngLat[1], this.userLngLat[0])
         .subscribe(res => {
           this.services = res["features"];
+
+          console.log(this.services);
         });
     });
   }
 
   navigate(id) {
-    this.nav.navigateForward("/service-profile?id=" + id);
+    let data = {
+      id: id,
+      userId: this.userId
+    };
+
+    let params = {
+      queryParams: {
+        q: JSON.stringify(data)
+      }
+    };
+
+    this.nav.navigateForward(["/service-profile"], params);
   }
 
-  ngOnDestroy() {
+  ionViewDidLeave() {
     this.getGeoData.unsubscribe();
   }
 }

@@ -34,16 +34,18 @@ ion-toolbar {
       border-radius: 10px;
       padding: 20px 10px;
       line-height: 20px;
+      white-space: pre-wrap;
+      word-break: break-word;
 
       &.right {
-        background-color: #f1e9e985;
+        color: white;
+        background-color: var(--ion-color-primary-tint);
         //margin-right: 50px;
       }
 
       &.left {
-        color: white;
         //margin-left: 50px;
-        background-color: var(--ion-color-primary-tint);
+        background-color: #f1e9e985;
       }
     }
 

@@ -19,8 +19,11 @@ const routes: Routes = [
       )
   },
   {
-    path: 'private-message',
-    loadChildren: () => import('./pages/private-message/private-message.module').then( m => m.PrivateMessagePageModule)
+    path: "private-message",
+    loadChildren: () =>
+      import("./pages/private-message/private-message.module").then(
+        m => m.PrivateMessagePageModule
+      )
   }
 ];
 @NgModule({
