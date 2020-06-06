@@ -11,7 +11,11 @@
     <ion-icon name="close" (click)="closeDetails()"></ion-icon>
   </div>
   <h5>{{ currentServices.title }}</h5>
-  <p>{{ currentServices.description }}</p>
+  <p>
+    <ion-icon name="location-outline"></ion-icon>
+    {{ currentServices.description }}
+  </p>
+  <p><ion-icon name="build"></ion-icon> {{ currentServices.services }}</p>
   <ion-button (click)="navigate()" style="color: white"
     >View Details</ion-button
   >

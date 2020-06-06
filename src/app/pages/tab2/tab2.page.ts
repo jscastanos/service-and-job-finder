@@ -29,18 +29,18 @@ export class Tab2Page implements OnInit {
   ngOnInit() {
     get("user").then(e => {
       this.userId = e;
-    });
 
-    get("LngLat").then(e => {
-      this.userLngLat = e != null ? e : [125.8093, 7.4472];
+      get("LngLat").then(e => {
+        this.userLngLat = e != null ? e : [125.8093, 7.4472];
 
-      this.getGeoData = this.geodataService
-        .GetLocalGeoData(this.userLngLat[1], this.userLngLat[0])
-        .subscribe(res => {
-          this.services = res["features"];
+        this.getGeoData = this.geodataService
+          .GetLocalGeoData(this.userLngLat[1], this.userLngLat[0])
+          .subscribe(res => {
+            this.services = res["features"];
 
-          console.log(this.services);
-        });
+            console.log(this.services);
+          });
+      });
     });
   }
 

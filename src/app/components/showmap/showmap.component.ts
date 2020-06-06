@@ -21,7 +21,8 @@ export class ShowmapComponent implements OnInit {
   currentServices = {
     title: null,
     description: null,
-    id: null
+    id: null,
+    services: null
   };
   userId;
 
@@ -83,10 +84,18 @@ export class ShowmapComponent implements OnInit {
           var matchingFeatures = [];
           for (var i = 0; i < res["features"].length; i++) {
             var feature = res["features"][i];
+            var services = feature.properties.services;
+            var serviceName = feature.properties.title;
+
+            const filterServices = (q, arr) => {
+              return arr.filter(
+                item => item.toLowerCase().indexOf(q.toLowerCase()) >= 0
+              );
+            };
+
             if (
-              feature.properties.title
-                .toLowerCase()
-                .search(query.toLowerCase()) !== -1
+              serviceName.toLowerCase().search(query.toLowerCase()) !== -1 ||
+              filterServices(query, services).length > 0
             ) {
               feature["place_name"] = feature.properties.title;
               feature["center"] = feature.geometry.coordinates;
@@ -100,7 +109,7 @@ export class ShowmapComponent implements OnInit {
         var geocoder = new MapboxGeocoder({
           accessToken: mapboxgl.accessToken,
           mapboxgl: mapboxgl,
-          placeholder: "Search for services",
+          placeholder: "Search services or service worker",
           localGeocoderOnly: true,
           localGeocoder: forwardGeocoder,
           marker: false
@@ -208,7 +217,8 @@ export class ShowmapComponent implements OnInit {
         this.currentServices = {
           title: e.properties.title,
           description: e.properties.description,
-          id: e.properties.id
+          id: e.properties.id,
+          services: e.properties.services
         };
       });
     });
@@ -234,7 +244,8 @@ export class ShowmapComponent implements OnInit {
     this.currentServices = {
       title: null,
       description: null,
-      id: null
+      id: null,
+      services: null
     };
   }
 
