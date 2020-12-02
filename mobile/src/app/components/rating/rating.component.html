@@ -1,0 +1,12 @@
+<div class="displayRate">
+  <h1 *ngIf="rateData.totalRate != 0; else noRating">
+    <span>{{ rateData.totalRate }}</span>
+    <ion-label *ngFor="let rate of ratingStars">
+      <ion-icon name="{{ rate }}"></ion-icon>
+    </ion-label>
+    <span>({{ rateData.rateCount }})</span>
+  </h1>
+  <ng-template #noRating>
+    <h1>No Rating</h1>
+  </ng-template>
+</div>

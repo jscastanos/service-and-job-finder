@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <a (click)="navigate()"> <ion-icon name="arrow-back-outline"></ion-icon></a>
+    <img
+      src="{{url}}/Employer/RetrieveCompanyLogo?id={{serviceRecNo}}"
+      onerror="this.onerror = null; this.src = '../../assets/bg.jpg'"
+      [routerLink]="['/profile']"
+    />
+    <span class="chat-name">
+      {{serviceName}}
+    </span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollEvents]="true">
+  <ion-list class="chat-room">
+    <ion-item class="chat-message" *ngFor="let m of messages" lines="none">
+      <div slot="{{(m.SenderId == serviceId) ? 'start' : 'end'}}">
+        <p [ngClass]="(m.SenderId == serviceId) ? 'left' : 'right'">
+          {{m.Message}}
+        </p>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item>
+      <ion-textarea
+        rows="1"
+        autosize
+        placeholder="Your message here"
+        [(ngModel)]="createMessage"
+      ></ion-textarea>
+    </ion-item>
+    <div slot="end" class="send" (click)="sendMessage(createMessage)">
+      <ion-icon name="paper-plane"></ion-icon>
+    </div>
+  </ion-toolbar>
+</ion-footer>

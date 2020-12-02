@@ -1,0 +1,22 @@
+<div id="overlay">
+  <ion-spinner name="crescent"></ion-spinner>
+</div>
+
+<div id="map"></div>
+
+<div id="geocoder" class="geocoder"></div>
+
+<div id="detail" *ngIf="currentServices.id != null">
+  <div style="float: right">
+    <ion-icon name="close" (click)="closeDetails()"></ion-icon>
+  </div>
+  <h5>{{ currentServices.title }}</h5>
+  <p>
+    <ion-icon name="location-outline"></ion-icon>
+    {{ currentServices.description }}
+  </p>
+  <p><ion-icon name="build"></ion-icon> {{ currentServices.services }}</p>
+  <ion-button (click)="navigate()" style="color: white"
+    >View Details</ion-button
+  >
+</div>

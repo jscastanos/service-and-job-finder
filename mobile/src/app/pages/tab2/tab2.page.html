@@ -1,0 +1,19 @@
+<ion-content [fullscreen]="true">
+  <ion-card *ngFor="let s of services">
+    <img
+      src="{{url}}/Employer/RetrieveCompanyLogo?id={{s.properties.recNo}}"
+      onerror="this.onerror = null; this.src = '../../assets/bg.jpg'"
+    />
+    <ion-card-header>
+      <ion-card-title>{{s.properties.title}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{s.properties.description}}
+      <div style="float: right;">
+        <ion-button (click)="navigate(s.properties.id)" class="view-button"
+          >View Details</ion-button
+        >
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

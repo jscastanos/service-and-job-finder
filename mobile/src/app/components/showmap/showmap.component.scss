@@ -1,0 +1,38 @@
+#map {
+  height: 100%;
+}
+#overlay {
+  position: relative;
+  background-color: #f5f5f5;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+
+  ion-spinner {
+    margin-top: calc(50vh - (28px * 2));
+    margin-left: calc(50vw - 28px);
+  }
+}
+
+#geocoder {
+  position: absolute;
+  z-index: 1;
+  width: calc(100% - 40px);
+  left: 20px;
+  top: 20px;
+}
+.mapboxgl-ctrl-geocoder {
+  min-width: 100%;
+}
+
+#detail {
+  position: absolute;
+  z-index: 2;
+  width: calc(100% - 20px);
+  left: 10px;
+  bottom: 70px;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px 5px 0px 0px;
+}
