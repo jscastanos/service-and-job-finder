@@ -1,0 +1,248 @@
+﻿<script src="~/Scripts/controllers/ng-navbar.js?@DateTime.Now.Ticks"></script>
+<style>
+    .small-chat-box-container {
+        position: fixed;
+        bottom: 20px;
+        right: 75px;
+        background: #ffffff00;
+        width: auto;
+        height: 320px;
+        z-index: 1000;
+    }
+
+    .open-small-chat {
+        z-index: 2000;
+    }
+
+    .small-chat-box {
+        position: relative;
+        width: 230px;
+        height: 320px;
+        border-radius: 4px;
+        right: auto;
+        bottom: auto;
+    }
+
+        .small-chat-box.active {
+            display: inline-block;
+        }
+
+    .small-chat-box-close {
+        font-weight: 900;
+        color: #fff;
+        cursor: pointer;
+        -moz-transition: all .2s linear;
+        -o-transition: all .2s linear;
+        -webkit-transition: all .2s linear;
+        transition: all .2s linear;
+    }
+
+        .small-chat-box-close:hover {
+            color: #c9c9c9;
+        }
+
+    .small-chat-avatar-close {
+        top: -7px !important;
+        right: -3px !important;
+        width: 20px;
+        height: 20px;
+        padding: 3px 2px;
+        -moz-transform: scale(0);
+        -ms-transform: scale(0);
+        -o-transform: scale(0);
+        -webkit-transform: scale(0);
+        transform: scale(0);
+        box-shadow: 0 1px 4px 2px rgba(0,0,0,0.3);
+        -moz-transition: transform .1s ease-in-out;
+        -o-transition: transform .1s ease-in-out;
+        -webkit-transition: transform .1s ease-in-out;
+        transition: transform .1s ease-in-out;
+    }
+
+    #small-chat:hover .small-chat-avatar-close {
+        -moz-transform: scale(.9);
+        -ms-transform: scale(.9);
+        -o-transform: scale(.9);
+        -webkit-transform: scale(.9);
+        transform: scale(.9);
+    }
+
+    .message-preview {
+        font-size: 10px;
+        width: 220px;
+        white-space: nowrap;
+        -ms-text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .dropdown-messages-box:hover {
+        background: #f5f5f5;
+    }
+
+    .message-textarea::-webkit-scrollbar {
+        display: none;
+    }
+
+    .small-chat-box .content::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .small-chat-box .content::-webkit-scrollbar-thumb {
+        background-color: rgba(0,0,0,0.3);
+        outline: 1px solid slategrey;
+        border-radius: 60px;
+    }
+
+    .message-unread {
+        color: #1d88ff;
+    }
+
+    .separator {
+        margin: 8px 10px 0;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 290px;
+    }
+</style>
+<div ng-controller="navbar" @*ng-init="userID=@Session["userID"]"*@>
+    @*Change Session*@
+    <div class="row border-bottom white-bg">
+        <nav class="navbar navbar-static-top" role="navigation">
+            <div class="navbar-header">
+                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                    <i class="fa fa-reorder"></i>
+                </button>
+                <a class="navbar-brand">APP WORK</a>
+            </div>
+            <div class="navbar-header">
+                <a class="navbar-brand" style="font-family:Trade Winds"></a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a href="">Menu item</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" @*ng-click="loadUserMessages()"*@>
+                            <i class="fa fa-envelope"></i>  <span class="label label-warning" ng-show="getMessageBadge() > 0">{{getMessageBadge()}}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-messages fadeInRight animated" style="padding:10px 0;">
+                            <li>
+                                <div class="messages-container">
+                                    <div class="dropdown-messages-box" style="cursor:pointer;padding:6px 10px; height: 55px; position:relative" ng-repeat="m in messages | orderBy:'-DateCreated'" ng-click="openMessage(m)">
+                                        <div class="pull-left" style="padding: 3px 10px 2px 0;">
+                                            <img alt="image" class="img-circle" src="~/images/a1.jpg">
+                                        </div>
+                                        <div class="media-body" style="padding-top:5px">
+                                            <small class="pull-right text-muted" style="font-size:9.5px">{{messageTimeElapsed(m.DateCreated)}}</small>
+                                            <strong>{{m.friendName}}</strong>
+                                            <div class="message-preview {{(m.Seen == false && m.SenderId != '@Session["userID"].ToString()' )? 'text-navy' : 'text-muted'}}"><i ng-show="(m.Seen == false && m.SenderId != '@Session["userID"].ToString()' )" class="icon icon-circle-small"></i>{{m.SenderId == '@Session["userID"].ToString()' ? 'You: ':''}}{{m.Message}}</div>
+                                        </div>
+                                        <hr class="separator" />
+                                    </div>
+                                    <div ng-show="loadingMessages && messages.length == 0" class="sk-spinner sk-spinner-double-bounce" style="width: 25px; height: 25px;">
+                                        <div class="sk-double-bounce1"></div>
+                                        <div class="sk-double-bounce2"></div>
+                                    </div>
+                                    <div ng-show="!loadingMessages && messages.length == 0">
+                                        <h6 class="text-muted font-bold" style="text-align:center;">Inbox is empty.</h6>
+                                    </div>
+                                </div>
+                            </li>
+                            @*<li>
+                                                    <div class="text-center link-block">
+                                                        <a>
+                                                            <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                                </a>
+                                            </div>
+                                                </li>*@
+
+                        </ul>
+                    </li>
+                    <li>
+
+                    </li>
+                    <li>
+                        <a class="dropdown-toggle count-info" aria-expanded="false" role="button" href="" data-toggle="dropdown" style="padding-bottom: 0; padding-top: 12px">
+                            <img src="~/images/a1.jpg" class="img-circle" alt="" width="30" />
+                            &nbsp;
+                            @Session["name"]
+                        </a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li>
+                                <a href="@Url.Action("Logout", "Account")">
+                                    <i class="icon icon-switch2"></i> Log out
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+
+
+    <div class="small-chat-box-container" ng-click="chatBoxFocused()">
+        <div class="small-chat-box fadeIn animated">
+            <div class="heading media">
+                <div class="pull-left">
+                    <img src="~/images/a{{activeChatObj.friendID}}.jpg" class="img-circle" width="25" alt="{{activeChatObj.friendName}}" />
+                </div>
+                <small class="pull-right" style="vertical-align:middle">
+                    <span class="small-chat-box-close" style="vertical-align:middle" ng-click="hideChatBox()"><i class="icon icon-minus3"></i></span>
+                </small>
+                <span style="vertical-align:middle;cursor:pointer;">{{activeChatObj.friendName}}</span>
+            </div>
+
+            <div class="content" scroll-to-bottom="openedMessages[activeChatObj.friendID].messages" id="message-scrollable-container" style="height:234px; overflow: auto">
+
+                <div id="messages">
+                    <div class="{{(b.SenderId=='@Session["userID"].ToString()')? 'right':'left'}}" ng-repeat="b in openedMessages[activeChatObj.friendID].messages | orderBy:'DateCreated'">
+                        <div class="author-name">
+                            <small class="chat-date">
+                                {{messageTimeElapsed(b.DateCreated)}}
+                            </small>
+                        </div>
+                        <div class="chat-message word-break {{(b.SenderId=='@Session["userID"].ToString()')? '':'active'}}" style="max-width:145px">{{b.Message}}</div>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="form-chat" style="padding: 4px 10px;">
+                <div class="input-group input-group-sm">
+                    <textarea class="form-control message-textarea" id="chat-input" placeholder="Message to {{activeChatObj.friendName}}" ng-model="newMessage" ng-keypress="keypress($event)" style="resize:none;"></textarea>
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" ng-click="sendMessage()">
+                            <i class="fa fa-send"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div id="small-chat" class="small-chat-btn-{{k}} img-shadow" ng-repeat="(k,v) in openedMessages" style="bottom:{{((($index)*50)+20)}}px;border-radius:50%;">
+
+        <a ng-click="closeMessageAvatar(k)" class="img-shadow">
+            <span class="badge badge-danger pull-right small-chat-avatar-close">
+                <i class="icon icon-cross3"></i>
+            </span>
+        </a>
+        <a class="open-small-chat no-padding" style="box-shadow: 0 1px 10px 3px rgba(0,0,0,0.2);" ng-click="openChatBox(v.info)">
+            <img alt="image" class="img-circle" src="~/images/a{{k}}.jpg" width="38">
+        </a>
+    </div>
+</div>

@@ -1,0 +1,286 @@
+﻿@{
+    ViewBag.Title = "Service Worker Registration";
+}
+
+<script src="~/Scripts/ng-serviceWorker.js"></script>
+<script src="~/Scripts/chosen.jquery.js"></script>
+<script src="~/Scripts/cropper.min.js"></script>
+<script src="~/Scripts/croppie.js"></script>
+<script src="~/Scripts/select2.full.min.js"></script>
+<script src="~/Scripts/sweetalert.min.js"></script>
+
+<link href="~/Content/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+<link href="~/Content/select2.min.css" rel="stylesheet" />
+<link href="~/Content/chosen/chosen.css" rel="stylesheet" />
+<link href="~/Content/croppie.css" rel="stylesheet" />
+<link href="~/Content/cropper.min.css" rel="stylesheet" />
+<link href="~/Content/sweetalert.css" rel="stylesheet" />
+   
+
+<style>
+    input {
+        border-radius: 15px !important;
+    }
+
+    textarea {
+        border-radius: 15px !important;
+    }
+
+    .pointer {cursor: pointer;}
+</style>
+
+<div class="row animated fadeInRight" ng-controller="serviceWorkerJS">
+    <div class="col-lg-4">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Getting started</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="#">Config option 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Config option 2</a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="ibox-content">
+                <div style="margin-bottom:20px;font-size:16px;">
+                    <center>
+                        <label class="pointer" ng-click="skillsServices()">
+                            <i class="fa {{iconSkill}}"></i>
+                            <b>Skills and Services</b>
+                        </label>
+                    </center>
+
+                </div>
+                <div style="margin-left:79px;font-size:16px">
+                    <label class="pointer" ng-click="createProfile()">
+                        <i class="fa fa-circle"></i>
+                        <b>Create Profile</b>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-8">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Tell us about your firm/company.</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="#">Config option 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Config option 2</a>
+                        </li>
+                    </ul>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <form ng-submit="save()">
+                <div class="ibox-content">
+                    <div class="animated fadeInRight" ng-show="skills">
+                        <h3>What is the main service you offer to customers?</h3>
+
+                        <div class="form-group" style="margin-top:10px">
+                            <div class="input-group">
+                                <select data-placeholder="Select . . ." class="select2_demo_1" style="width:400px;" tabindex="4" ng-model="tempMainService.IndustryId">
+                                    <option ng-repeat="a in serviceTempArr" value="{{a.ServiceId}}">{{a.Description}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <h3>What is/are those other services you offer?</h3>
+
+                        <div class="form-group" style="margin-top:10px">
+                            <div class="input-group">
+                                <select data-placeholder="Select . . ." class="select2_demo_1" multiple="multiple" style="width:400px;" tabindex="4" ng-model="tempService">
+                                    <option ng-repeat="a in serviceTempArr" value="{{a.ServiceId}}">{{a.Description}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="animated fadeInRight" ng-show="profile">
+
+                        <center class="contact-box center-version">
+                            <a ng-click="hideshowCompany()">
+                                <img src="~/images/user60.png" id="fa-user" alt="image" class="img-circle circle-border m-b-md" style="width:150px;height:150px;margin-bottom:-25px" />
+                                <h4>Choose Company Logo</h4>
+                            </a>
+
+                            <div id="companyimgPreview" class="thumbnail" style="display:none; height:210px;width:250px">
+                                <img class="img-circle circle-border m-b-md" id="targetPic" style="height:200px;width:200px" />
+                            </div>
+
+                        </center>
+
+                        <div class="btn btn-primary" ng-hide="true">
+                            <input type="file" id="companyPic" />
+                        </div>
+
+                        <h3></h3>
+                        <div class="form-group " style="margin-bottom:10px">
+                            <input required placeholder="Add a name of your firm/company" type="text" class="form-control" ng-model="serviceTempArrData.name">
+                        </div>
+
+                        <h3></h3>
+                        <div class="form-group " style="margin-top:10px;margin-bottom:10px">
+                            <textarea required placeholder="Write about your services" class="form-control" rows="5" ng-model="serviceTempArrData.desc"></textarea>
+                        </div>
+
+                        <h3></h3>
+                        <div class="form-group ">
+                            <input required placeholder="Address of your firm/company" type="text" class="form-control" ng-model="serviceTempArrData.add">
+                        </div>
+
+
+                        <h3></h3>
+                        <div class="form-group " style="margin-top:10px;margin-bottom:10px">
+                            <input required placeholder="Contact No" type="text" class="form-control" ng-model="serviceTempArrData.contact">
+
+                        </div>
+
+                        <b style="font-size:16px">Certification</b>&nbsp;&nbsp;<button class="btn btn-default btn-circle" type="button" data-toggle="modal" data-target="#certModal" @*ng-click="addToTable()"*@><i class="fa fa-plus"></i></button>
+                        <table style="margin-top:10px" id="table" class="table">
+                            <tbody>
+                                <tr ng-repeat="a in certArr">
+                                    <td>
+                                        <div class="photos">
+                                            <a href="#"> <img src="../Employer/RetrieveCertImg?id={{a.recNo}}" class="feed-photo" style="width: 100px" /></a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h2>{{a.Filename}}</h2>
+                                        <h3>{{a.Description}}</h3>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btn-circle" type="button"><i class="fa fa-trash" ng-click="removeCert(a.recNo)"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Add a location</h3>
+                        <b>Select Barangay:</b>
+                        <div class="input-group" style="margin-bottom:15px;">
+                            <select id="brgyID" data-placeholder="Select . . ." class="select2_demo_1" style="width:400px;" tabindex="4" ng-model="brgyLatLong">
+                                <option ng-repeat="a in brgytempArr" value="{{a.Latitude + '-' + a.Longitude}}">{{a.BrgyName}}</option>
+                            </select>
+                        </div>
+                        <div class="google-map" id='gmap_canvas'></div>
+                    </div>
+
+                </div>
+                <div class="ibox-footer">
+                    <button style="width:100%" type="button" class="btn btn-success btn-lg" ng-if="skillsBtn" ng-click="continue()">Save & Continue</button>
+                    <button style="width:100%" type="button" class="btn btn-success btn-lg" ng-if="skillsUpdate" ng-click="updatecontinue()">Update & Continue</button>
+                    <button style="width:100%" type="submit" class="btn btn-success btn-lg" ng-if="profile">Save Profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="certModal" class="modal inmodal" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeInLeft">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title"><i class="fa fa-plus"></i>&nbsp;&nbsp; Add Certificate</h6>
+                </div>
+
+                <div class="modal-body">
+                    <form ng-submit="addToTable()">
+                        <div style="margin-top:10px">
+
+                            <center class="contact-box center-version">
+                                <a ng-click="hideshow()">
+                                    <img src="~/images/user60.png" id="fa-user" alt="image" class="img-circle circle-border m-b-md" style="width:150px;height:150px;margin-bottom:-25px" />
+                                    <h4>Choose Picture</h4>
+                                </a>
+                            </center>
+
+                            <div id="imgPreview" class="thumbnail" style="display:none">
+                                <img class="img-responsive" id="targetImg" />
+                                <div class="caption">
+                                    <a href="#" onclick="ClearPreview()"><i class="fa fa-trash"></i></a>
+                                    <span id="description"></span>
+                                </div>
+                            </div>
+
+                            <div class="btn btn-primary" ng-hide="true">
+                                <input type="file" id="imageBrowes" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-group " style="margin-top:10px;margin-bottom:10px">
+                                <input required type="text" class="form-control" placeholder="Filename" ng-model="certTempArr.Filename">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group " style="margin-top:10px;margin-bottom:10px">
+                                <input required type="text" class="form-control" placeholder="Description" ng-model="certTempArr.Description">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary" style="width:100%">Save Data</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+</div>
+
+<script src='https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyALxrTX2HnaT0llLY5C5uHsJb8FdY64_X0'></script>
+<style>
+    #gmap_canvas img {
+        max-width: none !important;
+        background: none !important;
+    }
+</style>
+<script>
+
+    $(".select2_demo_1").select2();
+
+    var config = {
+        '.chosen-select': {},
+        '.chosen-select-deselect': { allow_single_deselect: true },
+        '.chosen-select-no-single': { disable_search_threshold: 10 },
+        '.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+        '.chosen-select-width': { width: "95%" }
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+
+</script>
+
+

@@ -1,0 +1,154 @@
+﻿@{
+    ViewBag.Title = "Applicants";
+}
+
+
+
+<link href="~/Content/sweetalert.css" rel="stylesheet" />
+<script src="~/Scripts/sweetalert.min.js"></script>
+<script src="~/Scripts/controllers/Applicants.js"></script>
+<div class="row" ng-app="SJF" ng-controller="Applicants" ng-init="init()">
+    <div class="col-lg-3">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content mailbox-content">
+                <div class="file-manager">
+
+
+                    <h5>Job Applicants</h5>
+                    <ul class="category-list" style="padding: 0">
+
+                        <li ng-repeat="data in jobs" class="active"><a ng-click="vApplicants($index)"> <i class="fa fa-circle text-navy"></i> <span class="font-{{$index == index? 'bold':'normal'}}">{{data.JobTitle}}</span> <span class="label label-warning pull-right">{{data.applicants.length != 0? data.applicants.length : ''}}</span> </a></li>
+
+                    </ul>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div ng-repeat="data in jobs" ng-show="$index == index" class="col-lg-9 tabs-container animated fadeInRight">
+        <div class="mail-box-header">
+            <div class="pull-right mail-search">
+                <div style="border-radius:50px;border-color:#23c6c8" class="input-group fa-border ">
+
+                    <div class="input-group-btn">
+
+                        <i class="fa fa-search"></i>
+
+                        <input ng-show="showSearchBartab1 == 0" style="border-radius:50px;border:none" type="text" class="form-control input-sm" name="search" ng-model="fullname" placeholder="Search">
+
+                        <input ng-show="showSearchBartab2 == 1 " style="border-radius:50px;border:none" type="text" class="form-control input-sm" name="search" ng-model="vfullname" placeholder="Search">
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+            <h2>
+                {{data.JobTitle}}
+            </h2>
+            <div class="mail-tools tooltip-demo m-t-md ">
+
+                <button ng-click="cTab(0)" class="btn btn-white btn-sm " data-toggle="tab" href="#{{$index}}-1" aria-expanded="true">
+                    <i class="fa fa-users count-info"></i> Applicants <span class="label label-warning">{{data.applicants.length != 0? data.applicants.length : ''}}</span>
+                </button>
+
+                <button ng-click="cTab(1)" class="btn btn-white btn-sm" data-toggle="tab" href="#{{$index}}-2" aria-expanded="false">
+                    <i class="fa fa-thumbs-o-up count-info"></i> Qualified Applicants <span class="label label-primary">{{data.qualifiedApplicants.length != 0? data.qualifiedApplicants.length : ''}}</span>
+                </button>
+
+            </div>
+        </div>
+
+        <div class="mail-box">
+            <div class="tab-content">
+                <div id="{{$index}}-1" class="{{activeTab1}}">
+
+                    <table class="table table-hover table-mail">
+                        <tbody>
+                            <tr ng-repeat="data in data.applicants | filter: fullname" id="{{index}}1">
+                                <td class="check-mail text-center" style="padding-bottom:0%">
+                                    <div class="chat-element"><img alt="image" class="img-circle" src="../Employer/RetrieveIMG?id={{data.recNo}}"></div>
+                                </td>
+                                <td class="mail-ontact" style="width:80%">
+                                    <div class="font-bold">{{data.fullname}}</div>
+                                    <div>{{data.Address}}</div>
+                                </td>
+
+                                <td class="text-right mail-date">
+                                    <a href="../JobSeekerProfile/JobSeekerView?id={{data.UserId}}" class="btn btn-outline btn-primary btn-rounded btn-sm">View Pofile</a>
+                                    
+                                </td>
+                            </tr>
+                            <tr ng-show="data.applicants.length == 0 || isElementExistsAtDOM(index +'1') != true">
+                                <td class="check-mail text-center">
+                                    <h3 style="color:red">
+                                        No data found.
+                                    </h3>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="{{$index}}-2" class="{{activeTab2}}">
+
+                    <table class="table table-hover table-mail">
+                        <tbody>
+                            <tr ng-repeat="data in data.qualifiedApplicants | filter: vfullname" id="{{index}}2">
+                                <td class="check-mail text-center" style="padding-bottom:0%">
+                                    <div class="chat-element"><img alt="image" class="img-circle" src="../Employer/RetrieveIMG?id={{data.recNo}}"></div>
+                                </td>
+                                <td class="mail-ontact" style="width:80%">
+                                    <div class="font-bold">{{data.vfullname}}</div>
+                                    <div>{{data.Address}}</div>
+                                </td>
+
+                                <td class="text-right mail-date">
+                                    <button type="button" class="btn btn-outline btn-primary btn-rounded btn-sm" ng-click="sendMsg(data.msgFullname, data.UserId)">Send Message</button>
+                                </td>
+                            </tr>
+                            <tr ng-show="data.qualifiedApplicants.length == 0 || isElementExistsAtDOM(index +'2') != true">
+                                <td class="check-mail text-center">
+                                    <h3 style="color:red">
+                                        No data found.
+                                    </h3>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+

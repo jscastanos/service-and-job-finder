@@ -1,0 +1,124 @@
+﻿@{
+    ViewBag.Title = "LogIn";
+    Layout = null;
+}
+
+<html>
+
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AppWork | Login</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/custom.css" rel="stylesheet" />
+    <!-- Animation CSS -->
+    <link href="~/Content/animate.css" rel="stylesheet" />
+
+
+    <!-- Custom styles for this template -->
+    <link href="~/Content/style.css" rel="stylesheet" />
+
+
+
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/ng-app.js"></script>
+    <script src="~/Scripts/controllers/LogIn.js"></script>
+</head>
+
+<body class="gray-bg" ng-app="SJF" ng-controller="LogIn">
+
+    <div class="loginColumns animated fadeInDown">
+        <div class="row">
+
+            <div class="col-md-6 animated fadeInLeft">
+
+
+                <div>
+                    <h2 class="font-bold"><span style="color:#1ab394">AppWork</span> </h2>
+                    <span class="font-noraml">
+                        {{description != null? description : "-Error content-"}}
+                    </span>
+                </div>
+                <br />
+                <br />
+                <div>
+                    <img src="../images/socialmedia.jpg" alt="dashboard" class="img-responsive pull-left">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="ibox">
+                    <div class=" ibox ibox-title">
+                        <h3 class="font-noraml">Login to your account</h3>
+
+                    </div>
+                    <div class="ibox-content">
+                        <form class="m-t" method="post" action="@Url.Action("Login", "Account")">
+
+                            <div class="text-center text-muted" ng-if="result == null" style="margin-bottom:5%">Enter your credentials below</div>
+                            <div class="text-center" ng-if="result == 3" style="color:red;margin-bottom:5%">*Credentials not match</div>
+                            <div class="text-center" ng-if="result == 2" style="color:red;margin-bottom:5%"> *Your account is blocked</div>
+                            <div class="text-center text-info" ng-if="result == 0 || result == 1" style="margin-bottom:5%">Welcome</div>
+
+
+                            @*<div class="form-group">
+                                <input type="text" ng-model="user.Username" class="form-control" placeholder="Username" required="">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" ng-model="user.Password" class="form-control" placeholder="Password" required="">
+                            </div>*@
+
+                            <div class="form-group">
+                                <input type="text" name="Username" class="form-control" placeholder="Username" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="Password" class="form-control" placeholder="Password" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                            @*<a href="#">
+                                    <small>Forgot password?</small>
+                                </a>*@
+
+                            <hr>
+
+                            <p class="text-muted text-center">
+                                <small>Do not have an account?</small>
+                            </p>
+                            <a class="btn btn-sm btn-white btn-block" ng-click="gotToSignUpPage(0)">Create an account</a>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Mainly scripts -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+
+    <!-- iCheck -->
+    <script src="~/Scripts/icheck.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+</body>
+
+
+</html>
+

@@ -1,0 +1,61 @@
+﻿<script src="~/Scripts/controllers/ng-newPost.js?@DateTime.Now.Ticks"></script>
+<style>
+    input[type=file] {
+        display: none;
+    }
+
+    .remove {
+        top: -8px;
+        position: absolute;
+        right: -8px;
+        background: white;
+        border-radius: 50%;
+        cursor:pointer;
+    }
+</style>
+
+
+<div class="modal inmodal" id="newPostModal" tabindex="-1" role="dialog" aria-hidden="true" ng-controller="newPost" @*ng-init="userID=@Session["userID"]"*@ style="margin-top: 15vh;">
+    <div class="modal-dialog">
+        <form ng-submit="savePost()" name="postForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Write Post</h5>
+                </div>
+                <div class="modal-body" style="padding: 10px 30px">
+
+                    <div class="form-group">
+                        <label>
+                            Title
+                        </label>
+                        <input type="text" class="form-control border-radius" ng-model="post.Title" placeholder="Enter you title" required>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Job Title
+                        </label>
+                        <select class="form-control border-radius" ng-model="post.JobId" ng-options="j.JobId as j.JobTitle for j in jobTitles" required>
+                            <option value="" selected disabled class="text-muted">Select Job Title</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Password
+                        </label>
+                        <textarea class="form-control border-radius" placeholder="Enter description here" ng-model="post.Description" required></textarea>
+                    </div>
+                    <button type="button" class="btn btn-outline btn-primary" onclick="document.getElementById('file-picker').click()"><i class="icon icon-attachment"></i> {{imgSrc ? 'Change':'Attachment'}}</button>
+                    <input type="file" id="file-picker" accept="image/png, image/jpg, image/jpeg" onchange="angular.element(this).scope().getFiles(this.files)" value="" />
+                    <div class="inline" style="position:relative" ng-show="imgSrc">
+                        <img id="attachment" ng-src="{{imgSrc}}" class="border-radius m-l-lg img-shadow" width="50" height="50" style="object-fit: cover;" alt="" />
+                        <i class="icon icon-cross remove img-shadow text-danger" ng-click="removeAttachment()"></i>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="postForm.$invalid"><i class="icon icon-upload"></i> Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

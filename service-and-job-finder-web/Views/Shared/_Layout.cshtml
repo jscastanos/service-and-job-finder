@@ -1,0 +1,57 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewBag.Title | Jobs and Service Finder</title>
+    @Styles.Render("~/css")
+        @Scripts.Render("~/js")
+    <link href="~/Content/font-families/open-sans/open-sans.css" rel="stylesheet" />
+    @*<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,800,800i|Open+Sans:400,400i,600,600i,700,700i&display=swap" rel="stylesheet">*@
+    <style>
+        .img-shadow {
+            /* -webkit-box-shadow: 0 0 3px 0 #919191; */
+            -moz-box-shadow: 0 0 3px 0 #dadada;
+            box-shadow: 0 0 3px 0 #dadada;
+        }
+
+        .border-radius {
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .word-break {
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-size: 14px;
+        }
+
+        .slide-content {
+            max-height: 85vh !important;
+            min-height: 55vh !important;
+        }
+    </style>
+
+    <script src="~/Scripts/jquery.signalR-2.3.0.js"></script>
+    <script src="~/signalr/js?@DateTime.Now.Ticks"></script>
+    <script src="~/Scripts/controllers/init-hub.js?@DateTime.Now.Ticks"></script>
+</head>
+
+<body class="top-navigation" ng-app="SJF" ng-cloak>
+    <input type="hidden" id="userID" value="@Session["userID"]" />
+    <input type="hidden" id="entityID" value="@Session["entityID"]" />
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+            @Html.Partial("_navbar")
+            <div class="wrapper wrapper-content">
+                <div class="container">
+                    @RenderBody()
+                </div>
+
+            </div>
+            </div>
+        </div>
+    </body>
+</html>

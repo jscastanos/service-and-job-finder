@@ -1,0 +1,113 @@
+﻿<link href="~/Content/blueimp-gallery.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.blueimp-gallery.min.js"></script>
+<script src="~/Scripts/controllers/ng-post.js?@DateTime.Now.Ticks"></script>
+<style>
+    .comment {
+        background: #eaeaea;
+        padding: 11px;
+        border-radius: 10px;
+        display: inline-block;
+    }
+    .social-footer{
+        background:#fff !important;
+    }
+    .animated {
+        -webkit-animation-duration: 1s;
+        animation-duration: .7s;
+    }
+
+    .job-title {
+        background: #e0e0e0;
+        color: #4c4c4c;
+        padding: 4px;
+        font-size: 9px;
+        border-radius: 3px;
+        font-size:12px;
+    }
+    .clearFix {
+         overflow:auto;
+    }
+</style>
+<div ng-controller="post" class="row">
+    <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
+    <div id="blueimp-gallery" class="blueimp-gallery">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+    </div>
+
+    <div class="col-md-12">
+        <div class="social-feed-box img-shadow border-radius animated fadeInRight" ng-repeat="j in jobPostFeed | orderBy:'-DateCreated'">
+            <div class="social-avatar">
+                <div class="media-body">
+                    <div class="pull-right" ng-if="@Session["accountType"].ToString() == '2'">
+                        <button class="btn btn-outline btn-primary" ng-hide="isApplicationSent(j.Applicants)" title="Send Application" ng-click="sendApplication(j)">
+                            <span><i class="icon icon-magazine"></i> Send Application</span>
+                        </button>
+                        <button class="btn btn-outline btn-primary" ng-show="isApplicationSent(j.Applicants)" title="Application Sent">
+                            <span><i class="icon icon-check"></i> Application Sent</span>
+                        </button>
+                    </div>
+                    <div class="pull-right">
+                        <button class="btn btn-outline btn-primary" title="Send Message" ng-click="$parent.sendMessage(j)" ng-if="@Session["accountType"].ToString() == '4'" style="padding-left:11px">
+                            <i class="fa fa-envelope"></i> Send Message
+                        </button>
+                    </div>
+                    <a href="" class="pull-left">
+                        <img alt="image" class="img-circle" src="~/images/a1.jpg">
+                    </a>
+                    <a href="" class="font-bold feed-name" style="color:#5d5d5d; font-weight: 700">
+                        {{j.Name}}
+                    </a>
+                    <small class="text-muted">{{getTimeElapsed(j.DateCreated)}}</small>
+                </div>
+            </div>
+            <div class="social-body">
+                <div>
+                    <h3 style="font-size:18px">{{j.Title}}</h3>
+                    <span class="job-title">{{j.JobTitle}}</span>
+                </div>
+                <p class="word-break m-t-lg" style="font-size:14px">{{j.Description}}</p>
+            </div>
+
+            <div ng-if="j.HasFile">
+                <div class="lightBoxGallery">
+                    <a href="@Url.Content("~/Jobs/postImage/"){{j.PostId}}" title="{{j.Name}}" data-gallery="asdf-{{$index}}">
+                        <img src="@Url.Content("~/Jobs/postImage/"){{j.PostId}}" style="width:100%; object-fit:cover; width:100%; margin:0" alt="" />
+                    </a>
+                </div>
+                <br />
+            </div>
+            <div class="social-footer">
+                <div class="social-comment animated fadeInUp" ng-repeat="c in j.Comments">
+                    <a href="" class="pull-left">
+                        <img alt="image" class="img-circle" src="~/images/a1.jpg">
+                    </a>
+                    <div class="media-body" style="max-width:90%">
+                        <div class="comment">
+                            <a href="" style="color: #050505; font-weight: 700;">
+                                {{c.Name}}
+                            </a>
+                            <div class="word-break" style="color: #050505; font-weight: 400;">{{c.Comment}}</div>
+
+                        </div><br />
+                        <small class="text-muted m-l-sm">{{getTimeElapsed(c.DateCreated)}}</small>
+                    </div>
+                </div>
+                <div class="social-comment">
+                    <a href="#" class="pull-left">
+                        <img alt="image" class="img-circle" src="~/images/a3.jpg">
+                    </a>
+                    <div class="media-body">
+                        <textarea class="form-control border-radius" style="resize:none;" id="new-comment-{{$index}}" ng-model="j.newComment" ng-keypress="keypress($event, j)" placeholder="Write comment..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
